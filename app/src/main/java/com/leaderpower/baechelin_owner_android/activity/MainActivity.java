@@ -1,7 +1,9 @@
-package com.leaderpower.baechelin_owner_android;
+package com.leaderpower.baechelin_owner_android.activity;
 
 import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
+import android.os.Bundle;
+
+import com.leaderpower.baechelin_owner_android.R;
 
 public class MainActivity extends AppCompatActivity {
 
