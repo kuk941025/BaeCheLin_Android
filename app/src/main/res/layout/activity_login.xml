@@ -15,7 +15,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="배슐랭"
-        android:textColor="#000000"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/title_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,6 +32,8 @@
         android:layout_marginEnd="@dimen/login_side_margin"
         android:background="#ffffff"
         android:textSize="@dimen/edit_text_size"
+        android:paddingLeft="@dimen/edit_text_padding"
+        android:paddingRight="@dimen/edit_text_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_txt_title" />
@@ -46,6 +48,8 @@
         android:background="#ffffff"
         android:inputType="textPassword"
         android:textSize="@dimen/edit_text_size"
+        android:paddingLeft="@dimen/edit_text_padding"
+        android:paddingRight="@dimen/edit_text_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_edit_id" />
@@ -58,7 +62,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="@dimen/login_side_margin"
         android:layout_marginBottom="8dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
         android:text="로그인"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -66,4 +70,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_edit_pw"
         app:layout_constraintVertical_bias=".4" />
+
+    <TextView
+        android:id="@+id/login_txt_sign_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/login_side_margin"
+        android:layout_marginTop="8dp"
+        android:text="회원가입"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_edit_pw" />
 </android.support.constraint.ConstraintLayout>
