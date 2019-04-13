@@ -21,8 +21,8 @@ public class OrderPageAdapter extends FragmentPagerAdapter {
     }
     private void initFrags(){
         fragmentList = new ArrayList<>();
-        fragmentList.add(new OrderCompleteFragment());
         fragmentList.add(new OrderInProgressFragment());
+        fragmentList.add(new OrderCompleteFragment());
     }
 
     @Override
