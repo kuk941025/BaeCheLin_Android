@@ -87,6 +87,7 @@ public class OrderCompleteFragment extends Fragment {
             calendar.set(Calendar.YEAR, i);
             calendar.set(Calendar.MONTH, i1);
             calendar.set(Calendar.DAY_OF_MONTH, i2);
+            updateLabel();
         }
     };
 }
