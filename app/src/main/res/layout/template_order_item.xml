@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/order_card_height"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/template_order_button_layout"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_vertical|center_horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+                <Button
+                    android:id="@+id/template_order_confirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/button_custom_height"
+                    android:textColor="#ffffff"
+                    android:layout_marginBottom="4dp"
+                    android:text="승락"
+                    android:background="@color/colorPrimary"
+                    />
+                <Button
+                    android:id="@+id/template_order_reject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/button_custom_height"
+                    android:layout_marginTop="4dp"
+                    android:text="거절"
+                    android:background="@drawable/button_border"
+                    />
+            </LinearLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/template_order_information_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/template_order_button_layout"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/template_order_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="12:00"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/cardview_title_txt_size"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/template_order_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#999"
+                    android:text="처리중"
+                    android:layout_marginStart="8dp"
+                    android:padding="3dp"
+                    android:textColor="#ffffff"
+                    app:layout_constraintBottom_toBottomOf="@+id/template_order_time"
+                    app:layout_constraintStart_toEndOf="@+id/template_order_time"
+                    app:layout_constraintTop_toTopOf="@+id/template_order_time" />
+
+                <TextView
+                    android:id="@+id/template_order_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="17,000 원"
+                    android:textColor="#000"
+                    app:layout_constraintBottom_toBottomOf="@+id/template_order_status"
+                    app:layout_constraintStart_toEndOf="@+id/template_order_status"
+                    app:layout_constraintTop_toTopOf="@+id/template_order_status" />
+
+                <TextView
+                    android:id="@+id/template_order_food"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textSize="@dimen/dscrp_large_txt_size"
+                    android:text="주문한 음식, 주문한 음식, 주문한 음식, 주문한 음식, 주문한 음식,"
+                    android:textColor="#000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/template_order_time" />
+
+                <TextView
+                    android:id="@+id/template_order_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="서울 용산시"
+                    android:textSize="@dimen/dscrp_default_txt_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/template_order_food" />
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>
