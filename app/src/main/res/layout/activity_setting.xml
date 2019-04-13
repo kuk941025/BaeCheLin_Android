@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SettingActivity">
+
+    <include
+        android:id="@+id/setting_toolbar"
+        layout="@layout/layout_main_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/setting_dscrp_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="24dp"
+        android:textSize="@dimen/cardview_title_txt_size"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:text="로그인 정보"
+        app:layout_constraintEnd_toEndOf="@+id/setting_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_toolbar" />
+
+    <TextView
+        android:id="@+id/setting_txt_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="asd@naver.com"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/setting_toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/setting_dscrp_setting" />
+
+    <Button
+        android:id="@+id/setting_btn_sign_out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/login_side_margin"
+        android:layout_marginEnd="@dimen/login_side_margin"
+        android:layout_marginTop="@dimen/login_side_margin"
+        android:background="@color/colorPrimaryDark"
+        android:text="로그아웃"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_txt_email" />
+
+    <View
+        android:id="@+id/setting_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#aaa"
+        android:layout_marginTop="@dimen/dscrp_margin"
+        app:layout_constraintTop_toBottomOf="@+id/setting_btn_sign_out"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/setting_dscrp_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dscrp_side_margin"
+        android:layout_marginTop="@dimen/dscrp_margin"
+        android:text="이름"
+        android:textColor="#000000"
+        android:textSize="@dimen/dscrp_default_txt_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_divider" />
+
+    <TextView
+        android:id="@+id/setting_txt_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dscrp_side_margin"
+        android:text="이름"
+        android:textSize="@dimen/dscrp_default_txt_size"
+        android:layout_marginTop="@dimen/dscrp_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_divider" />
+
+    <View
+        android:id="@+id/setting_divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ccc"
+        android:layout_marginTop="@dimen/dscrp_margin"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_dscrp_name" />
+
+    <TextView
+        android:id="@+id/setting_dscrp_serial_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dscrp_side_margin"
+        android:layout_marginTop="@dimen/dscrp_margin"
+        android:text="사업자 번호"
+        android:textColor="#000000"
+        android:textSize="@dimen/dscrp_default_txt_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_divider2" />
+
+    <TextView
+        android:id="@+id/setting_txt_serial_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dscrp_side_margin"
+        android:text="123-4567-8910"
+        android:textSize="@dimen/dscrp_default_txt_size"
+        android:layout_marginTop="@dimen/dscrp_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_divider2" />
+
+    <View
+        android:id="@+id/setting_divider3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ccc"
+        android:layout_marginTop="@dimen/dscrp_margin"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_txt_serial_num" />
+
+    <TextView
+        android:id="@+id/setting_dscrp_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dscrp_side_margin"
+        android:layout_marginTop="@dimen/dscrp_margin"
+        android:text="휴대폰 번호"
+        android:textColor="#000000"
+        android:textSize="@dimen/dscrp_default_txt_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_divider3" />
+
+    <TextView
+        android:id="@+id/setting_txt_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dscrp_side_margin"
+        android:text="010-1111-2222"
+        android:textSize="@dimen/dscrp_default_txt_size"
+        android:layout_marginTop="@dimen/dscrp_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_divider3" />
+
+    <View
+        android:id="@+id/setting_divider4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ccc"
+        android:layout_marginTop="@dimen/dscrp_margin"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_txt_phone" />
+
+    <TextView
+        android:id="@+id/setting_dscrp_created_at"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dscrp_side_margin"
+        android:layout_marginTop="@dimen/dscrp_margin"
+        android:text="휴대폰 번호"
+        android:textColor="#000000"
+        android:textSize="@dimen/dscrp_default_txt_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_divider4" />
+
+    <TextView
+        android:id="@+id/setting_txt_created_at"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dscrp_side_margin"
+        android:text="010-1111-2222"
+        android:textSize="@dimen/dscrp_default_txt_size"
+        android:layout_marginTop="@dimen/dscrp_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_divider4" />
+
+    <View
+        android:id="@+id/setting_divider5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ccc"
+        android:layout_marginTop="@dimen/dscrp_margin"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_txt_created_at" />
+</android.support.constraint.ConstraintLayout>
