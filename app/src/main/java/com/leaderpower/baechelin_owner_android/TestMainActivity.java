@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.leaderpower.baechelin_owner_android.util.Constant;
+import com.leaderpower.baechelin_owner_android.util.Constants;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public class TestMainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         ArrayList<String> activities = new ArrayList<>();
-        for (Class c : Constant.activities) activities.add(c.getSimpleName());
+        for (Class c : Constants.activities) activities.add(c.getSimpleName());
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, activities);
         listView.setAdapter(adapter);
@@ -35,8 +35,8 @@ public class TestMainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(TestMainActivity.this, Constant.activities[i]);
-                Log.d("TEST", Constant.activities[i].getName());
+                Intent intent = new Intent(TestMainActivity.this, Constants.activities[i]);
+                Log.d("TEST", Constants.activities[i].getName());
 
                 startActivity(intent);
             }
