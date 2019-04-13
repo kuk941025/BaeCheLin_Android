@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.adapter.OwnersListAdapter;
 import com.leaderpower.baechelin_owner_android.model.OwnerItem;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<OwnerItem> ownerLists = new ArrayList<>();
     private OwnersListAdapter ownersListAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
