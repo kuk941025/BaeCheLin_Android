@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.adapter.OrderPageAdapter;
 import com.leaderpower.baechelin_owner_android.model.OwnerItem;
@@ -19,9 +22,11 @@ public class OrderActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.order_view_pager)
     ViewPager viewPager;
-    private OrderPageAdapter pageAdapter;
 
+
+    private OrderPageAdapter pageAdapter;
     private OwnerItem owner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +43,7 @@ public class OrderActivity extends AppCompatActivity {
 
         tabLayout.setupWithViewPager(viewPager);
 
-
     }
+
 
 }

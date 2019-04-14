@@ -32,7 +32,6 @@ public class OrderPageAdapter extends FragmentPagerAdapter {
         OrderInProgressFragment progressFragment = new OrderInProgressFragment();
         progressFragment.setArguments(progressBundle);
 
-
         fragmentList.add(progressFragment);
         fragmentList.add(new OrderCompleteFragment());
     }

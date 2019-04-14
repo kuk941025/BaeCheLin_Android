@@ -50,7 +50,6 @@ public class OrderCompleteFragment extends Fragment {
             fragView = inflater.inflate(R.layout.fragment_order_complete, container, false);;
             ButterKnife.bind(this, fragView);
 
-            initRecycleView();
             setDatePicker();
         }
 
