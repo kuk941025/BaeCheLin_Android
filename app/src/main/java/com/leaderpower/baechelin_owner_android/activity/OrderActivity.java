@@ -5,10 +5,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-
+import android.widget.Toast;
 import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.adapter.OrderPageAdapter;
-
+import com.leaderpower.baechelin_owner_android.model.OwnerItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -21,6 +21,7 @@ public class OrderActivity extends AppCompatActivity {
     ViewPager viewPager;
     private OrderPageAdapter pageAdapter;
 
+    private OwnerItem owner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,10 +29,16 @@ public class OrderActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        pageAdapter = new OrderPageAdapter(getSupportFragmentManager());
+        //Receive owner information from the main activity
+        owner = (OwnerItem) getIntent().getSerializableExtra("Owner");
+
+        //send oid to fragment
+        pageAdapter = new OrderPageAdapter(getSupportFragmentManager(), owner.getOid());
         viewPager.setAdapter(pageAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
+
+
     }
 
 }

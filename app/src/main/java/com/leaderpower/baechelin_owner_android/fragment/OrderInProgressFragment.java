@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.adapter.OrderListAdapter;
@@ -24,6 +25,7 @@ public class OrderInProgressFragment extends Fragment {
     private View fragView = null;
     private OrderListAdapter orderAdapter;
     private ArrayList<Order> orderList;
+    private String oid;
     public OrderInProgressFragment() {
         // Required empty public constructor
     }
@@ -37,6 +39,9 @@ public class OrderInProgressFragment extends Fragment {
             fragView = inflater.inflate(R.layout.fragment_order_in_progress, container, false);
             ButterKnife.bind(this, fragView);
 
+            //receive oid
+            oid = getArguments().getString("oid");
+            Toast.makeText(getActivity(), "Received oid " + oid, Toast.LENGTH_LONG).show();
             initRecyclerView();
         }
         return fragView;
