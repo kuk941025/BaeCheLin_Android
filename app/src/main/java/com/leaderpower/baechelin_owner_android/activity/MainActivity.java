@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
     }
-    
+
     private void initRecyclerView(){
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
     private void setToolbar(){
         setSupportActionBar(toolbar);
         txtToolTitle.setText("배슐랭");
+
     }
     private void getOwnerInfo(ArrayList<BusinessOwners> owners){
         final int owner_num = owners.size();

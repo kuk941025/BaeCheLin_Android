@@ -5,6 +5,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
 import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.adapter.OrderPageAdapter;
 import com.leaderpower.baechelin_owner_android.model.OwnerItem;
@@ -19,6 +23,10 @@ public class OrderActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.order_view_pager)
     ViewPager viewPager;
+    @BindView(R.id.toolbar_txt_title)
+    TextView txtToolTitle;
+    @BindView(R.id.toolbar_right_btn)
+    Button btnTool;
 
     private OrderPageAdapter pageAdapter;
     private OwnerItem owner;
@@ -39,14 +47,15 @@ public class OrderActivity extends AppCompatActivity {
         viewPager.setAdapter(pageAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
-//        setToolbar();
 
+        setToolbar();
     }
 
-//    private void setToolbar(){
-//        setSupportActionBar(toolbar);
-//        txtToolTitle.setText("회원 정보");
-//    }
+    private void setToolbar(){
+        setSupportActionBar(toolbar);
+        txtToolTitle.setText("주문 현황");
+        btnTool.setVisibility(View.GONE);
+    }
 
 
 }
