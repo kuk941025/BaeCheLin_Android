@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -22,6 +23,8 @@ import com.leaderpower.baechelin_owner_android.adapter.OrderListAdapter;
 import com.leaderpower.baechelin_owner_android.model.Order;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.annotation.Nullable;
 
@@ -39,8 +42,9 @@ public class OrderInProgressFragment extends Fragment {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Query dbRef;
     private ListenerRegistration dbListener;
-
+    private boolean isSorted;
     private final String TAG = "ORDER_FRAGMENT";
+
     public OrderInProgressFragment() {
         // Required empty public constructor
     }
@@ -50,7 +54,7 @@ public class OrderInProgressFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        if (fragView == null){
+        if (fragView == null) {
             fragView = inflater.inflate(R.layout.fragment_order_in_progress, container, false);
             ButterKnife.bind(this, fragView);
 
@@ -60,7 +64,9 @@ public class OrderInProgressFragment extends Fragment {
             initRecyclerView();
 
             //set collection reference
-            dbRef = db.collection("owner").document(oid).collection("orders").whereLessThanOrEqualTo("status", 1 );
+            dbRef = db.collection("owner").document(oid).collection("orders")
+                    .whereLessThanOrEqualTo("status", 1);
+            isSorted = false;
         }
         return fragView;
     }
@@ -72,21 +78,64 @@ public class OrderInProgressFragment extends Fragment {
         dbListener = dbRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if (e != null){
-                    Log.d(TAG, "Listen failed "  + e);
+                if (e != null) {
+                    Log.d(TAG, "Listen failed " + e);
                 }
 
-                if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()){
-                    for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots ){
-                        Log.d(TAG, "Current data : " + snapshot.getData());
+                for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
+                    int position = 0;
+                    String id = dc.getDocument().getId();
+                    switch (dc.getType()) {
+                        case ADDED:
+                            Order order = dc.getDocument().toObject(Order.class);
+                            order.setId(dc.getDocument().getId());
+                            orderList.add(order);
+                            if (isSorted)
+                                orderAdapter.notifyItemInserted(orderList.size());
+                            else { //sort orders by created_at
+                                Collections.sort(orderList, new Comparator<Order>() {
+                                    @Override
+                                    public int compare(Order order, Order t1) {
+                                        return order.getCreated_at().compareTo(t1.getCreated_at());
+                                    }
+                                });
+                                orderAdapter.notifyDataSetChanged();
+                            }
+                            break;
+                        case REMOVED:
 
-                        orderList.add(snapshot.toObject(Order.class));
-                        orderAdapter.notifyItemInserted(orderList.size());
+                            for (Order item : orderList) {
+                                position++;
+                                if (item.getId() == id) {
+                                    orderList.remove(item);
+                                    orderAdapter.notifyItemRemoved(position);
+                                    break;
+                                }
+                            }
+                            break;
+                        case MODIFIED:
+                            for (Order item : orderList) {
+                                position++;
+                                if (item.getId() == id) {
+                                    item = dc.getDocument().toObject(Order.class);
+                                    orderAdapter.notifyItemChanged(position);
+                                    break;
+                                }
+                            }
+                            break;
                     }
                 }
-                else {
-                    Log.d(TAG, "current data is null");
-                }
+//                if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()){
+//                    for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots ){
+//                        Log.d(TAG, "Current data : " + snapshot.getData());
+//
+//                        orderList.add(snapshot.toObject(Order.class));
+//                        orderAdapter.notifyItemInserted(orderList.size());
+//                    }
+//                }
+//                else {
+//                    Log.d(TAG, "current data is null");
+//                }
             }
         });
     }

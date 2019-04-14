@@ -3,9 +3,17 @@ package com.leaderpower.baechelin_owner_android.model;
 import java.util.Date;
 
 public class Order {
-    private String address, food_ordered, request, user_phone;
+    private String address, food_ordered, request, user_phone, id;
     private int payment_method, status, total_price;
     private Date created_at, delivered_at;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getAddress() {
         return address;

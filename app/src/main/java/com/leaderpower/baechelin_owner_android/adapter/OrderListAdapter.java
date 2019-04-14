@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.model.Order;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -32,9 +34,13 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
 
     @Override
     public void onBindViewHolder(@NonNull orderViewHolder orderViewHolder, int i) {
+        DecimalFormat df = new DecimalFormat("#,###");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         Order item = orderList.get(i);
         orderViewHolder.txtAddress.setText(item.getAddress());
         orderViewHolder.txtFood.setText(item.getFood_ordered());
+        orderViewHolder.txtPrice.setText(df.format(item.getTotal_price()) + "원");
+        orderViewHolder.txtTime.setText(sdf.format(item.getCreated_at()));
     }
 
     @Override
