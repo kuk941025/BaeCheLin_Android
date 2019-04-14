@@ -91,9 +91,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void convertOwnerstoOwnerItem(BusinessOwners businessOwner, OwnerItem ownerItem) {
-        OwnerItem owner = new OwnerItem();
-    }
     private void getOwnerInfo(ArrayList<BusinessOwners> owners){
         final int owner_num = owners.size();
         for (BusinessOwners owner : owners ){
