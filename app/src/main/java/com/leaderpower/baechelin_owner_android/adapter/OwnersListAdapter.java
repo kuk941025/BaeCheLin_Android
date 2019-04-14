@@ -42,7 +42,7 @@ public class OwnersListAdapter extends RecyclerView.Adapter<OwnersListAdapter.ow
 
         ownerViewHolder.txtAddress.setText(ownerItem.getAddress() + " " + ownerItem.getAddress_detail());
         ownerViewHolder.txtTitle.setText(ownerItem.getShop_name());
-        Glide.with(mContext).load(ownerItem.getShop_image()).placeholder(android.R.drawable.spinner_background).into(ownerViewHolder.img);
+        Glide.with(mContext).load(ownerItem.getShop_image()).into(ownerViewHolder.img);
     }
 
     @Override
@@ -69,5 +69,6 @@ public class OwnersListAdapter extends RecyclerView.Adapter<OwnersListAdapter.ow
 
             ButterKnife.bind(this, itemView);
         }
+
     }
 }

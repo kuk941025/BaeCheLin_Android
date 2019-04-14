@@ -1,11 +1,14 @@
 package com.leaderpower.baechelin_owner_android.activity;
 
 import android.support.annotation.NonNull;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,6 +33,12 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.main_nested_scroll)
+    NestedScrollView nestedScrollView;
+    @BindView(R.id.main_layout_loading)
+    View loadingLayout;
+    @BindView(R.id.main_txt_total_owners)
+    TextView txtOwnerNum;
 
     private ArrayList<OwnerItem> ownerLists;
     private OwnersListAdapter ownersListAdapter;
@@ -106,6 +115,10 @@ public class MainActivity extends AppCompatActivity {
                                 if (owner_num == ownerLists.size()){
                                     ownersListAdapter = new OwnersListAdapter(ownerLists, MainActivity.this);
                                     recyclerView.setAdapter(ownersListAdapter);
+
+                                    loadingLayout.setVisibility(View.GONE);
+                                    nestedScrollView.setVisibility(View.VISIBLE);
+                                    txtOwnerNum.setText("사장님, 현재 등록되어 있는 업소는 총 " + owner_num + "개 입니다.");
                                 }
                             }
                         }
