@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                                 ownerLists.add(ownerItem);
 
                                 if (owner_num == ownerLists.size()){
-                                    ownersListAdapter = new OwnersListAdapter(ownerLists);
+                                    ownersListAdapter = new OwnersListAdapter(ownerLists, MainActivity.this);
                                     recyclerView.setAdapter(ownersListAdapter);
                                 }
                             }

@@ -1,5 +1,6 @@
 package com.leaderpower.baechelin_owner_android.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.model.OwnerItem;
 
@@ -19,9 +21,10 @@ import butterknife.ButterKnife;
 
 public class OwnersListAdapter extends RecyclerView.Adapter<OwnersListAdapter.ownerViewHolder> {
     private ArrayList<OwnerItem> ownerList;
-
-    public OwnersListAdapter(ArrayList<OwnerItem> ownerList) {
+    private Context mContext;
+    public OwnersListAdapter(ArrayList<OwnerItem> ownerList, Context context) {
         this.ownerList = ownerList;
+        this.mContext = context;
     }
 
     @NonNull
@@ -39,6 +42,7 @@ public class OwnersListAdapter extends RecyclerView.Adapter<OwnersListAdapter.ow
 
         ownerViewHolder.txtAddress.setText(ownerItem.getAddress() + " " + ownerItem.getAddress_detail());
         ownerViewHolder.txtTitle.setText(ownerItem.getShop_name());
+        Glide.with(mContext).load(ownerItem.getShop_image()).placeholder(android.R.drawable.spinner_background).into(ownerViewHolder.img);
     }
 
     @Override
