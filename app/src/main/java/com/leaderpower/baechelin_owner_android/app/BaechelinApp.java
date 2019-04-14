@@ -20,11 +20,11 @@ public class BaechelinApp extends Application {
         BaechelinApp.currentUser = currentUser;
     }
 
-    public static BusinessInfo getBusinessInfo() {
+    public BusinessInfo getBusinessInfo() {
         return businessInfo;
     }
 
-    public static void setBusinessInfo(BusinessInfo businessInfo) {
+    public void setBusinessInfo(BusinessInfo businessInfo) {
         BaechelinApp.businessInfo = businessInfo;
     }
 

@@ -1,13 +1,16 @@
 package com.leaderpower.baechelin_owner_android.activity;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_recycler_view)
@@ -39,13 +43,18 @@ public class MainActivity extends AppCompatActivity {
     View loadingLayout;
     @BindView(R.id.main_txt_total_owners)
     TextView txtOwnerNum;
+    @BindView(R.id.main_toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.toolbar_txt_title)
+    TextView txtToolTitle;
+
 
     private ArrayList<OwnerItem> ownerLists;
     private OwnersListAdapter ownersListAdapter;
     private FirebaseUser currentUser;
     private String uid;
     private FirebaseFirestore db;
-
+    private BaechelinApp baechelinApp;
     private final String TAG = "MAIN_ACTIVITY";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,19 +64,15 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-//        for (int i = 0; i < 100; i++) ownerLists.add(new OwnerItem("name " + i, "address " + i));
-//        ownersListAdapter = new OwnersListAdapter(ownerLists);
-//
-//
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-//        recyclerView.setAdapter(ownersListAdapter);
-//        recyclerView.setLayoutManager(layoutManager);
+        baechelinApp = BaechelinApp.getInstance();
 
         //get current user
         currentUser = BaechelinApp.getCurrentUser();
         uid = currentUser.getUid();
 
         initRecyclerView();
+        setToolbar();
+
 
         //get firestore
         db = FirebaseFirestore.getInstance();
@@ -79,8 +84,7 @@ public class MainActivity extends AppCompatActivity {
                         if (doc.exists()){
                             Log.d(TAG, "DocumentSnapshot data " + doc.getData());
                             BusinessInfo businessInfo = doc.toObject(BusinessInfo.class);
-                            BaechelinApp.setBusinessInfo(businessInfo);
-
+                            baechelinApp.setBusinessInfo(businessInfo);
                             getOwnerInfo(businessInfo.getOwners());
 
                         }
@@ -91,15 +95,24 @@ public class MainActivity extends AppCompatActivity {
                 });
 
     }
+    
     private void initRecyclerView(){
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
         ownerLists = new ArrayList<>();
-
-
     }
 
+    @OnClick(R.id.toolbar_right_btn)
+    void onSettingClicked(){
+        Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+        startActivity(intent);
+    }
+
+    private void setToolbar(){
+        setSupportActionBar(toolbar);
+        txtToolTitle.setText("배슐랭");
+    }
     private void getOwnerInfo(ArrayList<BusinessOwners> owners){
         final int owner_num = owners.size();
         for (BusinessOwners owner : owners ){
@@ -113,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
                                 ownerLists.add(ownerItem);
 
                                 if (owner_num == ownerLists.size()){
+
                                     ownersListAdapter = new OwnersListAdapter(ownerLists, MainActivity.this);
                                     recyclerView.setAdapter(ownersListAdapter);
 

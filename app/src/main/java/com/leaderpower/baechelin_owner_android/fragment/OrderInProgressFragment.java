@@ -91,19 +91,9 @@ public class OrderInProgressFragment extends Fragment {
                             order.setId(dc.getDocument().getId());
                             orderList.add(order);
                             orderAdapter.notifyItemInserted(orderList.size());
-//                            else { //sort orders by created_at
-//                                Collections.sort(orderList, new Comparator<Order>() {
-//                                    @Override
-//                                    public int compare(Order order, Order t1) {
-//                                        return order.getCreated_at().compareTo(t1.getCreated_at());
-//                                    }
-//                                });
-//                                isSorted = true;
-//                                orderAdapter.notifyDataSetChanged();
-//                            }
+
                             break;
                         case REMOVED:
-
                             for (Order item : orderList) {
                                 position++;
                                 if (item.getId() == id) {
@@ -128,17 +118,20 @@ public class OrderInProgressFragment extends Fragment {
                             break;
                     }
                 }
-//                if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()){
-//                    for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots ){
-//                        Log.d(TAG, "Current data : " + snapshot.getData());
-//
-//                        orderList.add(snapshot.toObject(Order.class));
-//                        orderAdapter.notifyItemInserted(orderList.size());
-//                    }
-//                }
-//                else {
-//                    Log.d(TAG, "current data is null");
-//                }
+
+
+                if (!isSorted){
+                    //initially sort orders by date
+                    Collections.sort(orderList, new Comparator<Order>() {
+                        @Override
+                        public int compare(Order order, Order t1) {
+                            return order.getCreated_at().compareTo(t1.getCreated_at());
+                        }
+                    });
+
+                    orderAdapter.notifyDataSetChanged();
+                    isSorted = true;
+                }
             }
         });
     }

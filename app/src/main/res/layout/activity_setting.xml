@@ -174,7 +174,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dscrp_side_margin"
         android:layout_marginTop="@dimen/dscrp_margin"
-        android:text="휴대폰 번호"
+        android:text="가입날짜"
         android:textColor="#000000"
         android:textSize="@dimen/dscrp_default_txt_size"
         app:layout_constraintStart_toStartOf="parent"
