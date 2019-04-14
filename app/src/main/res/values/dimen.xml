@@ -18,4 +18,5 @@
     <dimen name="tab_height">50dp</dimen>
     <dimen name="order_card_height">150dp</dimen>
     <dimen name="button_custom_height">30dp</dimen>
+    <dimen name="logo_baechelin">100dp</dimen>
 </resources>
