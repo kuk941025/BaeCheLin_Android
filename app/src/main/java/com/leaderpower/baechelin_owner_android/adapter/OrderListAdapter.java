@@ -1,5 +1,6 @@
 package com.leaderpower.baechelin_owner_android.adapter;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,6 +42,21 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         orderViewHolder.txtFood.setText(item.getFood_ordered());
         orderViewHolder.txtPrice.setText(df.format(item.getTotal_price()) + "원");
         orderViewHolder.txtTime.setText(sdf.format(item.getCreated_at()));
+
+        switch (item.getStatus()){
+            case 0:
+                orderViewHolder.txtStatus.setBackgroundColor(Color.parseColor("#FF9800"));
+                orderViewHolder.txtStatus.setText("신규");
+                break;
+            case 1:
+                orderViewHolder.txtStatus.setBackgroundColor(Color.parseColor("#FF5722"));
+                orderViewHolder.txtStatus.setText("처리중");
+                break;
+            case 2:
+                orderViewHolder.txtStatus.setBackgroundColor(Color.parseColor("#4CAF50"));
+                orderViewHolder.txtStatus.setText("완료됨");
+                break;
+        }
     }
 
     @Override

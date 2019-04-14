@@ -90,17 +90,17 @@ public class OrderInProgressFragment extends Fragment {
                             Order order = dc.getDocument().toObject(Order.class);
                             order.setId(dc.getDocument().getId());
                             orderList.add(order);
-                            if (isSorted)
-                                orderAdapter.notifyItemInserted(orderList.size());
-                            else { //sort orders by created_at
-                                Collections.sort(orderList, new Comparator<Order>() {
-                                    @Override
-                                    public int compare(Order order, Order t1) {
-                                        return order.getCreated_at().compareTo(t1.getCreated_at());
-                                    }
-                                });
-                                orderAdapter.notifyDataSetChanged();
-                            }
+                            orderAdapter.notifyItemInserted(orderList.size());
+//                            else { //sort orders by created_at
+//                                Collections.sort(orderList, new Comparator<Order>() {
+//                                    @Override
+//                                    public int compare(Order order, Order t1) {
+//                                        return order.getCreated_at().compareTo(t1.getCreated_at());
+//                                    }
+//                                });
+//                                isSorted = true;
+//                                orderAdapter.notifyDataSetChanged();
+//                            }
                             break;
                         case REMOVED:
 
@@ -115,12 +115,15 @@ public class OrderInProgressFragment extends Fragment {
                             break;
                         case MODIFIED:
                             for (Order item : orderList) {
-                                position++;
-                                if (item.getId() == id) {
-                                    item = dc.getDocument().toObject(Order.class);
+                                if (item.getId().equals(id)) {
+                                    Order modifiedOrder = dc.getDocument().toObject(Order.class);
+                                    modifiedOrder.setId(dc.getDocument().getId());
+                                    orderList.set(position, modifiedOrder);
                                     orderAdapter.notifyItemChanged(position);
                                     break;
                                 }
+
+                                position++;
                             }
                             break;
                     }
