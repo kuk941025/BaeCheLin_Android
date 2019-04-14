@@ -34,7 +34,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
     public void onBindViewHolder(@NonNull orderViewHolder orderViewHolder, int i) {
         Order item = orderList.get(i);
         orderViewHolder.txtAddress.setText(item.getAddress());
-        orderViewHolder.txtFood.setText(item.getOrdered_food());
+        orderViewHolder.txtFood.setText(item.getFood_ordered());
     }
 
     @Override

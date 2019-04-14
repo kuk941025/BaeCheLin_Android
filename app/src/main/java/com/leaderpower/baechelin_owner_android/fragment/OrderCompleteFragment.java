@@ -66,7 +66,7 @@ public class OrderCompleteFragment extends Fragment {
     }
     private void initRecycleView(){
         orderList = new ArrayList<>();
-        for (int i = 0; i < 100; i++) orderList.add(new Order("주소 " + i, "음식 " + i));
+//        for (int i = 0; i < 100; i++) orderList.add(new Order("주소 " + i, "음식 " + i));
 
         orderAdapter = new OrderListAdapter(orderList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);

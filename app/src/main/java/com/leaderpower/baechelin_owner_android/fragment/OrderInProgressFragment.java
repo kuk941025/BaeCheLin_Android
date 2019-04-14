@@ -79,6 +79,9 @@ public class OrderInProgressFragment extends Fragment {
                 if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()){
                     for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots ){
                         Log.d(TAG, "Current data : " + snapshot.getData());
+
+                        orderList.add(snapshot.toObject(Order.class));
+                        orderAdapter.notifyItemInserted(orderList.size());
                     }
                 }
                 else {
@@ -96,9 +99,7 @@ public class OrderInProgressFragment extends Fragment {
 
     private void initRecyclerView() {
         orderList = new ArrayList<>();
-        for (int i = 0; i < 50; i++){
-            orderList.add(new Order("주소" + i, "음식" + i));
-        }
+
         orderAdapter = new OrderListAdapter(orderList);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
