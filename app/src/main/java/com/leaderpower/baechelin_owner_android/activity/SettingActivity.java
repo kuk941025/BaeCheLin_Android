@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SettingActivity extends AppCompatActivity {
-    @BindView(R.id.order_toolbar)
+    @BindView(R.id.setting_toolbar)
     Toolbar toolbar;
     @BindView(R.id.toolbar_txt_title)
     TextView txtToolTitle;
