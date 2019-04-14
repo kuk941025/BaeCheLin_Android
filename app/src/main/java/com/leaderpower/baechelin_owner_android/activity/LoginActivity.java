@@ -1,5 +1,6 @@
 package com.leaderpower.baechelin_owner_android.activity;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -81,14 +82,18 @@ public class LoginActivity extends AppCompatActivity {
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    setViewEnabled(true);
                     if (task.isSuccessful()){
                         Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_LONG).show();
                         BaechelinApp.setCurrentUser(FirebaseAuth.getInstance().getCurrentUser());
+
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        setViewEnabled(true);
                     }
                     else {
                         Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 다시 확인해주세요.", Toast.LENGTH_LONG).show();
                         Log.d("FAIL", "FAILED");
+                        setViewEnabled(true);
                     }
                 }
             });

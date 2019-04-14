@@ -33,9 +33,12 @@ public class OwnersListAdapter extends RecyclerView.Adapter<OwnersListAdapter.ow
 
     @Override
     public void onBindViewHolder(@NonNull ownerViewHolder ownerViewHolder, int i) {
-        ownerViewHolder.txtTitle.setText(ownerList.get(i).getName());
-        ownerViewHolder.txtAddress.setText(ownerList.get(i).getAddress());
+        OwnerItem ownerItem = ownerList.get(i);
+        ownerViewHolder.layoutComplete.setVisibility(View.VISIBLE);
+        ownerViewHolder.layoutLoading.setVisibility(View.GONE);
 
+        ownerViewHolder.txtAddress.setText(ownerItem.getAddress() + " " + ownerItem.getAddress_detail());
+        ownerViewHolder.txtTitle.setText(ownerItem.getShop_name());
     }
 
     @Override
@@ -43,7 +46,7 @@ public class OwnersListAdapter extends RecyclerView.Adapter<OwnersListAdapter.ow
         return ownerList.size();
     }
 
-    class ownerViewHolder extends RecyclerView.ViewHolder{
+    class ownerViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.card_owner_title)
         TextView txtTitle;
         @BindView(R.id.card_owner_address)
@@ -52,6 +55,10 @@ public class OwnersListAdapter extends RecyclerView.Adapter<OwnersListAdapter.ow
         Switch switchAlarm;
         @BindView(R.id.card_owner_image)
         ImageView img;
+        @BindView(R.id.card_owner_layout_complete)
+        View layoutComplete;
+        @BindView(R.id.card_owner_layout_loading)
+        View layoutLoading;
 
         public ownerViewHolder(@NonNull View itemView) {
             super(itemView);
