@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.Retrofit.RetroClient;
 import com.leaderpower.baechelin_owner_android.activity.OrderActivity;
@@ -92,6 +93,15 @@ public class OwnersListAdapter extends RecyclerView.Adapter<OwnersListAdapter.ow
             intent.putExtra("Owner", ownerList.get(getLayoutPosition()));
             mContext.startActivity(intent);
 
+        }
+
+        @OnClick(R.id.card_alarm_switch)
+        void onSwitchClicked(){
+            if (switchAlarm.isChecked()){
+                //if not checked
+                String token = FirebaseInstanceId.getInstance().getId();
+                Toast.makeText(mContext, token, Toast.LENGTH_LONG).show();
+            }
         }
     }
 }
