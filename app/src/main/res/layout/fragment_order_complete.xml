@@ -19,24 +19,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:text="총 몇건의 주문을 받았습니다."
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/fragment_edit_start_date" />
 
             <EditText
                 android:id="@+id/fragment_edit_start_date"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:background="#ffffff"
-                android:layout_marginTop="@dimen/dscrp_margin"
                 android:layout_marginStart="8dp"
-                android:hint="시작 날짜"
-                android:textSize="@dimen/edit_text_size"
-                android:padding="@dimen/edit_text_padding"
+                android:layout_marginTop="8dp"
+                android:background="#ffffff"
                 android:focusable="false"
+                android:hint="시작 날짜"
+                android:padding="@dimen/edit_text_padding"
+                android:textSize="@dimen/edit_text_size"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_order_complete_dscrp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/fragment_edit_end_date"
@@ -57,12 +58,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_edit_end_date" />
+                app:layout_constraintTop_toBottomOf="@+id/fragment_order_complete_dscrp" />
 
+            <Button
+                android:id="@+id/fragment_order_complete_search"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_custom_height"
+                android:textColor="#ffffff"
+                android:layout_marginEnd="8dp"
+                android:background="@color/colorPrimaryDark"
+                android:text="검색"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_edit_end_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/fragment_edit_end_date" />
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v4.widget.NestedScrollView>

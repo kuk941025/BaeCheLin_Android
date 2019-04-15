@@ -117,7 +117,6 @@ public class OrderInProgressFragment extends Fragment {
                                     orderAdapter.notifyItemChanged(position);
                                     break;
                                 }
-
                                 position++;
                             }
                             break;

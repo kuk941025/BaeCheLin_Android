@@ -185,12 +185,10 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             if (order.getMode() == 0) {
                 //click rejected
                 order.setMode(2);
-
             } else {
                 order.setMode(0);
             }
             notifyItemChanged(getLayoutPosition());
-
         }
 
         @OnClick(R.id.template_order_confirm)
@@ -260,7 +258,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                                     });
                         }
                     }
-
                     order.setMode(0);
                     editSelected.setText("");
 
