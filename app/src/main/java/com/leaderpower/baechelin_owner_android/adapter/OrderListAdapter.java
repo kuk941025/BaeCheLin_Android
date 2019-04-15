@@ -197,7 +197,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
 
                     order.setMode(0);
                     editSelected.setText("");
-                    
+
                     InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
                 }
