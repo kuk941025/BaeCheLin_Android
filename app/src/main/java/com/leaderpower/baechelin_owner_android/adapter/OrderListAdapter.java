@@ -91,9 +91,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             if (item.getStatus() == 0){
                 orderViewHolder.btnConfirm.setText("승락");
                 orderViewHolder.btnReject.setText("거절");
+                orderViewHolder.btnReject.setVisibility(View.VISIBLE);
             }
             else if (item.getStatus() == 1 ){
                 orderViewHolder.btnConfirm.setText("준비완료");
+                orderViewHolder.btnReject.setVisibility(View.GONE);
             }
             else {
                 orderViewHolder.btnConfirm.setVisibility(View.GONE);
@@ -214,7 +216,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 order.setStatus(1);
-                                                Toast.makeText(mContext, "주문 변경 선공", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(mContext, "주문 변경 성공", Toast.LENGTH_LONG).show();
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {

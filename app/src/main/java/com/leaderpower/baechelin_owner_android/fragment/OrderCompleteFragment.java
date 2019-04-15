@@ -114,7 +114,7 @@ public class OrderCompleteFragment extends Fragment {
 
                 db.collection("owner").document(oid).collection("orders")
                         .whereGreaterThanOrEqualTo("created_at", startDate)
-                        .whereLessThanOrEqualTo("created_at", endDate)
+                        .whereLessThanOrEqualTo("created_at", endDate).whereEqualTo("status", 2)
                         .orderBy("created_at", Query.Direction.DESCENDING).get()
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
