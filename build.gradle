@@ -29,5 +29,5 @@ task clean(type: Delete) {
 
 ext {
     retrofitVersion = '2.5.0'
-    okhttpVersion = '3.14.1'
+    okhttpVersion = '3.9.0'
 }

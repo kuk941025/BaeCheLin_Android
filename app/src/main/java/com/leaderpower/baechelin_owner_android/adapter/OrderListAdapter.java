@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.leaderpower.baechelin_owner_android.R;
+import com.leaderpower.baechelin_owner_android.Retrofit.Response.ResponseKakao;
+import com.leaderpower.baechelin_owner_android.Retrofit.RetroCallBack;
+import com.leaderpower.baechelin_owner_android.Retrofit.RetroClient;
 import com.leaderpower.baechelin_owner_android.model.Order;
 
 import java.text.DecimalFormat;
@@ -34,17 +38,22 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
     private ArrayList<Order> orderList;
     private Context mContext;
     private CollectionReference dbRef;
+    private RetroClient retroClient;
 
     public OrderListAdapter(ArrayList<Order> orderList, Context context) {
         this.orderList = orderList;
         this.mContext = context;
         dbRef = null;
+
+        retroClient = RetroClient.getInstance(context).createBaseApi();
     }
 
     public OrderListAdapter(ArrayList<Order> orderList, Context mContext, CollectionReference dbRef) {
         this.orderList = orderList;
         this.mContext = mContext;
         this.dbRef = dbRef;
+
+        retroClient = RetroClient.getInstance(mContext).createBaseApi();
     }
 
     public void setDbRef(CollectionReference dbRef) {
@@ -225,6 +234,32 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
 
                                             }
                                         });
+
+                                HashMap<String, Object> paramters = new HashMap<>();
+                                paramters.put("temp_number", "7855");
+                                paramters.put("kakao_sender", "028663820");
+                                paramters.put("kakao_name", "박준규");
+                                paramters.put("kakao_phone", "01024421848");
+                                paramters.put("kakao_add1", "1234");
+                                paramters.put("kakao_080", "N");
+                                retroClient.postSendKakao(paramters, new RetroCallBack() {
+                                    @Override
+                                    public void onError(Throwable t) {
+                                        Log.d("TAG", t.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onSuccess(int code, Object receivedData) {
+                                        ResponseKakao responseKakao = (ResponseKakao) receivedData;
+                                        Log.d("TAG", code + " " + responseKakao.response_code);
+                                    }
+
+                                    @Override
+                                    public void onFailure(int code) {
+                                        Log.d("TAG", code + ".");
+                                        Toast.makeText(mContext, "카카오 메세지 실패: + code", Toast.LENGTH_LONG).show();
+                                    }
+                                });
                             }
                             else {
                                 Toast.makeText(mContext, "알수없는 데이터베이스.", Toast.LENGTH_LONG).show();

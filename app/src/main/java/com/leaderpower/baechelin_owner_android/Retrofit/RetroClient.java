@@ -2,6 +2,13 @@ package com.leaderpower.baechelin_owner_android.Retrofit;
 
 import android.content.Context;
 
+import com.leaderpower.baechelin_owner_android.Retrofit.Response.ResponseKakao;
+
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -35,5 +42,24 @@ public class RetroClient {
         if (service == null)
             throw new RuntimeException("API service null");
         return  retrofit.create(service);
+    }
+
+    public void postSendKakao(HashMap<String, Object> parameters, final RetroCallBack callback){
+        apiService.postSendKakao(parameters).enqueue(new Callback<ResponseKakao>() {
+            @Override
+             public void onResponse(Call<ResponseKakao> call, Response<ResponseKakao> response) {
+                if (response.isSuccessful()){
+                    callback.onSuccess(response.code(), response.body());
+                }
+                else{
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseKakao> call, Throwable t) {
+
+            }
+        });
     }
 }
