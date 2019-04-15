@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,7 +41,8 @@ public class OrderInProgressFragment extends Fragment {
     private ArrayList<Order> orderList;
     private String oid;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private Query dbRef;
+    private CollectionReference dbRef;
+    private Query dbQuery;
     private ListenerRegistration dbListener;
     private boolean isSorted;
     private final String TAG = "ORDER_FRAGMENT";
@@ -61,12 +63,15 @@ public class OrderInProgressFragment extends Fragment {
             //receive oid
             oid = getArguments().getString("oid");
             Toast.makeText(getActivity(), "Received oid " + oid, Toast.LENGTH_LONG).show();
-            initRecyclerView();
 
             //set collection reference
-            dbRef = db.collection("owner").document(oid).collection("orders")
-                    .whereLessThanOrEqualTo("status", 1);
+            dbRef = db.collection("owner").document(oid).collection("orders");
+            dbQuery = dbRef.whereLessThanOrEqualTo("status", 1);
             isSorted = false;
+
+            //setup recycler
+            initRecyclerView();
+
         }
         return fragView;
     }
@@ -75,7 +80,7 @@ public class OrderInProgressFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        dbListener = dbRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        dbListener = dbQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if (e != null) {
@@ -118,8 +123,6 @@ public class OrderInProgressFragment extends Fragment {
                             break;
                     }
                 }
-
-
                 if (!isSorted){
                     //initially sort orders by date
                     Collections.sort(orderList, new Comparator<Order>() {
@@ -145,11 +148,13 @@ public class OrderInProgressFragment extends Fragment {
     private void initRecyclerView() {
         orderList = new ArrayList<>();
 
-        orderAdapter = new OrderListAdapter(orderList, getActivity().getApplicationContext());
+        orderAdapter = new OrderListAdapter(orderList, getActivity().getApplicationContext(), dbRef);
+
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(orderAdapter);
+
     }
 
 }

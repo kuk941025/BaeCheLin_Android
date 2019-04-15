@@ -8,19 +8,23 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.model.Order;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,10 +33,22 @@ import butterknife.OnClick;
 public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orderViewHolder> {
     private ArrayList<Order> orderList;
     private Context mContext;
+    private CollectionReference dbRef;
 
     public OrderListAdapter(ArrayList<Order> orderList, Context context) {
         this.orderList = orderList;
         this.mContext = context;
+        dbRef = null;
+    }
+
+    public OrderListAdapter(ArrayList<Order> orderList, Context mContext, CollectionReference dbRef) {
+        this.orderList = orderList;
+        this.mContext = mContext;
+        this.dbRef = dbRef;
+    }
+
+    public void setDbRef(CollectionReference dbRef) {
+        this.dbRef = dbRef;
     }
 
     @NonNull
@@ -72,9 +88,17 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         if (item.getMode() == 0) {
             orderViewHolder.viewInfo.setVisibility(View.VISIBLE);
             orderViewHolder.viewSelected.setVisibility(View.GONE);
-            orderViewHolder.btnConfirm.setText("승락");
-            orderViewHolder.btnReject.setText("거절");
-            if (item.getStatus() > 0) orderViewHolder.btnReject.setVisibility(View.GONE);
+            if (item.getStatus() == 0){
+                orderViewHolder.btnConfirm.setText("승락");
+                orderViewHolder.btnReject.setText("거절");
+            }
+            else if (item.getStatus() == 1 ){
+                orderViewHolder.btnConfirm.setText("준비완료");
+            }
+            else {
+                orderViewHolder.btnConfirm.setVisibility(View.GONE);
+                orderViewHolder.btnReject.setVisibility(View.GONE);
+            }
         } else {
             //new order
             orderViewHolder.viewInfo.setVisibility(View.GONE);
@@ -171,7 +195,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
 
         @OnClick(R.id.template_order_confirm)
         void onConfirmClicked() {
-            Order order = orderList.get(getLayoutPosition());
+            final Order order = orderList.get(getLayoutPosition());
             if (order.getMode() == 0) {
                 order.setMode(1);
             } else {
@@ -184,15 +208,57 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                         if (order.getStatus() == 0){
                             //new order, let user know the owner has accepted the order
                             Toast.makeText(mContext, "주문승락", Toast.LENGTH_LONG).show();
+                            if (dbRef != null){
+                                Map<String, Object> updatedStatus = new HashMap<>();
+                                updatedStatus.put("status", 1);
+                                dbRef.document(order.getId()).update(updatedStatus)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                order.setStatus(1);
+                                                Toast.makeText(mContext, "주문 변경 선공", Toast.LENGTH_LONG).show();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+
+                                            }
+                                        });
+                            }
+                            else {
+                                Toast.makeText(mContext, "알수없는 데이터베이스.", Toast.LENGTH_LONG).show();
+                            }
                         }
                         else {
                             //order in preparation, let user know the delivery has started
                             Toast.makeText(mContext, "배달시작", Toast.LENGTH_LONG).show();
+                            if (dbRef != null){
+                                Map<String, Object> updatedStatus = new HashMap<>();
+                                updatedStatus.put("status", 2);
+                                dbRef.document(order.getId()).update(updatedStatus)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                order.setStatus(2);
+                                                Toast.makeText(mContext, "배달시작", Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+                            }
                         }
                     }
                     else if (order.getMode() == 2){
                         //user  has clicked rejecting order
                         Toast.makeText(mContext, "주문 거절", Toast.LENGTH_LONG).show();
+                        if (dbRef != null ){
+                            dbRef.document(order.getId()).delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(mContext, "주문 취소 완료", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                        }
                     }
 
                     order.setMode(0);
