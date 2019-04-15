@@ -1,7 +1,7 @@
 package com.leaderpower.baechelin_owner_android.model;
 
 public class BusinessOwners {
-    private String oid, name;
+    private String oid, name, token;
 
     public String getOid() {
         return oid;
@@ -17,5 +17,13 @@ public class BusinessOwners {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

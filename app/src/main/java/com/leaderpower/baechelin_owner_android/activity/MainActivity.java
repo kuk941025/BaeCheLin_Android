@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private String uid;
     private FirebaseFirestore db;
     private BaechelinApp baechelinApp;
+    private BusinessInfo businessInfo;
     private final String TAG = "MAIN_ACTIVITY";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                         DocumentSnapshot doc = task.getResult();
                         if (doc.exists()){
                             Log.d(TAG, "DocumentSnapshot data " + doc.getData());
-                            BusinessInfo businessInfo = doc.toObject(BusinessInfo.class);
+                            businessInfo = doc.toObject(BusinessInfo.class);
                             baechelinApp.setBusinessInfo(businessInfo);
                             getOwnerInfo(businessInfo.getOwners());
 
@@ -116,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private void getOwnerInfo(ArrayList<BusinessOwners> owners){
         final int owner_num = owners.size();
+        final ArrayList<BusinessOwners> businessOwners = businessInfo.getOwners();
+
         for (BusinessOwners owner : owners ){
             db.collection("owner").document(owner.getOid()).get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -124,6 +127,13 @@ public class MainActivity extends AppCompatActivity {
                             DocumentSnapshot doc = task.getResult();
                             if (doc.exists()){
                                 OwnerItem ownerItem = doc.toObject(OwnerItem.class);
+
+                                //insert token
+                                for (BusinessOwners owner : businessOwners){
+                                    if (owner.getOid().equals(ownerItem.getOid())){
+                                        ownerItem.setToken(owner.getToken());
+                                    }
+                                }
                                 ownerLists.add(ownerItem);
 
                                 if (owner_num == ownerLists.size()){
