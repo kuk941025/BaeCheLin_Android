@@ -4,15 +4,26 @@ import java.util.Date;
 
 public class Order {
     private String address, food_ordered, request, user_phone, id;
-    private int payment_method, status, total_price;
+    private int payment_method, status, total_price, mode = 0;
     private Date created_at, delivered_at;
 
+    //mode == 0 default
+    //mode == 1 confirm clicked
+    //mode == 2 reject clicked
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getMode() {
+        return mode;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
     }
 
     public String getAddress() {

@@ -145,7 +145,7 @@ public class OrderInProgressFragment extends Fragment {
     private void initRecyclerView() {
         orderList = new ArrayList<>();
 
-        orderAdapter = new OrderListAdapter(orderList);
+        orderAdapter = new OrderListAdapter(orderList, getActivity().getApplicationContext());
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
