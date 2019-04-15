@@ -54,7 +54,7 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void setSettingUI(){
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         BusinessInfo businessInfo = app.getBusinessInfo();
 
         txtEmail.setText(businessInfo.getEmail());
