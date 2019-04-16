@@ -1,8 +1,9 @@
 package com.leaderpower.baechelin_owner_android.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Notification {
+public class Notification implements Serializable {
     private String corp_name, shop_name, uid, token_id;
     private Date created_at;
 
