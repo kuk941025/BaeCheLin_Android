@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.app.BaechelinApp;
+import com.leaderpower.baechelin_owner_android.util.SharedPrefManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,10 +37,12 @@ public class LoginActivity extends AppCompatActivity {
     Button btnSignIn;
     @BindView(R.id.login_progressbar)
     ProgressBar progressLogin;
-
+    @BindView(R.id.login_check_save)
+    CheckBox chkSave;
 
     private BaechelinApp baechelinApp;
     private FirebaseAuth mAuth;
+    private SharedPrefManager sharedPrefManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         baechelinApp = BaechelinApp.getInstance();
 
         btnSignIn.setOnClickListener(onClickListener);
+        sharedPrefManager = new SharedPrefManager(this);
     }
 
     @Override
@@ -64,6 +69,15 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
 
             finish();
+        }
+        else {
+            //if not logged in and check whether value is saved;
+            boolean isSaved = sharedPrefManager.isSaved();
+            chkSave.setChecked(isSaved);
+            if (isSaved){
+                editId.setText(sharedPrefManager.getEmail());
+                editPw.setText(sharedPrefManager.getPassword());
+            }
         }
 
 
@@ -80,8 +94,8 @@ public class LoginActivity extends AppCompatActivity {
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            String email = editId.getText().toString();
-            String password = editPw.getText().toString();
+            final String email = editId.getText().toString();
+            final String password = editPw.getText().toString();
 
             setViewEnabled(false);
 
@@ -96,6 +110,10 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         setViewEnabled(true);
 
+                        //save
+                        if (chkSave.isChecked()){
+                            sharedPrefManager.setEmailAndPassword(email, password);
+                        }
                         finish();
                     }
                     else {
@@ -115,4 +133,9 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @OnClick(R.id.login_check_save)
+    void onCheckClicked(){
+        if (chkSave.isEnabled()) Toast.makeText(this, "checked", Toast.LENGTH_LONG).show();
+        sharedPrefManager.setSaveAccount(chkSave.isChecked());
+    }
 }
