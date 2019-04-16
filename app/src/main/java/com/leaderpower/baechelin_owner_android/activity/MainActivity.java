@@ -73,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.toolbar_txt_title)
     TextView txtToolTitle;
+    @BindView(R.id.main_layout_error)
+    View errorLayout;
+    @BindView(R.id.main_error_dscrp)
+    TextView txtError;
 
     private ArrayList<OwnerItem> ownerLists;
     private OwnersListAdapter ownersListAdapter;
@@ -114,8 +118,24 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(TAG, "DocumentSnapshot data " + doc.getData());
                             businessInfo = doc.toObject(BusinessInfo.class);
                             baechelinApp.setBusinessInfo(businessInfo);
-                            getOwnerInfo(businessInfo.getOwners());
 
+                            //check if owner has applied stores;
+                            //only users who have applied store can use
+                            if (businessInfo.getBusiness_status() < 2){
+
+                                errorLayout.setVisibility(View.VISIBLE);
+                                txtError.setText("웹사이트에서 사업자 정보를 승인을 받은 후 이용할 수 있습니다.");
+                            }
+                            else if (businessInfo.getOwners().size() == 0){
+                                //if no owner is added
+
+                                errorLayout.setVisibility(View.VISIBLE);
+                                txtError.setText("웹사이트에서 업체 등록을 먼저 하시고 이용해주시기 바랍니다.");
+
+                            }
+                            else {
+                                getOwnerInfo(businessInfo.getOwners());
+                            }
                         } else {
                             Toast.makeText(getApplicationContext(), "옳바르지 않은 로그인.", Toast.LENGTH_LONG).show();
                         }
@@ -144,15 +164,17 @@ public class MainActivity extends AppCompatActivity {
         txtToolTitle.setText("배슐랭");
 
     }
+    private void sendToLoginActivity(){
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
 
+        finish();
+    }
     @Override
     protected void onStart() {
         super.onStart();
         if (mAuth.getCurrentUser() == null){
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
-
-            finish();
+            sendToLoginActivity();
         }
 
     }
@@ -220,4 +242,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.main_error_btn)
+    void onErrorClicked(){
+        mAuth.signOut();
+        sendToLoginActivity();
+    }
 }
