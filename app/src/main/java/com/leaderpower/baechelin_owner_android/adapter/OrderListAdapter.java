@@ -28,6 +28,7 @@ import com.leaderpower.baechelin_owner_android.model.OwnerItem;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -75,8 +76,16 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
     @Override
     public void onBindViewHolder(@NonNull orderViewHolder orderViewHolder, int i) {
         DecimalFormat df = new DecimalFormat("#,###");
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         Order item = orderList.get(i);
+        SimpleDateFormat sdf;
+
+        if (item.getStatus() < 2) {
+            sdf = new SimpleDateFormat("HH:mm:ss");
+        }
+        else {
+            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+        }
+
         orderViewHolder.txtAddress.setText(item.getAddress());
         orderViewHolder.txtFood.setText(item.getFood_ordered());
         orderViewHolder.txtPrice.setText(df.format(item.getTotal_price()) + "원");
@@ -96,6 +105,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             case 2:
                 orderViewHolder.txtStatus.setBackgroundColor(Color.parseColor("#4CAF50"));
                 orderViewHolder.txtStatus.setText("완료됨");
+                orderViewHolder.txtDeliveredAt.setText("완료된 시간: " + sdf.format(item.getDelivered_at()));
                 break;
         }
 
@@ -188,6 +198,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         EditText editSelected;
         @BindView(R.id.template_order_main_layout)
         View mainLayout;
+        @BindView(R.id.template_order_delivered_at)
+        TextView txtDeliveredAt;
 
         public orderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -253,6 +265,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                             if (dbRef != null){
                                 Map<String, Object> updatedStatus = new HashMap<>();
                                 updatedStatus.put("status", 2);
+                                updatedStatus.put("delivered_at", new Date());
                                 dbRef.document(order.getId()).update(updatedStatus)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
