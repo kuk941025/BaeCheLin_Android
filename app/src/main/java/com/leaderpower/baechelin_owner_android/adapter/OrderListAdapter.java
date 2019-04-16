@@ -42,6 +42,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
     private CollectionReference dbRef;
     private RetroClient retroClient;
     private OwnerItem owner;
+    private final String KAKAO_SENDER = "01024421848";
 
     public OrderListAdapter(ArrayList<Order> orderList, Context context) {
         this.orderList = orderList;
@@ -230,48 +231,17 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 order.setStatus(1);
+                                                sendAcceptedMessage(order, strMessage);
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-
+                                                Toast.makeText(mContext, "주문이 정상적으로 처리되지 않았습니다. " + e.getMessage(), Toast.LENGTH_LONG).show();
                                             }
                                         });
-                                SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", Locale.KOREA);
 
-                                HashMap<String, Object> paramters = new HashMap<>();
-                                paramters.put("tmp_number", "7853");
-                                paramters.put("kakao_sender", "01024421848");
-                                paramters.put("kakao_name", "고객");
-                                paramters.put("kakao_phone", "01024421848");
-                                paramters.put("kakao_add1", strMessage + "분");
-                                paramters.put("kakao_add2", sdf.format(order.getCreated_at()));
-                                paramters.put("kakao_add3", owner.getShop_name());
-                                paramters.put("kakao_add4", order.getFood_ordered());
-                                paramters.put("kakao_add5", order.getAddress());
-                                paramters.put("kakao_080", "N");
 
-                                retroClient.postSendKakao(paramters, new RetroCallBack() {
-                                    @Override
-                                    public void onError(Throwable t) {
-                                        Log.d("TAG", t.getMessage());
-                                        Toast.makeText(mContext, "카카오 알림 메세지 알수없는 오류: " + t.getMessage(), Toast.LENGTH_LONG).show();
-                                    }
-
-                                    @Override
-                                    public void onSuccess(int code, Object receivedData) {
-                                        ResponseKakao responseKakao = (ResponseKakao) receivedData;
-                                        Log.d("TAG", code + " " + responseKakao.response_code);
-                                        Toast.makeText(mContext, "고객님에게 카카오 알림 메세지를 발송했습니다.", Toast.LENGTH_LONG).show();
-                                    }
-
-                                    @Override
-                                    public void onFailure(int code) {
-                                        Log.d("TAG", code + ".");
-                                        Toast.makeText(mContext, "카카오 알림 발송실패. 오류코드: " + code, Toast.LENGTH_LONG).show();
-                                    }
-                                });
                             }
                             else {
                                 Toast.makeText(mContext, "알수없는 데이터베이스.", Toast.LENGTH_LONG).show();
@@ -288,7 +258,13 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 order.setStatus(2);
-                                                Toast.makeText(mContext, "배달시작", Toast.LENGTH_LONG).show();
+                                                sendStartDelieveryMessage(order, strMessage);
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(mContext, "주문이 정상적으로 처리되지 않았습니다. " + e.getMessage(), Toast.LENGTH_LONG).show();
                                             }
                                         });
                             }
@@ -303,6 +279,13 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Toast.makeText(mContext, "주문 취소 완료", Toast.LENGTH_LONG).show();
+                                            sendRejectedMessage(order, strMessage);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(mContext, "주문이 정상적으로 처리되지 않았습니다. " + e.getMessage(), Toast.LENGTH_LONG).show();
                                         }
                                     });
                         }
@@ -316,6 +299,79 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
 
             }
             notifyItemChanged(getLayoutPosition());
+        }
+
+        private void sendStartDelieveryMessage(Order order, String strMessage){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+
+            HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("tmp_number", "7854");
+            parameters.put("kakao_sender", KAKAO_SENDER);
+            parameters.put("kakao_name", "고객");
+            parameters.put("kakao_phone", "01024421848");
+            parameters.put("kakao_add1", strMessage + "분");
+            parameters.put("kakao_add2", sdf.format(order.getCreated_at()));
+            parameters.put("kakao_add3", owner.getShop_name());
+            parameters.put("kakao_add4", order.getFood_ordered());
+            parameters.put("kakao_080", "N");
+
+            sendMessage(parameters);
+        }
+        private void sendRejectedMessage(Order order, String strMessage){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+
+            HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("tmp_number", "7858");
+            parameters.put("kakao_sender", KAKAO_SENDER);
+            parameters.put("kakao_name", "고객");
+            parameters.put("kakao_phone", "01024421848");
+            parameters.put("kakao_add1", "[" + strMessage + "]");
+            parameters.put("kakao_add2", sdf.format(order.getCreated_at()));
+            parameters.put("kakao_add3", owner.getShop_name());
+            parameters.put("kakao_add4", order.getFood_ordered());
+            parameters.put("kakao_add5", order.getAddress());
+
+            sendMessage(parameters);
+        }
+        private void sendAcceptedMessage(Order order, String strMessage){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+
+            HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("tmp_number", "7853");
+            parameters.put("kakao_sender", KAKAO_SENDER);
+            parameters.put("kakao_name", "고객");
+            parameters.put("kakao_phone", "01024421848");
+            parameters.put("kakao_add1", strMessage + "분");
+            parameters.put("kakao_add2", sdf.format(order.getCreated_at()));
+            parameters.put("kakao_add3", owner.getShop_name());
+            parameters.put("kakao_add4", order.getFood_ordered());
+            parameters.put("kakao_add5", order.getAddress());
+            parameters.put("kakao_080", "N");
+
+            sendMessage(parameters);
+        }
+
+        private void sendMessage(HashMap<String, Object> params){
+            retroClient.postSendKakao(params, new RetroCallBack() {
+                @Override
+                public void onError(Throwable t) {
+                    Log.d("TAG", t.getMessage());
+                    Toast.makeText(mContext, "카카오 알림 메세지 알수없는 오류: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onSuccess(int code, Object receivedData) {
+                    ResponseKakao responseKakao = (ResponseKakao) receivedData;
+                    Log.d("TAG", code + " " + responseKakao.response_code);
+                    Toast.makeText(mContext, "고객님에게 카카오 알림 메세지를 발송했습니다.", Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onFailure(int code) {
+                    Log.d("TAG", code + ".");
+                    Toast.makeText(mContext, "카카오 알림 발송실패. 오류코드: " + code, Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 }
