@@ -126,6 +126,7 @@ public class OwnersListAdapter extends RecyclerView.Adapter<OwnersListAdapter.ow
             DocumentReference dbRef = db.collection("owner").document(owner.getOid()).collection("notifications").document(tokenId);
 
             if (switchAlarm.isChecked()) {
+                final String token = BaechelinApp.getInstance().getRegisteration_Token();
                 //Checked, save token id to firestore
                 Map<String, Object> params = new HashMap<>();
                 final Date curDate = new Date();
@@ -133,7 +134,7 @@ public class OwnersListAdapter extends RecyclerView.Adapter<OwnersListAdapter.ow
                 params.put("shop_name", owner.getShop_name());
                 params.put("uid", owner.getUid());
                 params.put("created_at", curDate);
-
+                params.put("token", token);
                 dbRef.set(params).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -142,6 +143,7 @@ public class OwnersListAdapter extends RecyclerView.Adapter<OwnersListAdapter.ow
                         updated.setCorp_name(owner.getCorp_name());
                         updated.setUid(owner.getUid());
                         updated.setCreated_at(curDate);
+                        updated.setToken(BaechelinApp.getInstance().getRegisteration_Token());
 
                         ownerList.get(getLayoutPosition()).getToken().add(updated);
                     }

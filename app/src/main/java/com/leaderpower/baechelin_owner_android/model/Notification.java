@@ -4,11 +4,19 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Notification implements Serializable {
-    private String corp_name, shop_name, uid, token_id;
+    private String corp_name, shop_name, uid, token_id, token;
     private Date created_at;
 
     public String getToken_id() {
         return token_id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public void setToken_id(String token_id) {
