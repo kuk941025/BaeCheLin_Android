@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,8 @@ public class OrderCompleteFragment extends Fragment {
     RecyclerView recyclerView;
     @BindView(R.id.fragment_order_complete_dscrp)
     TextView txtCompleteDscrp;
+    @BindView(R.id.fragment_order_complete_progressbar)
+    ProgressBar progressBar;
 
     private OrderListAdapter orderAdapter;
     private View fragView = null;
@@ -114,6 +117,13 @@ public class OrderCompleteFragment extends Fragment {
                 Date startDate = sdf.parse(strStart);
                 Date endDate = sdf.parse(strEnd);
 
+                if (endDate.before(startDate)) {
+                    Toast.makeText(getContext(), "옳바르지 않은 입력입니다.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                progressBar.setVisibility(View.VISIBLE);
+                txtCompleteDscrp.setVisibility(View.GONE);
+
                 db.collection("owner").document(oid).collection("orders")
                         .whereGreaterThanOrEqualTo("created_at", startDate)
                         .whereLessThanOrEqualTo("created_at", endDate)
@@ -132,14 +142,19 @@ public class OrderCompleteFragment extends Fragment {
                                 orderAdapter.notifyDataSetChanged();
                                 txtCompleteDscrp.setVisibility(View.VISIBLE);
                                 txtCompleteDscrp.setText("총 " + orderList.size() + "건의 주문을 받았습니다.");
+                                progressBar.setVisibility(View.GONE);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        progressBar.setVisibility(View.GONE);
+                        txtCompleteDscrp.setVisibility(View.VISIBLE);
                         Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
             }catch (Exception e){
+                progressBar.setVisibility(View.GONE);
+                txtCompleteDscrp.setVisibility(View.VISIBLE);
                 Log.d("FRAG", e.getMessage());
             }
 
