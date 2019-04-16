@@ -315,7 +315,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             parameters.put("kakao_add4", order.getFood_ordered());
             parameters.put("kakao_080", "N");
 
-//            sendMessage(parameters);
+            sendMessage(parameters);
         }
         private void sendRejectedMessage(Order order, String strMessage){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
@@ -331,7 +331,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             parameters.put("kakao_add4", order.getFood_ordered());
             parameters.put("kakao_add5", order.getAddress());
 
-//            sendMessage(parameters);
+            sendMessage(parameters);
         }
         private void sendAcceptedMessage(Order order, String strMessage){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
@@ -348,7 +348,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             parameters.put("kakao_add5", order.getAddress());
             parameters.put("kakao_080", "N");
 
-//            sendMessage(parameters);
+            sendMessage(parameters);
         }
 
         private void sendMessage(HashMap<String, Object> params){
