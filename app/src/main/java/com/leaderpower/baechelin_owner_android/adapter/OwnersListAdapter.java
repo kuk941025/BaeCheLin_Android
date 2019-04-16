@@ -100,6 +100,7 @@ public class OwnersListAdapter extends RecyclerView.Adapter<OwnersListAdapter.ow
             if (switchAlarm.isChecked()){
                 //if not checked
                 String token = FirebaseInstanceId.getInstance().getId();
+
                 Toast.makeText(mContext, token, Toast.LENGTH_LONG).show();
             }
         }
