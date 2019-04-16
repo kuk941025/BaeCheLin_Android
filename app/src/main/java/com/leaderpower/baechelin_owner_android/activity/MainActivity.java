@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private BaechelinApp baechelinApp;
     private BusinessInfo businessInfo;
+    private FirebaseAuth mAuth;
     private final String TAG = "MAIN_ACTIVITY";
 
     @Override
@@ -100,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
         //get firestore
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         db.collection("auths").document(uid).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -137,6 +139,19 @@ public class MainActivity extends AppCompatActivity {
     private void setToolbar() {
         setSupportActionBar(toolbar);
         txtToolTitle.setText("배슐랭");
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("BAECHELIN 1234", "called");
+        if (mAuth.getCurrentUser() == null){
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+
+            finish();
+        }
 
     }
 

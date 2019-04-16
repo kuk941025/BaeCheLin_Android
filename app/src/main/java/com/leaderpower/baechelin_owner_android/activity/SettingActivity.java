@@ -1,11 +1,14 @@
 package com.leaderpower.baechelin_owner_android.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.app.BaechelinApp;
 import com.leaderpower.baechelin_owner_android.model.BusinessInfo;
@@ -14,6 +17,7 @@ import java.text.SimpleDateFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SettingActivity extends AppCompatActivity {
     @BindView(R.id.setting_toolbar)
@@ -34,7 +38,7 @@ public class SettingActivity extends AppCompatActivity {
     Button btnToolbar;
 
     private BaechelinApp app = BaechelinApp.getInstance();
-
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +48,8 @@ public class SettingActivity extends AppCompatActivity {
 
         setToolbar();
         setSettingUI();
+
+        mAuth = FirebaseAuth.getInstance();
     }
 
     private void setToolbar() {
@@ -63,5 +69,11 @@ public class SettingActivity extends AppCompatActivity {
         txtPhone.setText(businessInfo.getCorp_num());
         txtCreatedAt.setText(sdf.format(businessInfo.getCreated_at()));
 
+    }
+
+    @OnClick(R.id.setting_btn_sign_out)
+    void onSignOutClicked() {
+        mAuth.signOut();
+        finish();
     }
 }

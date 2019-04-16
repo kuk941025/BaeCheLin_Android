@@ -9,11 +9,10 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-
 import com.google.firebase.messaging.RemoteMessage;
 import com.leaderpower.baechelin_owner_android.R;
+import com.leaderpower.baechelin_owner_android.activity.LoginActivity;
 import com.leaderpower.baechelin_owner_android.activity.MainActivity;
-import com.leaderpower.baechelin_owner_android.model.Notification;
 
 import java.util.Map;
 
@@ -38,7 +37,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             String channelName = "Channel Name";
 
             NotificationManager notifManager
-
                     = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
 
@@ -52,7 +50,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             NotificationCompat.Builder builder =
                     new NotificationCompat.Builder(getApplicationContext(), channelId);
 
-            Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
+
+            Intent notificationIntent = new Intent(getApplicationContext(), LoginActivity.class);
 
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                     Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -78,24 +77,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                     .setContentIntent(pendingIntent);
 
             notifManager.notify((int) System.currentTimeMillis(), builder.build());
-//
-//            if (/* Check if data needs to be processed by long running job */ true) {
-//                // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
-//                scheduleJob();
-//            } else {
-//                // Handle message within 10 seconds
-//                handleNow();
-//            }
 
         }
 
-//        // Check if message contains a notification payload.
-//        if (remoteMessage.getNotification() != null) {
-//            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-//        }
-
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
     }
 
     @Override
