@@ -83,7 +83,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             sdf = new SimpleDateFormat("HH:mm:ss");
         }
         else {
-            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ", Locale.KOREA);
         }
 
         orderViewHolder.txtAddress.setText(item.getAddress());
@@ -106,6 +106,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                 orderViewHolder.txtStatus.setBackgroundColor(Color.parseColor("#4CAF50"));
                 orderViewHolder.txtStatus.setText("완료됨");
                 orderViewHolder.txtDeliveredAt.setText("완료된 시간: " + sdf.format(item.getDelivered_at()));
+                orderViewHolder.viewButton.setVisibility(View.GONE);
                 break;
         }
 
@@ -200,6 +201,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         View mainLayout;
         @BindView(R.id.template_order_delivered_at)
         TextView txtDeliveredAt;
+        @BindView(R.id.template_order_button_layout)
+        View viewButton;
 
         public orderViewHolder(@NonNull View itemView) {
             super(itemView);
