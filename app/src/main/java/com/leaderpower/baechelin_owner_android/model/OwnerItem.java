@@ -8,11 +8,19 @@ public class OwnerItem implements Serializable {
     private String address, address_detail, bcode, corp_image, corp_name, corp_num, corp_serial_num,
             corp_shop_name, delivery_option, delivery_price, denied_reason, oid, report_image, shop_description, shop_image, shop_name, zone_code, uid;
     private int business_status, is_working, store_type;
-    private Date store_coupon;
+    private Date store_coupon, created_at;
     private List<Notification> token;
 
     public List<Notification> getToken() {
         return token;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
     }
 
     public void setToken(List<Notification> token) {

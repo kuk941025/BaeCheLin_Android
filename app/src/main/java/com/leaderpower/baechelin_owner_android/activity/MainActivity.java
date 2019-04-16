@@ -42,6 +42,9 @@ import com.leaderpower.baechelin_owner_android.model.Notification;
 import com.leaderpower.baechelin_owner_android.model.OwnerItem;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -145,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("BAECHELIN 1234", "called");
         if (mAuth.getCurrentUser() == null){
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
@@ -191,6 +193,12 @@ public class MainActivity extends AppCompatActivity {
 
                                                     loadingLayout.setVisibility(View.GONE);
                                                     nestedScrollView.setVisibility(View.VISIBLE);
+                                                    Collections.sort(ownerLists, new Comparator<OwnerItem>() {
+                                                        @Override
+                                                        public int compare(OwnerItem ownerItem, OwnerItem t1) {
+                                                            return ownerItem.getCreated_at().compareTo(t1.getCreated_at());
+                                                        }
+                                                    });
                                                     txtOwnerNum.setText("사장님, 현재 등록되어 있는 업소는 총 " + owner_num + "개 입니다.");
                                                 }
                                             }
