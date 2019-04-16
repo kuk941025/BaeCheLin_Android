@@ -17,11 +17,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.adapter.OrderListAdapter;
 import com.leaderpower.baechelin_owner_android.model.Order;
+import com.leaderpower.baechelin_owner_android.model.OwnerItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,13 +39,13 @@ public class OrderInProgressFragment extends Fragment {
     private View fragView = null;
     private OrderListAdapter orderAdapter;
     private ArrayList<Order> orderList;
-    private String oid;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference dbRef;
     private Query dbQuery;
     private ListenerRegistration dbListener;
     private boolean isSorted;
     private final String TAG = "ORDER_FRAGMENT";
+    private OwnerItem owner = null;
 
     public OrderInProgressFragment() {
         // Required empty public constructor
@@ -60,12 +60,11 @@ public class OrderInProgressFragment extends Fragment {
             fragView = inflater.inflate(R.layout.fragment_order_in_progress, container, false);
             ButterKnife.bind(this, fragView);
 
-            //receive oid
-            oid = getArguments().getString("oid");
-            Toast.makeText(getActivity(), "Received oid " + oid, Toast.LENGTH_LONG).show();
+            //receive owner object
+            owner = (OwnerItem) getArguments().getSerializable("owner");
 
             //set collection reference
-            dbRef = db.collection("owner").document(oid).collection("orders");
+            dbRef = db.collection("owner").document(owner.getOid()).collection("orders");
             dbQuery = dbRef.whereLessThanOrEqualTo("status", 1);
             isSorted = false;
 
@@ -147,7 +146,7 @@ public class OrderInProgressFragment extends Fragment {
     private void initRecyclerView() {
         orderList = new ArrayList<>();
 
-        orderAdapter = new OrderListAdapter(orderList, getActivity().getApplicationContext(), dbRef);
+        orderAdapter = new OrderListAdapter(orderList, getActivity().getApplicationContext(), dbRef, owner);
 
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);

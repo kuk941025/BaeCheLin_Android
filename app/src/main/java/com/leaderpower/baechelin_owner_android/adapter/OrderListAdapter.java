@@ -23,11 +23,13 @@ import com.leaderpower.baechelin_owner_android.Retrofit.Response.ResponseKakao;
 import com.leaderpower.baechelin_owner_android.Retrofit.RetroCallBack;
 import com.leaderpower.baechelin_owner_android.Retrofit.RetroClient;
 import com.leaderpower.baechelin_owner_android.model.Order;
+import com.leaderpower.baechelin_owner_android.model.OwnerItem;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -39,6 +41,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
     private Context mContext;
     private CollectionReference dbRef;
     private RetroClient retroClient;
+    private OwnerItem owner;
 
     public OrderListAdapter(ArrayList<Order> orderList, Context context) {
         this.orderList = orderList;
@@ -48,10 +51,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         retroClient = RetroClient.getInstance(context).createBaseApi();
     }
 
-    public OrderListAdapter(ArrayList<Order> orderList, Context mContext, CollectionReference dbRef) {
+    public OrderListAdapter(ArrayList<Order> orderList, Context mContext, CollectionReference dbRef, OwnerItem owner) {
         this.orderList = orderList;
         this.mContext = mContext;
         this.dbRef = dbRef;
+        this.owner = owner;
 
         retroClient = RetroClient.getInstance(mContext).createBaseApi();
     }
@@ -205,10 +209,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         @OnClick(R.id.template_order_confirm)
         void onConfirmClicked() {
             final Order order = orderList.get(getLayoutPosition());
+            final String strMessage = editSelected.getText().toString();
             if (order.getMode() == 0) {
                 order.setMode(1);
             } else {
-                if (editSelected.getText().toString().equals("")){
+                if (strMessage.equals("")){
                     Toast.makeText(mContext, "빈칸을 입력해주세요.", Toast.LENGTH_LONG).show();
                 }
                 else{
@@ -225,7 +230,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 order.setStatus(1);
-                                                Toast.makeText(mContext, "주문 변경 성공", Toast.LENGTH_LONG).show();
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
@@ -234,30 +238,38 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
 
                                             }
                                         });
+                                SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss", Locale.KOREA);
 
                                 HashMap<String, Object> paramters = new HashMap<>();
-                                paramters.put("temp_number", "7855");
-                                paramters.put("kakao_sender", "028663820");
-                                paramters.put("kakao_name", "박준규");
+                                paramters.put("tmp_number", "7853");
+                                paramters.put("kakao_sender", "01024421848");
+                                paramters.put("kakao_name", "고객");
                                 paramters.put("kakao_phone", "01024421848");
-                                paramters.put("kakao_add1", "1234");
+                                paramters.put("kakao_add1", strMessage + "분");
+                                paramters.put("kakao_add2", sdf.format(order.getCreated_at()));
+                                paramters.put("kakao_add3", owner.getShop_name());
+                                paramters.put("kakao_add4", order.getFood_ordered());
+                                paramters.put("kakao_add5", order.getAddress());
                                 paramters.put("kakao_080", "N");
+
                                 retroClient.postSendKakao(paramters, new RetroCallBack() {
                                     @Override
                                     public void onError(Throwable t) {
                                         Log.d("TAG", t.getMessage());
+                                        Toast.makeText(mContext, "카카오 알림 메세지 알수없는 오류: " + t.getMessage(), Toast.LENGTH_LONG).show();
                                     }
 
                                     @Override
                                     public void onSuccess(int code, Object receivedData) {
                                         ResponseKakao responseKakao = (ResponseKakao) receivedData;
                                         Log.d("TAG", code + " " + responseKakao.response_code);
+                                        Toast.makeText(mContext, "고객님에게 카카오 알림 메세지를 발송했습니다.", Toast.LENGTH_LONG).show();
                                     }
 
                                     @Override
                                     public void onFailure(int code) {
                                         Log.d("TAG", code + ".");
-                                        Toast.makeText(mContext, "카카오 메세지 실패: + code", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(mContext, "카카오 알림 발송실패. 오류코드: " + code, Toast.LENGTH_LONG).show();
                                     }
                                 });
                             }

@@ -29,7 +29,7 @@ public class OrderActivity extends AppCompatActivity {
     Button btnTool;
 
     private OrderPageAdapter pageAdapter;
-    private OwnerItem owner;
+    private OwnerItem owner = null;
 
 
     @Override
@@ -43,8 +43,10 @@ public class OrderActivity extends AppCompatActivity {
         owner = (OwnerItem) getIntent().getSerializableExtra("Owner");
 
         //send oid to fragment
-        pageAdapter = new OrderPageAdapter(getSupportFragmentManager(), owner.getOid());
+//        pageAdapter = new OrderPageAdapter(getSupportFragmentManager(), owner.getOid());
+        pageAdapter = new OrderPageAdapter(getSupportFragmentManager(), owner);
         viewPager.setAdapter(pageAdapter);
+
 
         tabLayout.setupWithViewPager(viewPager);
 
@@ -56,6 +58,5 @@ public class OrderActivity extends AppCompatActivity {
         txtToolTitle.setText("주문 현황");
         btnTool.setVisibility(View.GONE);
     }
-
 
 }

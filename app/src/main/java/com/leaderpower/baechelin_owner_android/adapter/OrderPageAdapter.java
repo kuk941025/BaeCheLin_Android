@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.leaderpower.baechelin_owner_android.fragment.OrderCompleteFragment;
 import com.leaderpower.baechelin_owner_android.fragment.OrderInProgressFragment;
+import com.leaderpower.baechelin_owner_android.model.OwnerItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,24 +16,32 @@ import java.util.List;
 public class OrderPageAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragmentList;
     private final String[] ORDER_TAB_TITLE = {"신규·처리중", "완료"};
-    private String oid;
+    private OwnerItem owner;
 
-    public OrderPageAdapter(FragmentManager fm, String oid) {
+
+    public OrderPageAdapter(FragmentManager fm, OwnerItem owner) {
         super(fm);
 
-        this.oid = oid;
+        this.owner = owner;
+
         initFrags();
     }
+
     private void initFrags(){
         fragmentList = new ArrayList<>();
 
         //send oid to fragment
         Bundle progressBundle = new Bundle();
-        progressBundle.putString("oid", this.oid);
+        progressBundle.putSerializable("owner", owner);
+
         OrderInProgressFragment progressFragment = new OrderInProgressFragment();
         progressFragment.setArguments(progressBundle);
+
+
+        Bundle completeBundle = new Bundle();
+        completeBundle.putString("oid", owner.getOid());
         OrderCompleteFragment completeFragment = new OrderCompleteFragment();
-        completeFragment.setArguments(progressBundle);
+        completeFragment.setArguments(completeBundle);
 
         fragmentList.add(progressFragment);
         fragmentList.add(completeFragment);
