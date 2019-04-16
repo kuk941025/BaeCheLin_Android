@@ -135,7 +135,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.login_check_save)
     void onCheckClicked(){
-        if (chkSave.isEnabled()) Toast.makeText(this, "checked", Toast.LENGTH_LONG).show();
         sharedPrefManager.setSaveAccount(chkSave.isChecked());
     }
 }
