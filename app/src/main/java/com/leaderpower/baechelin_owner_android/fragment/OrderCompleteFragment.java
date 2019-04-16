@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -115,7 +116,7 @@ public class OrderCompleteFragment extends Fragment {
 
                 db.collection("owner").document(oid).collection("orders")
                         .whereGreaterThanOrEqualTo("created_at", startDate)
-                        .whereLessThanOrEqualTo("created_at", endDate).whereEqualTo("status", 2)
+                        .whereLessThanOrEqualTo("created_at", endDate)
                         .orderBy("created_at", Query.Direction.DESCENDING).get()
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
@@ -132,7 +133,12 @@ public class OrderCompleteFragment extends Fragment {
                                 txtCompleteDscrp.setVisibility(View.VISIBLE);
                                 txtCompleteDscrp.setText("총 " + orderList.size() + "건의 주문을 받았습니다.");
                             }
-                        });
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
             }catch (Exception e){
                 Log.d("FRAG", e.getMessage());
             }

@@ -15,7 +15,7 @@ import java.util.List;
 
 public class OrderPageAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragmentList;
-    private final String[] ORDER_TAB_TITLE = {"신규·처리중", "완료"};
+    private final String[] ORDER_TAB_TITLE = {"신규·처리중", "주문 기록"};
     private OwnerItem owner;
 
 
