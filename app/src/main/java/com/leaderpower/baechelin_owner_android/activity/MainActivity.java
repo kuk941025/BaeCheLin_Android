@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 if (owner_num == ownerLists.size()){
 
-                                    ownersListAdapter = new OwnersListAdapter(ownerLists, MainActivity.this);
+                                    ownersListAdapter = new OwnersListAdapter(ownerLists, MainActivity.this, db);
                                     recyclerView.setAdapter(ownersListAdapter);
 
                                     loadingLayout.setVisibility(View.GONE);
