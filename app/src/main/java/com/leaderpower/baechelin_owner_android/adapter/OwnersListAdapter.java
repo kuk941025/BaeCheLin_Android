@@ -51,12 +51,13 @@ public class OwnersListAdapter extends RecyclerView.Adapter<OwnersListAdapter.ow
         ownerViewHolder.txtTitle.setText(ownerItem.getShop_name());
         Glide.with(mContext).load(ownerItem.getShop_image()).into(ownerViewHolder.img);
 
-        if (ownerItem.getToken() == null || ownerItem.getToken().equals("")){
+        if (ownerItem.getToken() == null || ownerItem.getToken().size() == 0 ){
             ownerViewHolder.switchAlarm.setChecked(false);
         }
         else {
             ownerViewHolder.switchAlarm.setChecked(true);
         }
+
     }
 
     @Override
@@ -102,6 +103,9 @@ public class OwnersListAdapter extends RecyclerView.Adapter<OwnersListAdapter.ow
                 String token = FirebaseInstanceId.getInstance().getId();
 
                 Toast.makeText(mContext, token, Toast.LENGTH_LONG).show();
+            }
+            else {
+
             }
         }
     }

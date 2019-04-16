@@ -2,19 +2,20 @@ package com.leaderpower.baechelin_owner_android.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class OwnerItem implements Serializable {
     private String address, address_detail, bcode, corp_image, corp_name, corp_num, corp_serial_num,
             corp_shop_name, delivery_option, delivery_price, denied_reason, oid, report_image, shop_description, shop_image, shop_name, zone_code, uid;
     private int business_status, is_working, store_type;
     private Date store_coupon;
-    private String token;
+    private List<String> token;
 
-    public String getToken() {
+    public List<String> getToken() {
         return token;
     }
 
-    public void setToken(String token) {
+    public void setToken(List<String> token) {
         this.token = token;
     }
 

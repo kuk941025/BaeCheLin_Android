@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar_txt_title)
     TextView txtToolTitle;
 
-
     private ArrayList<OwnerItem> ownerLists;
     private OwnersListAdapter ownersListAdapter;
     private FirebaseUser currentUser;
