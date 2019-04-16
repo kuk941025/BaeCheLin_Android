@@ -1,7 +1,16 @@
 package com.leaderpower.baechelin_owner_android.activity;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,13 +50,13 @@ import butterknife.OnClick;
 
 
 /*
-* Logic behind getting data from firestore
-* User logs in and gets user data.
-* 1. From the received user data, find out oid that the user has.
-* 2. Load all owner data.
-* 3. For each owner data, get notification data which can be retrieved from owner/{oid}/notifications
-* 4. document id of notification is token_id for the device; save it to ownerItem, which stores all owner-related data.
-* */
+ * Logic behind getting data from firestore
+ * User logs in and gets user data.
+ * 1. From the received user data, find out oid that the user has.
+ * 2. Load all owner data.
+ * 3. For each owner data, get notification data which can be retrieved from owner/{oid}/notifications
+ * 4. document id of notification is token_id for the device; save it to ownerItem, which stores all owner-related data.
+ * */
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_recycler_view)
     RecyclerView recyclerView;
@@ -70,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     private BaechelinApp baechelinApp;
     private BusinessInfo businessInfo;
     private final String TAG = "MAIN_ACTIVITY";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -95,14 +105,13 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         DocumentSnapshot doc = task.getResult();
-                        if (doc.exists()){
+                        if (doc.exists()) {
                             Log.d(TAG, "DocumentSnapshot data " + doc.getData());
                             businessInfo = doc.toObject(BusinessInfo.class);
                             baechelinApp.setBusinessInfo(businessInfo);
                             getOwnerInfo(businessInfo.getOwners());
 
-                        }
-                        else {
+                        } else {
                             Toast.makeText(getApplicationContext(), "옳바르지 않은 로그인.", Toast.LENGTH_LONG).show();
                         }
                     }
@@ -110,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -118,27 +127,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.toolbar_right_btn)
-    void onSettingClicked(){
+    void onSettingClicked() {
         Intent intent = new Intent(MainActivity.this, SettingActivity.class);
         startActivity(intent);
+
+
     }
 
-    private void setToolbar(){
+    private void setToolbar() {
         setSupportActionBar(toolbar);
         txtToolTitle.setText("배슐랭");
 
     }
-    private void getOwnerInfo(ArrayList<BusinessOwners> owners){
+
+    private void getOwnerInfo(ArrayList<BusinessOwners> owners) {
         final int owner_num = owners.size();
         final ArrayList<BusinessOwners> businessOwners = businessInfo.getOwners();
 
-        for (BusinessOwners owner : owners ){
+        for (BusinessOwners owner : owners) {
             db.collection("owner").document(owner.getOid()).get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             DocumentSnapshot doc = task.getResult();
-                            if (doc.exists()){
+                            if (doc.exists()) {
                                 final OwnerItem ownerItem = doc.toObject(OwnerItem.class);
 
                                 //get notification data to setup switch
@@ -149,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                                                 List<DocumentSnapshot> documentSnapshots = queryDocumentSnapshots.getDocuments();
                                                 List<Notification> notificationList = new ArrayList<>();
 
-                                                for (DocumentSnapshot doc : documentSnapshots){
+                                                for (DocumentSnapshot doc : documentSnapshots) {
                                                     Notification notification = doc.toObject(Notification.class);
                                                     notification.setToken_id(doc.getId());
                                                     notificationList.add(notification);
@@ -157,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
 
                                                 ownerItem.setToken(notificationList);
                                                 ownerLists.add(ownerItem);
-                                                if (owner_num == ownerLists.size()){
+                                                if (owner_num == ownerLists.size()) {
 
                                                     ownersListAdapter = new OwnersListAdapter(ownerLists, MainActivity.this, db);
                                                     recyclerView.setAdapter(ownersListAdapter);

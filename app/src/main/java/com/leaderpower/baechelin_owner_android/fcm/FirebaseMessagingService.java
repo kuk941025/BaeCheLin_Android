@@ -1,8 +1,21 @@
 package com.leaderpower.baechelin_owner_android.fcm;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.RemoteMessage;
+import com.leaderpower.baechelin_owner_android.R;
+import com.leaderpower.baechelin_owner_android.activity.MainActivity;
+import com.leaderpower.baechelin_owner_android.model.Notification;
+
+import java.util.Map;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -18,7 +31,53 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            Map<String, String> data = remoteMessage.getData();
+            String shop_name = data.get("shop_name");
 
+            String channelId = "channel";
+            String channelName = "Channel Name";
+
+            NotificationManager notifManager
+
+                    = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                int importance = NotificationManager.IMPORTANCE_HIGH;
+                NotificationChannel mChannel = new NotificationChannel(
+                        channelId, channelName, importance);
+                notifManager.createNotificationChannel(mChannel);
+            }
+
+            NotificationCompat.Builder builder =
+                    new NotificationCompat.Builder(getApplicationContext(), channelId);
+
+            Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
+
+            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                    Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+            int requestID = (int) System.currentTimeMillis();
+
+            PendingIntent pendingIntent
+                    = PendingIntent.getActivity(getApplicationContext()
+                    , requestID
+                    , notificationIntent
+                    , PendingIntent.FLAG_UPDATE_CURRENT);
+
+            builder.setContentTitle("새로운 주문") // required
+                    .setContentText(shop_name + "에 새로운 주문이 들어왔습니다.")  // required
+                    .setDefaults(android.app.Notification.DEFAULT_ALL) // 알림, 사운드 진동 설정
+                    .setAutoCancel(true) // 알림 터치시 반응 후 삭제
+                    .setSound(RingtoneManager
+                            .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                    .setSmallIcon(android.R.drawable.btn_star)
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources()
+                            , R.drawable.baechelin))
+                    .setBadgeIconType(R.drawable.baechelin)
+                    .setContentIntent(pendingIntent);
+
+            notifManager.notify((int) System.currentTimeMillis(), builder.build());
 //
 //            if (/* Check if data needs to be processed by long running job */ true) {
 //                // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
@@ -30,10 +89,10 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         }
 
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-        }
+//        // Check if message contains a notification payload.
+//        if (remoteMessage.getNotification() != null) {
+//            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+//        }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
