@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.firestore.CollectionReference;
@@ -36,6 +37,8 @@ import butterknife.ButterKnife;
 public class OrderInProgressFragment extends Fragment {
     @BindView(R.id.fragment_order_progress_recycle)
     RecyclerView recyclerView;
+    @BindView(R.id.fragment_order_progress_txt_no_order)
+    TextView txtNoOrder;
 
     private View fragView = null;
     private OrderListAdapter orderAdapter;
@@ -123,6 +126,15 @@ public class OrderInProgressFragment extends Fragment {
                             }
                             break;
                     }
+                }
+
+                //if no order is found, show text.
+                if (orderList.size() == 0){
+                    txtNoOrder.setVisibility(View.VISIBLE);
+                }
+                else {
+                    int isVisible = txtNoOrder.getVisibility();
+                    if (isVisible == View.VISIBLE) txtNoOrder.setVisibility(View.GONE);
                 }
                 if (!isSorted){
                     //initially sort orders by date

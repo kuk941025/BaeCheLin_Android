@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
-                        Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_LONG).show();
                         BaechelinApp.setCurrentUser(FirebaseAuth.getInstance().getCurrentUser());
 
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
