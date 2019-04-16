@@ -9,13 +9,13 @@ public class OwnerItem implements Serializable {
             corp_shop_name, delivery_option, delivery_price, denied_reason, oid, report_image, shop_description, shop_image, shop_name, zone_code, uid;
     private int business_status, is_working, store_type;
     private Date store_coupon;
-    private List<String> token;
+    private List<Notification> token;
 
-    public List<String> getToken() {
+    public List<Notification> getToken() {
         return token;
     }
 
-    public void setToken(List<String> token) {
+    public void setToken(List<Notification> token) {
         this.token = token;
     }
 

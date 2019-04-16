@@ -15,25 +15,39 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.adapter.OwnersListAdapter;
 import com.leaderpower.baechelin_owner_android.app.BaechelinApp;
 import com.leaderpower.baechelin_owner_android.model.BusinessInfo;
 import com.leaderpower.baechelin_owner_android.model.BusinessOwners;
+import com.leaderpower.baechelin_owner_android.model.Notification;
 import com.leaderpower.baechelin_owner_android.model.OwnerItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+
+/*
+* Logic behind getting data from firestore
+* User logs in and gets user data.
+* 1. From the received user data, find out oid that the user has.
+* 2. Load all owner data.
+* 3. For each owner data, get notification data which can be retrieved from owner/{oid}/notifications
+* 4. document id of notification is token_id for the device; save it to ownerItem, which stores all owner-related data.
+* */
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_recycler_view)
     RecyclerView recyclerView;
@@ -125,28 +139,56 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             DocumentSnapshot doc = task.getResult();
                             if (doc.exists()){
-                                OwnerItem ownerItem = doc.toObject(OwnerItem.class);
+                                final OwnerItem ownerItem = doc.toObject(OwnerItem.class);
 
-                                //insert token
-                                for (BusinessOwners owner : businessOwners){
-                                    if (owner.getOid().equals(ownerItem.getOid())){
-                                        ownerItem.setToken(owner.getToken());
+                                //get notification data to setup switch
+                                db.collection("owner").document(ownerItem.getOid()).collection("notifications").get()
+                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                List<DocumentSnapshot> documentSnapshots = queryDocumentSnapshots.getDocuments();
+                                                List<Notification> notificationList = new ArrayList<>();
+
+                                                for (DocumentSnapshot doc : documentSnapshots){
+                                                    Notification notification = doc.toObject(Notification.class);
+                                                    notification.setToken_id(doc.getId());
+                                                    notificationList.add(notification);
+                                                }
+
+                                                ownerItem.setToken(notificationList);
+                                                ownerLists.add(ownerItem);
+                                                if (owner_num == ownerLists.size()){
+
+                                                    ownersListAdapter = new OwnersListAdapter(ownerLists, MainActivity.this, db);
+                                                    recyclerView.setAdapter(ownersListAdapter);
+
+                                                    loadingLayout.setVisibility(View.GONE);
+                                                    nestedScrollView.setVisibility(View.VISIBLE);
+                                                    txtOwnerNum.setText("사장님, 현재 등록되어 있는 업소는 총 " + owner_num + "개 입니다.");
+                                                }
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(MainActivity.this, "네트워크 통신 오류가 발생했습니다. 다시 로그인 해주세요.", Toast.LENGTH_LONG).show();
                                     }
-                                }
-                                ownerLists.add(ownerItem);
+                                });
+//                                //insert token
+//                                for (BusinessOwners owner : businessOwners){
+//                                    if (owner.getOid().equals(ownerItem.getOid())){
+//                                        ownerItem.setToken(owner.getToken());
+//                                    }
+//                                }
 
-                                if (owner_num == ownerLists.size()){
 
-                                    ownersListAdapter = new OwnersListAdapter(ownerLists, MainActivity.this, db);
-                                    recyclerView.setAdapter(ownersListAdapter);
-
-                                    loadingLayout.setVisibility(View.GONE);
-                                    nestedScrollView.setVisibility(View.VISIBLE);
-                                    txtOwnerNum.setText("사장님, 현재 등록되어 있는 업소는 총 " + owner_num + "개 입니다.");
-                                }
                             }
                         }
-                    });
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(MainActivity.this, "네트워크 통신 오류가 발생했습니다. 다시 로그인 해주세요.", Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 

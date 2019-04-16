@@ -69,15 +69,15 @@ public class OwnersListAdapter extends RecyclerView.Adapter<OwnersListAdapter.ow
 
 
         //is this device listening to alarm?
-        ownerViewHolder.switchAlarm.setChecked(false);
-        if (ownerItem.getToken() != null && ownerItem.getToken().size() > 0) {
-            for (String id : ownerItem.getToken()) {
-                if (id == tokenId) {
-                    ownerViewHolder.switchAlarm.setChecked(true);
-                    break;
-                }
-            }
-        }
+//        ownerViewHolder.switchAlarm.setChecked(false);
+//        if (ownerItem.getToken() != null && ownerItem.getToken().size() > 0) {
+//            for (String id : ownerItem.getToken()) {
+//                if (id == tokenId) {
+//                    ownerViewHolder.switchAlarm.setChecked(true);
+//                    break;
+//                }
+//            }
+//        }
 
     }
 
@@ -119,53 +119,54 @@ public class OwnersListAdapter extends RecyclerView.Adapter<OwnersListAdapter.ow
 
         @OnClick(R.id.card_alarm_switch)
         void onSwitchClicked() {
-            OwnerItem owner = ownerList.get(getLayoutPosition());
-            final String oid = owner.getOid();
-            BusinessInfo businessInfo = BaechelinApp.getInstance().getBusinessInfo();
-            List<BusinessOwners> authOwners = businessInfo.getOwners();
 
-            if (switchAlarm.isChecked()) {
-                //if not checked, add token id to database
-
-                for (BusinessOwners authOwner : authOwners ){
-                    if (authOwner.getOid().equals(oid)){
-                        if (authOwner.getToken() == null ) authOwner.setToken(new ArrayList<String>());
-                        authOwner.getToken().add(tokenId);
-                        break;
-                    }
-                }
-
-
-            } else {
-                //remove id from base
-                
-                for (BusinessOwners authOwner : authOwners ){
-
-                    if (authOwner.getOid().equals(oid)){
-                        List<String> tokenIDs = authOwner.getToken();
-                        Iterator iterator = tokenIDs.iterator();
-                        while (iterator.hasNext()){
-                            String id = (String) iterator.next();
-                            if (id.equals(tokenId)) iterator.remove();
-                        }
-                    }
-                }
-            }
-
-            Map<String, Object> updateField = new HashMap<>();
-            updateField.put("owners", authOwners);
-            db.collection("auths").document(owner.getUid()).update(updateField)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d("TAG", "SUCCESS");
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.d("TAG", "FAILED " + e.getMessage());
-                }
-            });
+//            OwnerItem owner = ownerList.get(getLayoutPosition());
+//            final String oid = owner.getOid();
+//            BusinessInfo businessInfo = BaechelinApp.getInstance().getBusinessInfo();
+//            List<BusinessOwners> authOwners = businessInfo.getOwners();
+//
+//            if (switchAlarm.isChecked()) {
+//                //if not checked, add token id to database
+//
+//                for (BusinessOwners authOwner : authOwners ){
+//                    if (authOwner.getOid().equals(oid)){
+//                        if (authOwner.getToken() == null ) authOwner.setToken(new ArrayList<String>());
+//                        authOwner.getToken().add(tokenId);
+//                        break;
+//                    }
+//                }
+//
+//
+//            } else {
+//                //remove id from base
+//
+//                for (BusinessOwners authOwner : authOwners ){
+//
+//                    if (authOwner.getOid().equals(oid)){
+//                        List<String> tokenIDs = authOwner.getToken();
+//                        Iterator iterator = tokenIDs.iterator();
+//                        while (iterator.hasNext()){
+//                            String id = (String) iterator.next();
+//                            if (id.equals(tokenId)) iterator.remove();
+//                        }
+//                    }
+//                }
+//            }
+//
+//            Map<String, Object> updateField = new HashMap<>();
+//            updateField.put("owners", authOwners);
+//            db.collection("auths").document(owner.getUid()).update(updateField)
+//                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void aVoid) {
+//                            Log.d("TAG", "SUCCESS");
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    Log.d("TAG", "FAILED " + e.getMessage());
+//                }
+//            });
         }
     }
 }
