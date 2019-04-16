@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leaderpower.baechelin_owner_android.R;
@@ -15,6 +16,7 @@ import com.leaderpower.baechelin_owner_android.model.OwnerItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class OrderActivity extends AppCompatActivity {
     @BindView(R.id.order_tab_layout)
@@ -27,6 +29,8 @@ public class OrderActivity extends AppCompatActivity {
     TextView txtToolTitle;
     @BindView(R.id.toolbar_right_btn)
     Button btnTool;
+    @BindView(R.id.toolbar_left_btn)
+    ImageView btnLeft;
 
     private OrderPageAdapter pageAdapter;
     private OwnerItem owner = null;
@@ -57,6 +61,11 @@ public class OrderActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         txtToolTitle.setText("주문 현황");
         btnTool.setVisibility(View.GONE);
+        btnLeft.setVisibility(View.VISIBLE);
     }
 
+    @OnClick(R.id.toolbar_left_btn)
+    void onLeftBtnClicked(){
+        finish();
+    }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,6 +37,8 @@ public class SettingActivity extends AppCompatActivity {
     TextView txtEmail;
     @BindView(R.id.toolbar_right_btn)
     Button btnToolbar;
+    @BindView(R.id.toolbar_left_btn)
+    ImageView btnLeft;
 
     private BaechelinApp app = BaechelinApp.getInstance();
     private FirebaseAuth mAuth;
@@ -56,6 +59,7 @@ public class SettingActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         txtToolTitle.setText("사용자 정보");
         btnToolbar.setVisibility(View.GONE);
+        btnLeft.setVisibility(View.VISIBLE);
 
     }
 
@@ -74,6 +78,12 @@ public class SettingActivity extends AppCompatActivity {
     @OnClick(R.id.setting_btn_sign_out)
     void onSignOutClicked() {
         mAuth.signOut();
+        finish();
+    }
+
+
+    @OnClick(R.id.toolbar_left_btn)
+    void onLeftBtnClicked(){
         finish();
     }
 }
