@@ -173,13 +173,6 @@ public class MainActivity extends AppCompatActivity {
                                         Toast.makeText(MainActivity.this, "네트워크 통신 오류가 발생했습니다. 다시 로그인 해주세요.", Toast.LENGTH_LONG).show();
                                     }
                                 });
-//                                //insert token
-//                                for (BusinessOwners owner : businessOwners){
-//                                    if (owner.getOid().equals(ownerItem.getOid())){
-//                                        ownerItem.setToken(owner.getToken());
-//                                    }
-//                                }
-
 
                             }
                         }
