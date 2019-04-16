@@ -26,6 +26,7 @@ import com.leaderpower.baechelin_owner_android.model.OwnerItem;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 
 import javax.annotation.Nullable;
 
@@ -98,13 +99,15 @@ public class OrderInProgressFragment extends Fragment {
 
                             break;
                         case REMOVED:
-                            for (Order item : orderList) {
-                                position++;
-                                if (item.getId() == id) {
-                                    orderList.remove(item);
-                                    orderAdapter.notifyItemRemoved(position);
-                                    break;
+                            int idx = 0;
+                            Iterator iterator = orderList.iterator();
+                            while (iterator.hasNext()){
+                                Order item = (Order) iterator.next();
+                                if (item.getId().equals(id) ) {
+                                    iterator.remove();
+                                    orderAdapter.notifyItemRemoved(idx);
                                 }
+                                idx++;
                             }
                             break;
                         case MODIFIED:

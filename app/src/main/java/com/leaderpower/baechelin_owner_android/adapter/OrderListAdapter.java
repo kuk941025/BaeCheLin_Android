@@ -222,7 +222,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                         //user has clicked accepting order
                         if (order.getStatus() == 0){
                             //new order, let user know the owner has accepted the order
-                            Toast.makeText(mContext, "주문승락", Toast.LENGTH_LONG).show();
+//                            Toast.makeText(mContext, "주문승락", Toast.LENGTH_LONG).show();
                             if (dbRef != null){
                                 Map<String, Object> updatedStatus = new HashMap<>();
                                 updatedStatus.put("status", 1);
@@ -249,7 +249,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                         }
                         else {
                             //order in preparation, let user know the delivery has started
-                            Toast.makeText(mContext, "배달시작", Toast.LENGTH_LONG).show();
+//                            Toast.makeText(mContext, "배달시작", Toast.LENGTH_LONG).show();
                             if (dbRef != null){
                                 Map<String, Object> updatedStatus = new HashMap<>();
                                 updatedStatus.put("status", 2);
@@ -272,7 +272,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                     }
                     else if (order.getMode() == 2){
                         //user  has clicked rejecting order
-                        Toast.makeText(mContext, "주문 거절", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(mContext, "주문 거절", Toast.LENGTH_LONG).show();
                         if (dbRef != null ){
                             dbRef.document(order.getId()).delete()
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -315,7 +315,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             parameters.put("kakao_add4", order.getFood_ordered());
             parameters.put("kakao_080", "N");
 
-            sendMessage(parameters);
+//            sendMessage(parameters);
         }
         private void sendRejectedMessage(Order order, String strMessage){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
@@ -331,7 +331,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             parameters.put("kakao_add4", order.getFood_ordered());
             parameters.put("kakao_add5", order.getAddress());
 
-            sendMessage(parameters);
+//            sendMessage(parameters);
         }
         private void sendAcceptedMessage(Order order, String strMessage){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
@@ -348,7 +348,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             parameters.put("kakao_add5", order.getAddress());
             parameters.put("kakao_080", "N");
 
-            sendMessage(parameters);
+//            sendMessage(parameters);
         }
 
         private void sendMessage(HashMap<String, Object> params){
