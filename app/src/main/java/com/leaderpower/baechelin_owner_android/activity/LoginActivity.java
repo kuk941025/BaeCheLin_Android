@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.login_txt_sign_up)
     void onSignUpClicked(){
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://localhost:3000/signup"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.배슐랭.kr/#/signup"));
         startActivity(intent);
     }
 
