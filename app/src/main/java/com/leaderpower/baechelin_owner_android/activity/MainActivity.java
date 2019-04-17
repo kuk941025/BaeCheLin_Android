@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //get firestore
+        btnToolRight.setVisibility(View.GONE);
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         db.collection("auths").document(uid).get()
@@ -116,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         DocumentSnapshot doc = task.getResult();
                         if (doc.exists()) {
+                            btnToolRight.setVisibility(View.VISIBLE);
                             Log.d(TAG, "DocumentSnapshot data " + doc.getData());
                             businessInfo = doc.toObject(BusinessInfo.class);
                             baechelinApp.setBusinessInfo(businessInfo);
