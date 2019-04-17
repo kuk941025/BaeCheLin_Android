@@ -77,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
     View errorLayout;
     @BindView(R.id.main_error_dscrp)
     TextView txtError;
-
+    @BindView(R.id.toolbar_right_btn)
+    Button btnToolRight;
     private ArrayList<OwnerItem> ownerLists;
     private OwnersListAdapter ownersListAdapter;
     private FirebaseUser currentUser;
@@ -138,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         } else {
                             errorLayout.setVisibility(View.VISIBLE);
+                            btnToolRight.setVisibility(View.GONE);
                             txtError.setText("사장님 계정으로만 서비스를 이용할 수 있습니다.");
                             Toast.makeText(getApplicationContext(), "옳바르지 않은 로그인.", Toast.LENGTH_LONG).show();
                         }
