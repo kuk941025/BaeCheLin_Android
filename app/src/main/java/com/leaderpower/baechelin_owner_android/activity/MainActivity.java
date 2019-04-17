@@ -137,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
                                 getOwnerInfo(businessInfo.getOwners());
                             }
                         } else {
+                            errorLayout.setVisibility(View.VISIBLE);
+                            txtError.setText("사장님 계정으로만 서비스를 이용할 수 있습니다.");
                             Toast.makeText(getApplicationContext(), "옳바르지 않은 로그인.", Toast.LENGTH_LONG).show();
                         }
                     }
