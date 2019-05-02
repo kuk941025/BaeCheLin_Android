@@ -43,7 +43,7 @@
         android:layout_marginStart="@dimen/login_side_margin"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="@dimen/login_side_margin"
-
+        android:background="@drawable/grey_border"
         android:inputType="textEmailAddress"
         android:maxLines="1"
         android:paddingLeft="@dimen/edit_text_padding"
@@ -64,7 +64,7 @@
         android:paddingLeft="@dimen/edit_text_padding"
         android:paddingRight="@dimen/edit_text_padding"
         android:textSize="@dimen/edit_text_size"
-
+        android:background="@drawable/grey_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_edit_id" />
@@ -102,12 +102,12 @@
         android:id="@+id/login_txt_sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="@dimen/login_side_margin"
         android:text="회원가입"
         android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="@+id/login_check_save"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_edit_pw" />
+        app:layout_constraintTop_toTopOf="@+id/login_check_save" />
 
     <CheckBox
         android:id="@+id/login_check_save"
