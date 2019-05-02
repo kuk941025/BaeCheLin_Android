@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:text="업체 이름"
             android:textSize="@dimen/cardview_title_txt_size"
+            android:fontFamily="@font/bold"
             android:layout_marginStart="@dimen/padding"
             android:textColor="#000000"
             android:textStyle="bold"
@@ -41,6 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/padding"
             android:text="업체 주소"
+            android:fontFamily="@font/regular"
             android:textColor="#000000"
             app:layout_constraintStart_toEndOf="@+id/card_owner_image"
             app:layout_constraintTop_toBottomOf="@+id/card_owner_title" />
