@@ -59,7 +59,7 @@ public class OrderCompleteFragment extends Fragment {
     private OrderListAdapter orderAdapter;
     private View fragView = null;
     private ArrayList<Order> orderList;
-    private Calendar calendar;
+    private Calendar calendar = Calendar.getInstance();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private EditText selectedEdit = null;
     private final String strDateFormat = "MM/dd/yy";
@@ -87,12 +87,18 @@ public class OrderCompleteFragment extends Fragment {
         return fragView;
     }
     private void setDatePicker(){
-
+        final SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat, Locale.US);
         startDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectedEdit = startDate;
-                calendar = Calendar.getInstance();
+                try {
+                    if (selectedEdit.getText().toString() == "") calendar.setTime(new Date());
+                    else calendar.setTime(sdf.parse(selectedEdit.getText().toString()));
+                } catch (Exception e){
+                    calendar.setTime(new Date());
+                }
+
                 new DatePickerDialog(getContext(), dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
@@ -101,7 +107,13 @@ public class OrderCompleteFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 selectedEdit = endDate;
-                calendar = Calendar.getInstance();
+                try {
+                    if (selectedEdit.getText().toString() == "") calendar.setTime(new Date());
+                    else calendar.setTime(sdf.parse(selectedEdit.getText().toString()));
+                }catch (Exception e){
+                    calendar.setTime(new Date());
+                }
+
                 new DatePickerDialog(getContext(), dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
