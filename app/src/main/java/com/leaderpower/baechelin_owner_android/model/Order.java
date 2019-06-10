@@ -1,17 +1,27 @@
 package com.leaderpower.baechelin_owner_android.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Order {
     private String address, food_ordered, request, user_phone, id;
     private int payment_method, status, total_price, mode = 0;
     private Date created_at, delivered_at;
+    private ArrayList<Foods> foods;
 
     //mode == 0 default
     //mode == 1 confirm clicked
     //mode == 2 reject clicked
     public String getId() {
         return id;
+    }
+
+    public ArrayList<Foods> getFoods() {
+        return foods;
+    }
+
+    public void setFoods(ArrayList<Foods> foods) {
+        this.foods = foods;
     }
 
     public void setId(String id) {

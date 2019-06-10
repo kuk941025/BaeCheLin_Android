@@ -22,6 +22,7 @@ import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.Retrofit.Response.ResponseKakao;
 import com.leaderpower.baechelin_owner_android.Retrofit.RetroCallBack;
 import com.leaderpower.baechelin_owner_android.Retrofit.RetroClient;
+import com.leaderpower.baechelin_owner_android.model.Foods;
 import com.leaderpower.baechelin_owner_android.model.Order;
 import com.leaderpower.baechelin_owner_android.model.OwnerItem;
 
@@ -87,7 +88,13 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         }
 
         orderViewHolder.txtAddress.setText(item.getAddress());
-        orderViewHolder.txtFood.setText(item.getFood_ordered());
+        String food_ordered = ""; int idx = 0;
+        for (Foods food : item.getFoods()){
+            food_ordered += food.getName() + " (" + food.getCount() + "개)";
+            if (idx < item.getFoods().size() - 1) food_ordered += ", ";
+            idx++;
+        }
+        orderViewHolder.txtFood.setText(food_ordered);
         orderViewHolder.txtPrice.setText(df.format(item.getTotal_price()) + "원");
         orderViewHolder.txtTime.setText(sdf.format(item.getCreated_at()));
 
