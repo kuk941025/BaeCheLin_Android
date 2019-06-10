@@ -59,7 +59,7 @@ public class OrderCompleteFragment extends Fragment {
     private OrderListAdapter orderAdapter;
     private View fragView = null;
     private ArrayList<Order> orderList;
-    private final Calendar calendar = Calendar.getInstance();
+    private Calendar calendar;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private EditText selectedEdit = null;
     private final String strDateFormat = "MM/dd/yy";
@@ -92,6 +92,7 @@ public class OrderCompleteFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 selectedEdit = startDate;
+                calendar = Calendar.getInstance();
                 new DatePickerDialog(getContext(), dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
@@ -100,6 +101,7 @@ public class OrderCompleteFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 selectedEdit = endDate;
+                calendar = Calendar.getInstance();
                 new DatePickerDialog(getContext(), dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
@@ -173,8 +175,8 @@ public class OrderCompleteFragment extends Fragment {
     private void updateLabel() {
 
         SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat, Locale.US);
-
         selectedEdit.setText(sdf.format(calendar.getTime()));
+
     }
     DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
