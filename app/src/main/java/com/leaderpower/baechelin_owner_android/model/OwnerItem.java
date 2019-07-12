@@ -5,9 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 public class OwnerItem implements Serializable {
-    private String address, address_detail, bcode, corp_image, corp_name, corp_num, corp_serial_num,
-            corp_shop_name, delivery_option, delivery_price, denied_reason, oid, report_image, shop_description, shop_image, shop_name, zone_code, uid;
-    private int business_status, is_working, store_type;
+    private String address, address_detail, bcode, corp_image, corp_name, corp_num, corp_serial_num,store_type,
+            corp_shop_name, delivery_option, denied_reason, oid, report_image, shop_description, shop_image, shop_name, zone_code, uid;
+    private int business_status, is_working;
     private Date store_coupon, created_at;
     private List<Notification> token;
 
@@ -99,14 +99,6 @@ public class OwnerItem implements Serializable {
         this.delivery_option = delivery_option;
     }
 
-    public String getDelivery_price() {
-        return delivery_price;
-    }
-
-    public void setDelivery_price(String delivery_price) {
-        this.delivery_price = delivery_price;
-    }
-
     public String getDenied_reason() {
         return denied_reason;
     }
@@ -179,11 +171,11 @@ public class OwnerItem implements Serializable {
         this.is_working = is_working;
     }
 
-    public int getStore_type() {
+    public String getStore_type() {
         return store_type;
     }
 
-    public void setStore_type(int store_type) {
+    public void setStore_type(String store_type) {
         this.store_type = store_type;
     }
 
