@@ -4,48 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/default_side_margin"
+    android:background="@color/grey"
     tools:context=".activity.OrderDetail">
 
-    <TextView
-        android:id="@+id/detail_txt_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="13:40"
-        android:textSize="@dimen/dscrp_large_txt_size"
-        android:textStyle="bold"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/detail_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingTop="@dimen/default_margin"
+        android:paddingBottom="@dimen/default_margin"
+        android:background="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        >
+        <TextView
+            android:id="@+id/detail_txt_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="13:40"
+            android:textSize="@dimen/dscrp_large_txt_size"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/detail_txt_order_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        <TextView
+            android:id="@+id/detail_txt_order_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="결제완료"
+            app:layout_constraintBottom_toBottomOf="@+id/detail_txt_time"
+            app:layout_constraintStart_toEndOf="@+id/detail_txt_time"
+            app:layout_constraintTop_toTopOf="@+id/detail_txt_time" />
 
-        android:text="결제완료"
-        app:layout_constraintBottom_toBottomOf="@+id/detail_txt_time"
-        app:layout_constraintStart_toEndOf="@+id/detail_txt_time"
-        app:layout_constraintTop_toTopOf="@+id/detail_txt_time" />
+        <Button
+            android:id="@+id/detail_btn_confirm"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:text="접수"
+            android:textStyle="bold"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/shape_dialog_btn"
+            app:layout_constraintBottom_toBottomOf="@+id/detail_txt_order_status"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/detail_txt_order_status" />
 
-    <Button
-        android:id="@+id/detail_btn_confirm"
-        android:layout_width="80dp"
-        android:layout_height="35dp"
-        android:text="접수"
-        android:textStyle="bold"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/shape_dialog_btn"
-        app:layout_constraintBottom_toBottomOf="@+id/detail_txt_order_status"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/detail_txt_order_status" />
+    </android.support.constraint.ConstraintLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/detail_btn_confirm">
+        app:layout_constraintTop_toBottomOf="@+id/detail_top_layout">
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
