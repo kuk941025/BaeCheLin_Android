@@ -27,6 +27,7 @@
                 android:id="@+id/template_order_button_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/default_margin"
                 android:background="@drawable/order_status"
                 android:gravity="center_vertical|center_horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
