@@ -138,7 +138,7 @@ public class OrderCompleteFragment extends Fragment {
                 progressBar.setVisibility(View.VISIBLE);
                 txtCompleteDscrp.setVisibility(View.GONE);
 
-                db.collection("owner").document(oid).collection("orders")
+                db.collection("owner").document(oid).collection("order")
                         .whereGreaterThanOrEqualTo("created_at", startDate)
                         .whereLessThanOrEqualTo("created_at", endDate)
                         .orderBy("created_at", Query.Direction.DESCENDING).get()

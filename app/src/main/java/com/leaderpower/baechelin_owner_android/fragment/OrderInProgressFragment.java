@@ -68,8 +68,8 @@ public class OrderInProgressFragment extends Fragment {
             owner = (OwnerItem) getArguments().getSerializable("owner");
 
             //set collection reference
-            dbRef = db.collection("owner").document(owner.getOid()).collection("orders");
-            dbQuery = dbRef.whereLessThanOrEqualTo("status", 1);
+            dbRef = db.collection("owner").document(owner.getOid()).collection("order");
+            dbQuery = dbRef.whereLessThanOrEqualTo("status", "1");
             isSorted = false;
 
             //setup recycler

@@ -22,6 +22,7 @@ import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.Retrofit.Response.ResponseKakao;
 import com.leaderpower.baechelin_owner_android.Retrofit.RetroCallBack;
 import com.leaderpower.baechelin_owner_android.Retrofit.RetroClient;
+import com.leaderpower.baechelin_owner_android.model.Food;
 import com.leaderpower.baechelin_owner_android.model.Foods;
 import com.leaderpower.baechelin_owner_android.model.Order;
 import com.leaderpower.baechelin_owner_android.model.OwnerItem;
@@ -79,19 +80,27 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         DecimalFormat df = new DecimalFormat("#,###");
         Order item = orderList.get(i);
         SimpleDateFormat sdf;
+        int status;
 
-        if (item.getStatus() < 2) {
+        try{
+            status = Integer.parseInt(item.getStatus());
+        } catch (Exception e){
+            status = 0;
+        }
+
+
+        if (status  < 2) {
             sdf = new SimpleDateFormat("HH:mm:ss");
         }
         else {
             sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ", Locale.KOREA);
         }
 
-        orderViewHolder.txtAddress.setText(item.getAddress());
+        orderViewHolder.txtAddress.setText(item.getAddress_road() + " " + item.getAddress_detail());
         String food_ordered = ""; int idx = 0;
-        for (Foods food : item.getFoods()){
+        for (Food food : item.getFood()){
             food_ordered += food.getName() + " (" + food.getCount() + "개)";
-            if (idx < item.getFoods().size() - 1) food_ordered += ", ";
+            if (idx < item.getFood().size() - 1) food_ordered += ", ";
             idx++;
         }
         orderViewHolder.txtFood.setText(food_ordered);
@@ -100,7 +109,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
 
 
         //update ui based on order status
-        switch (item.getStatus()) {
+        switch (status) {
             case 0:
                 orderViewHolder.txtStatus.setBackgroundColor(Color.parseColor("#FF9800"));
                 orderViewHolder.txtStatus.setText("신규");
@@ -120,12 +129,12 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         if (item.getMode() == 0) {
             orderViewHolder.viewInfo.setVisibility(View.VISIBLE);
             orderViewHolder.viewSelected.setVisibility(View.GONE);
-            if (item.getStatus() == 0){
+            if (status == 0){
                 orderViewHolder.btnConfirm.setText("승락");
                 orderViewHolder.btnReject.setText("거절");
                 orderViewHolder.btnReject.setVisibility(View.VISIBLE);
             }
-            else if (item.getStatus() == 1 ){
+            else if (status == 1){
                 orderViewHolder.btnConfirm.setText("준비완료");
                 orderViewHolder.btnReject.setVisibility(View.GONE);
             }
@@ -139,7 +148,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             orderViewHolder.viewSelected.setVisibility(View.VISIBLE);
             orderViewHolder.btnReject.setVisibility(View.VISIBLE);
 
-            if (item.getStatus() == 0) {
+            if (status == 0) {
                 //accepted clicked
                 if (item.getMode() == 1) {
                     orderViewHolder.btnConfirm.setText("배달시작");
@@ -242,7 +251,14 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                 else{
                     if (order.getMode() == 1){
                         //user has clicked accepting order
-                        if (order.getStatus() == 0){
+                        int status;
+                        try {
+                            status = Integer.parseInt(order.getStatus());
+                        } catch (Exception e){
+                            status = 0;
+                        }
+
+                        if (status == 0){
                             //new order, let user know the owner has accepted the order
 //                            Toast.makeText(mContext, "주문승락", Toast.LENGTH_LONG).show();
                             if (dbRef != null){
@@ -252,7 +268,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                order.setStatus(1);
+                                                order.setStatus(Integer.toString(1));
                                                 sendAcceptedMessage(order, strMessage);
                                             }
                                         })
@@ -280,7 +296,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                order.setStatus(2);
+                                                order.setStatus(Integer.toString(2));
                                                 sendStartDelieveryMessage(order, strMessage);
                                             }
                                         })
@@ -326,6 +342,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
 
         private void sendStartDelieveryMessage(Order order, String strMessage){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+            String food_ordered;
 
             HashMap<String, Object> parameters = new HashMap<>();
             parameters.put("tmp_number", "7854");
@@ -335,7 +352,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             parameters.put("kakao_add1", strMessage + "분");
             parameters.put("kakao_add2", sdf.format(order.getCreated_at()));
             parameters.put("kakao_add3", owner.getShop_name());
-            parameters.put("kakao_add4", order.getFood_ordered());
+//            parameters.put("kakao_add4", order.getFood_ordered());
             parameters.put("kakao_080", "N");
 
             sendMessage(parameters);
@@ -351,8 +368,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             parameters.put("kakao_add1", "[" + strMessage + "]");
             parameters.put("kakao_add2", sdf.format(order.getCreated_at()));
             parameters.put("kakao_add3", owner.getShop_name());
-            parameters.put("kakao_add4", order.getFood_ordered());
-            parameters.put("kakao_add5", order.getAddress());
+//            parameters.put("kakao_add4", order.getFood_ordered());
+            parameters.put("kakao_add5", order.getAddress_road() + " " + order.getAddress_detail());
 
             sendMessage(parameters);
         }
@@ -367,8 +384,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             parameters.put("kakao_add1", strMessage + "분");
             parameters.put("kakao_add2", sdf.format(order.getCreated_at()));
             parameters.put("kakao_add3", owner.getShop_name());
-            parameters.put("kakao_add4", order.getFood_ordered());
-            parameters.put("kakao_add5", order.getAddress());
+//            parameters.put("kakao_add4", order.getFood_ordered());
+            parameters.put("kakao_add5", order.getAddress_road() + " " + order.getAddress_detail());
             parameters.put("kakao_080", "N");
 
             sendMessage(parameters);
