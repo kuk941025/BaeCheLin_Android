@@ -109,8 +109,9 @@
         android:id="@+id/login_txt_sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/login_side_margin"
+        android:layout_marginEnd="@dimen/default_side_margin"
         android:text="회원가입"
+        android:textColor="@color/design_default_color_primary"
         app:layout_constraintBottom_toBottomOf="@+id/login_check_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/login_check_save" />

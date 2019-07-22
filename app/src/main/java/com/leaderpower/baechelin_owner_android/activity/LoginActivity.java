@@ -161,4 +161,10 @@ public class LoginActivity extends AppCompatActivity {
 
         txtInfoRegister.setText(spannable, TextView.BufferType.SPANNABLE);
     }
+
+    @OnClick(R.id.login_txt_info_register)
+    void onInfoClicked() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.배슐랭.kr"));
+        startActivity(intent);
+    }
 }
