@@ -25,6 +25,8 @@
     <dimen name="toolbar_icon_size">35dp</dimen>
 
     <dimen name="btn_text_size">20dp</dimen>
+    <dimen name="btn_dialog_height">50dp</dimen>
     <dimen name="shape_order_status_width">64dp</dimen>
     <dimen name="shape_order_status_height">64dp</dimen>
+    <dimen name="dialog_title_margin_top">42dp</dimen>
 </resources>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteBackground"
+    >
+
+    <ImageView
+        android:id="@+id/dialog_accept_order_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="X"
+        android:textColor="@color/black"
+        android:background="@drawable/ic_close_black_24dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dialog_accept_order_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="@dimen/dialog_title_margin_top"
+        android:text="배달시간을 선택해주세요."
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/dscrp_default_txt_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dialog_accept_order_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="30분"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dscrp_large_txt_size"
+        android:textStyle="bold"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_accept_order_title" />
+
+    <ImageView
+        android:id="@+id/dialog_accept_order_btn_minus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/ic_remove_black_24dp"
+        android:textColor="@color/black"
+        android:textSize="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_accept_order_time"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_accept_order_time"
+        app:layout_constraintTop_toTopOf="@+id/dialog_accept_order_time" />
+
+    <ImageView
+        android:id="@+id/dialog_accept_order_btn_plus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:background="@drawable/ic_add_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_accept_order_time"
+        app:layout_constraintStart_toEndOf="@+id/dialog_accept_order_time"
+        app:layout_constraintTop_toTopOf="@+id/dialog_accept_order_time" />
+
+    <Button
+        android:id="@+id/dialog_accept_order_confirm"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/btn_dialog_height"
+        android:layout_marginStart="@dimen/default_side_margin"
+        android:layout_marginTop="@dimen/dialog_title_margin_top"
+        android:layout_marginEnd="@dimen/default_side_margin"
+        android:background="@drawable/shape_dialog_btn"
+        android:text="접수"
+        android:textSize="@dimen/btn_text_size"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_accept_order_time" />
+
+
+</android.support.constraint.ConstraintLayout>
