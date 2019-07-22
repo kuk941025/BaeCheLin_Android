@@ -21,7 +21,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="24dp"
         android:textSize="@dimen/cardview_title_txt_size"
-        android:textColor="#000000"
         android:textStyle="bold"
         android:text="로그인 정보"
         app:layout_constraintEnd_toEndOf="@+id/setting_toolbar"
@@ -46,7 +45,7 @@
         android:layout_marginStart="@dimen/login_side_margin"
         android:layout_marginEnd="@dimen/login_side_margin"
         android:layout_marginTop="@dimen/login_side_margin"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorAccent"
         android:text="로그아웃"
         android:textColor="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +69,6 @@
         android:layout_marginStart="@dimen/dscrp_side_margin"
         android:layout_marginTop="@dimen/dscrp_margin"
         android:text="이름"
-        android:textColor="#000000"
         android:textSize="@dimen/dscrp_default_txt_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setting_divider" />
@@ -105,7 +103,6 @@
         android:layout_marginStart="@dimen/dscrp_side_margin"
         android:layout_marginTop="@dimen/dscrp_margin"
         android:text="사업자 번호"
-        android:textColor="#000000"
         android:textSize="@dimen/dscrp_default_txt_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setting_divider2" />
@@ -140,7 +137,6 @@
         android:layout_marginStart="@dimen/dscrp_side_margin"
         android:layout_marginTop="@dimen/dscrp_margin"
         android:text="휴대폰 번호"
-        android:textColor="#000000"
         android:textSize="@dimen/dscrp_default_txt_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setting_divider3" />
@@ -175,7 +171,6 @@
         android:layout_marginStart="@dimen/dscrp_side_margin"
         android:layout_marginTop="@dimen/dscrp_margin"
         android:text="가입날짜"
-        android:textColor="#000000"
         android:textSize="@dimen/dscrp_default_txt_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setting_divider4" />

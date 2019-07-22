@@ -3,7 +3,6 @@
     android:id="@+id/template_order_main_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -14,6 +13,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        app:cardBackgroundColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -110,7 +110,6 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:text="12:00"
-                    android:textColor="#000000"
                     android:textSize="@dimen/cardview_title_txt_size"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -120,7 +119,7 @@
                     android:id="@+id/template_order_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#FF5722"
+                    android:background="@color/colorTextPrimary"
                     android:text="처리중"
                     android:layout_marginStart="8dp"
                     android:padding="3dp"
@@ -135,7 +134,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="17,000 원"
-                    android:textColor="#000"
                     app:layout_constraintBottom_toBottomOf="@+id/template_order_status"
                     app:layout_constraintStart_toEndOf="@+id/template_order_status"
                     app:layout_constraintTop_toTopOf="@+id/template_order_status" />
@@ -149,7 +147,7 @@
                     android:layout_marginEnd="8dp"
                     android:textSize="@dimen/dscrp_large_txt_size"
                     android:text="주문한 음식, 주문한 음식, 주문한 음식, 주문한 음식, 주문한 음식,"
-                    android:textColor="#000000"
+                    android:maxLines="1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/template_order_time" />

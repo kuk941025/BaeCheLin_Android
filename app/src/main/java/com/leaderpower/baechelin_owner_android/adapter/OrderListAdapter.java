@@ -90,7 +90,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
 
 
         if (status  < 2) {
-            sdf = new SimpleDateFormat("HH:mm:ss");
+            sdf = new SimpleDateFormat("HH:mm");
         }
         else {
             sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ", Locale.KOREA);
