@@ -209,8 +209,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         TextView txtDeliveredAt;
         @BindView(R.id.template_order_button_layout)
         View viewButton;
-        @BindView(R.id.template_order_button_layout)
-        View btnOrderStatus;
 
         public orderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -222,7 +220,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         void onOrderStatusClicked() {
             final Order order = orderList.get(getLayoutPosition());
             if (order.getMode() == 0){
-                
+
             }
         }
 //

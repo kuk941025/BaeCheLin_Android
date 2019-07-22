@@ -75,6 +75,73 @@ public class OrderInProgressFragment extends Fragment {
             //setup recycler
             initRecyclerView();
 
+            dbListener = dbQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    if (e != null) {
+                        Log.d(TAG, "Listen failed " + e);
+                    }
+
+                    for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
+                        int position = 0;
+                        String id = dc.getDocument().getId();
+                        switch (dc.getType()) {
+                            case ADDED:
+                                Order order = dc.getDocument().toObject(Order.class);
+                                order.setId(dc.getDocument().getId());
+                                orderList.add(order);
+                                orderAdapter.notifyItemInserted(orderList.size());
+
+                                break;
+                            case REMOVED:
+                                int idx = 0;
+                                Iterator iterator = orderList.iterator();
+                                while (iterator.hasNext()) {
+                                    Order item = (Order) iterator.next();
+                                    if (item.getId().equals(id)) {
+                                        iterator.remove();
+                                        orderAdapter.notifyItemRemoved(idx);
+                                    }
+                                    idx++;
+                                }
+                                break;
+                            case MODIFIED:
+                                for (Order item : orderList) {
+                                    if (item.getId().equals(id)) {
+                                        Order modifiedOrder = dc.getDocument().toObject(Order.class);
+                                        modifiedOrder.setId(dc.getDocument().getId());
+                                        orderList.set(position, modifiedOrder);
+                                        orderAdapter.notifyItemChanged(position);
+                                        break;
+                                    }
+                                    position++;
+                                }
+                                break;
+                        }
+                    }
+
+                    //if no order is found, show text.
+                    if (orderList.size() == 0) {
+                        txtNoOrder.setVisibility(View.VISIBLE);
+                    } else {
+                        int isVisible = txtNoOrder.getVisibility();
+                        if (isVisible == View.VISIBLE) txtNoOrder.setVisibility(View.GONE);
+                    }
+                    if (!isSorted) {
+                        //initially sort orders by date
+                        Collections.sort(orderList, new Comparator<Order>() {
+                            @Override
+                            public int compare(Order order, Order t1) {
+                                return order.getCreated_at().compareTo(t1.getCreated_at());
+                            }
+                        });
+
+                        orderAdapter.notifyDataSetChanged();
+                        isSorted = true;
+                    }
+                }
+            });
+
         }
         return fragView;
     }
@@ -83,73 +150,7 @@ public class OrderInProgressFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        dbListener = dbQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.d(TAG, "Listen failed " + e);
-                }
 
-                for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
-                    int position = 0;
-                    String id = dc.getDocument().getId();
-                    switch (dc.getType()) {
-                        case ADDED:
-                            Order order = dc.getDocument().toObject(Order.class);
-                            order.setId(dc.getDocument().getId());
-                            orderList.add(order);
-                            orderAdapter.notifyItemInserted(orderList.size());
-
-                            break;
-                        case REMOVED:
-                            int idx = 0;
-                            Iterator iterator = orderList.iterator();
-                            while (iterator.hasNext()){
-                                Order item = (Order) iterator.next();
-                                if (item.getId().equals(id) ) {
-                                    iterator.remove();
-                                    orderAdapter.notifyItemRemoved(idx);
-                                }
-                                idx++;
-                            }
-                            break;
-                        case MODIFIED:
-                            for (Order item : orderList) {
-                                if (item.getId().equals(id)) {
-                                    Order modifiedOrder = dc.getDocument().toObject(Order.class);
-                                    modifiedOrder.setId(dc.getDocument().getId());
-                                    orderList.set(position, modifiedOrder);
-                                    orderAdapter.notifyItemChanged(position);
-                                    break;
-                                }
-                                position++;
-                            }
-                            break;
-                    }
-                }
-
-                //if no order is found, show text.
-                if (orderList.size() == 0){
-                    txtNoOrder.setVisibility(View.VISIBLE);
-                }
-                else {
-                    int isVisible = txtNoOrder.getVisibility();
-                    if (isVisible == View.VISIBLE) txtNoOrder.setVisibility(View.GONE);
-                }
-                if (!isSorted){
-                    //initially sort orders by date
-                    Collections.sort(orderList, new Comparator<Order>() {
-                        @Override
-                        public int compare(Order order, Order t1) {
-                            return order.getCreated_at().compareTo(t1.getCreated_at());
-                        }
-                    });
-
-                    orderAdapter.notifyDataSetChanged();
-                    isSorted = true;
-                }
-            }
-        });
     }
 
     @Override
