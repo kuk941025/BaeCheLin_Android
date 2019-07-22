@@ -64,6 +64,7 @@ public class OrderCompleteFragment extends Fragment {
     private EditText selectedEdit = null;
     private final String strDateFormat = "MM/dd/yy";
     private String oid;
+
     public OrderCompleteFragment() {
         // Required empty public constructor
     }
@@ -72,8 +73,9 @@ public class OrderCompleteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (fragView == null){
-            fragView = inflater.inflate(R.layout.fragment_order_complete, container, false);;
+        if (fragView == null) {
+            fragView = inflater.inflate(R.layout.fragment_order_complete, container, false);
+            ;
             ButterKnife.bind(this, fragView);
 
             setDatePicker();
@@ -86,7 +88,8 @@ public class OrderCompleteFragment extends Fragment {
 
         return fragView;
     }
-    private void setDatePicker(){
+
+    private void setDatePicker() {
         final SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat, Locale.US);
         startDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +98,7 @@ public class OrderCompleteFragment extends Fragment {
                 try {
                     if (selectedEdit.getText().toString() == "") calendar.setTime(new Date());
                     else calendar.setTime(sdf.parse(selectedEdit.getText().toString()));
-                } catch (Exception e){
+                } catch (Exception e) {
                     calendar.setTime(new Date());
                 }
 
@@ -110,7 +113,7 @@ public class OrderCompleteFragment extends Fragment {
                 try {
                     if (selectedEdit.getText().toString() == "") calendar.setTime(new Date());
                     else calendar.setTime(sdf.parse(selectedEdit.getText().toString()));
-                }catch (Exception e){
+                } catch (Exception e) {
                     calendar.setTime(new Date());
                 }
 
@@ -120,13 +123,15 @@ public class OrderCompleteFragment extends Fragment {
     }
 
     @OnClick(R.id.fragment_order_complete_search)
-    void onSearchClicked(){
+    void onSearchClicked() {
         SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat, Locale.US);
+        SimpleDateFormat toDBFormat = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US);
         String strStart = startDate.getText().toString();
         String strEnd = endDate.getText().toString();
 
-        if (strStart.equals("") || endDate.equals("")) Toast.makeText(getContext(), "날짜를 입력해주세요.", Toast.LENGTH_LONG).show();
-        else{
+        if (strStart.equals("") || endDate.equals(""))
+            Toast.makeText(getContext(), "날짜를 입력해주세요.", Toast.LENGTH_LONG).show();
+        else {
             try {
                 Date startDate = sdf.parse(strStart);
                 Date endDate = sdf.parse(strEnd);
@@ -139,15 +144,15 @@ public class OrderCompleteFragment extends Fragment {
                 txtCompleteDscrp.setVisibility(View.GONE);
 
                 db.collection("owner").document(oid).collection("order")
-                        .whereGreaterThanOrEqualTo("created_at", startDate)
-                        .whereLessThanOrEqualTo("created_at", endDate)
+                        .whereGreaterThanOrEqualTo("created_at", toDBFormat.format(startDate))
+                        .whereLessThanOrEqualTo("created_at", toDBFormat.format(endDate))
                         .orderBy("created_at", Query.Direction.DESCENDING).get()
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                 orderList.clear();
                                 List<DocumentSnapshot> docs = queryDocumentSnapshots.getDocuments();
-                                for (DocumentSnapshot doc : docs ){
+                                for (DocumentSnapshot doc : docs) {
                                     Order order = doc.toObject(Order.class);
                                     order.setId(doc.getId());
 
@@ -166,7 +171,7 @@ public class OrderCompleteFragment extends Fragment {
                         Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-            }catch (Exception e){
+            } catch (Exception e) {
                 progressBar.setVisibility(View.GONE);
                 txtCompleteDscrp.setVisibility(View.VISIBLE);
                 Log.d("FRAG", e.getMessage());
@@ -174,7 +179,8 @@ public class OrderCompleteFragment extends Fragment {
 
         }
     }
-    private void initRecycleView(){
+
+    private void initRecycleView() {
         orderList = new ArrayList<>();
 
         orderAdapter = new OrderListAdapter(orderList, getContext().getApplicationContext());
@@ -190,6 +196,7 @@ public class OrderCompleteFragment extends Fragment {
         selectedEdit.setText(sdf.format(calendar.getTime()));
 
     }
+
     DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
