@@ -1,11 +1,18 @@
 package com.leaderpower.baechelin_owner_android.activity;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,6 +31,8 @@ import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.app.BaechelinApp;
 import com.leaderpower.baechelin_owner_android.util.SharedPrefManager;
 
+import java.lang.reflect.TypeVariable;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -39,6 +48,8 @@ public class LoginActivity extends AppCompatActivity {
     ProgressBar progressLogin;
     @BindView(R.id.login_check_save)
     CheckBox chkSave;
+    @BindView(R.id.login_txt_info_register)
+    TextView txtInfoRegister;
 
     private BaechelinApp baechelinApp;
     private FirebaseAuth mAuth;
@@ -56,6 +67,8 @@ public class LoginActivity extends AppCompatActivity {
 
         btnSignIn.setOnClickListener(onClickListener);
         sharedPrefManager = new SharedPrefManager(this);
+
+        setInfoText();
     }
 
     @Override
@@ -136,5 +149,16 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.login_check_save)
     void onCheckClicked(){
         sharedPrefManager.setSaveAccount(chkSave.isChecked());
+    }
+
+    void setInfoText(){
+        String text1 = "아이디와 비밀번호를 잊어버리셨다면,\n";
+        String text2 = "에서 확인해주세요.";
+        String textColor = "사장님사이트";
+
+        Spannable spannable = new SpannableString(text1 + textColor + text2);
+        spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#1a7cff")), text1.length(), text1.length() + textColor.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        txtInfoRegister.setText(spannable, TextView.BufferType.SPANNABLE);
     }
 }
