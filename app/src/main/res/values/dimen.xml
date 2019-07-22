@@ -33,5 +33,5 @@
     <dimen name="detail_title_padding_bottom">14dp</dimen>
     <dimen name="detail_dscrp_width">100dp</dimen>
     <dimen name="detail_layout_padding">24dp</dimen>
-    <dimen name="detail_dscrp_price_width">50dp</dimen>
+    <dimen name="detail_dscrp_price_width">100dp</dimen>
 </resources>

@@ -42,218 +42,285 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/detail_txt_order_status" />
 
-    <android.support.constraint.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@color/grey"
         app:layout_constraintTop_toBottomOf="@+id/detail_btn_confirm">
-
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/detail_layout_request"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="@dimen/default_margin"
-            android:paddingBottom="@dimen/detail_layout_padding"
-            android:background="@color/whiteBackground"
-            >
+            android:layout_marginTop="8dp"
+            android:background="@color/grey"
+            app:layout_constraintTop_toBottomOf="@+id/detail_btn_confirm">
 
-            <TextView
-                android:id="@+id/detail_dscrp_request"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:paddingBottom="@dimen/detail_title_padding_bottom"
-                android:text="요청사항"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dscrp_large_txt_size"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/detail_txt_request"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:text="asdasdqwasdqwas"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_dscrp_request" />
-        </android.support.constraint.ConstraintLayout>
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/detail_layout_order_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:paddingBottom="@dimen/detail_layout_padding"
-            android:background="@color/whiteBackground"
-            app:layout_constraintTop_toBottomOf="@id/detail_layout_request"
-            >
-            <TextView
-                android:id="@+id/detail_dscrp_order_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dscrp_large_txt_size"
-                android:textStyle="bold"
-                android:text="주문정보"
-                android:paddingBottom="@dimen/detail_title_padding_bottom"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin"
-                />
-
-            <TextView
-                android:id="@+id/detail_dscrp_address_jibun"
-                android:layout_width="@dimen/detail_dscrp_width"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="지번"
-                android:textColor="@color/colorTextPrimary"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_dscrp_order_info" />
-
-            <TextView
-                android:id="@+id/detail_txt_address_jibun"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
-                android:textColor="@color/black"
-                android:text="asdadqw"
-                app:layout_constraintBottom_toBottomOf="@+id/detail_dscrp_address_jibun"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/detail_dscrp_address_jibun"
-                app:layout_constraintTop_toTopOf="@+id/detail_dscrp_address_jibun" />
-
-            <TextView
-                android:id="@+id/detail_dscrp_address_road"
-                android:layout_width="@dimen/detail_dscrp_width"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="도로명"
-                android:textColor="@color/colorTextPrimary"
-                android:layout_marginTop="@dimen/default_side_margin"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_txt_address_jibun" />
-
-            <TextView
-                android:id="@+id/detail_txt_address_road"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
-                android:textColor="@color/black"
-                android:text="asdadqw"
-                app:layout_constraintBottom_toBottomOf="@+id/detail_dscrp_address_road"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/detail_dscrp_address_road"
-                app:layout_constraintTop_toTopOf="@+id/detail_dscrp_address_road" />
-
-            <TextView
-                android:id="@+id/detail_dscrp_user"
-                android:layout_width="@dimen/detail_dscrp_width"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="주문자"
-                android:textColor="@color/colorTextPrimary"
-                android:layout_marginTop="@dimen/default_side_margin"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_txt_address_road" />
-
-            <TextView
-                android:id="@+id/detail_txt_user"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
-                android:textColor="@color/black"
-                android:text="asdadqw"
-                app:layout_constraintBottom_toBottomOf="@+id/detail_dscrp_user"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/detail_dscrp_user"
-                app:layout_constraintTop_toTopOf="@+id/detail_dscrp_user" />
-
-        </android.support.constraint.ConstraintLayout>
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/detail_layout_bill"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:paddingBottom="@dimen/detail_layout_padding"
-            android:background="@color/whiteBackground"
-            app:layout_constraintTop_toBottomOf="@id/detail_layout_order_info">
-            <TextView
-                android:id="@+id/detail_dscrp_bill"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dscrp_large_txt_size"
-                android:textStyle="bold"
-                android:text="주문서"
-                android:paddingBottom="@dimen/detail_title_padding_bottom"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin"
-                />
-
-            <View
-                android:id="@+id/detail_divider1"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/detail_layout_request"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/grey"
-                android:layout_margin="@dimen/default_margin"
-                app:layout_constraintTop_toBottomOf="@id/detail_dscrp_bill" />
-
-            <TextView
-                android:id="@+id/detail_dscrp_menu"
-                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
+                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="@dimen/default_margin"
-                android:layout_marginEnd="8dp"
-                android:text="메뉴"
-                android:textColor="@color/colorTextPrimary"
-                app:layout_constraintEnd_toStartOf="@+id/detail_descrp_quantity"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_divider1" />
+                android:layout_marginBottom="@dimen/default_margin"
+                android:paddingBottom="@dimen/detail_layout_padding"
+                android:background="@color/whiteBackground"
+                >
 
-            <TextView
-                android:id="@+id/detail_dscrp_price"
-                android:layout_width="@dimen/detail_dscrp_price_width"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
-                android:textAlignment="textEnd"
-                android:text="금액"
-                android:textColor="@color/colorTextPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_divider1" />
+                <TextView
+                    android:id="@+id/detail_dscrp_request"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:paddingBottom="@dimen/detail_title_padding_bottom"
+                    android:text="요청사항"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dscrp_large_txt_size"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/detail_descrp_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                android:text="수량"
-                android:textColor="@color/colorTextPrimary"
-                app:layout_constraintBottom_toBottomOf="@+id/detail_dscrp_price"
-                app:layout_constraintEnd_toStartOf="@+id/detail_dscrp_price"
-                app:layout_constraintTop_toBottomOf="@+id/detail_divider1" />
-
-            <View
-                android:id="@+id/detail_divider2"
+                <TextView
+                    android:id="@+id/detail_txt_request"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:text="asdasdqwasdqwas"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_dscrp_request" />
+            </android.support.constraint.ConstraintLayout>
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/detail_layout_order_info"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/grey"
-                android:layout_margin="@dimen/default_margin"
-                app:layout_constraintTop_toBottomOf="@id/detail_descrp_quantity" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:paddingBottom="@dimen/detail_layout_padding"
+                android:background="@color/whiteBackground"
+                app:layout_constraintTop_toBottomOf="@id/detail_layout_request"
+                >
+                <TextView
+                    android:id="@+id/detail_dscrp_order_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dscrp_large_txt_size"
+                    android:textStyle="bold"
+                    android:text="주문정보"
+                    android:paddingBottom="@dimen/detail_title_padding_bottom"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    />
+
+                <TextView
+                    android:id="@+id/detail_dscrp_address_jibun"
+                    android:layout_width="@dimen/detail_dscrp_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="지번"
+                    android:textColor="@color/colorTextPrimary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_dscrp_order_info" />
+
+                <TextView
+                    android:id="@+id/detail_txt_address_jibun"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    android:textColor="@color/black"
+                    android:text="asdadqw"
+                    app:layout_constraintBottom_toBottomOf="@+id/detail_dscrp_address_jibun"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/detail_dscrp_address_jibun"
+                    app:layout_constraintTop_toTopOf="@+id/detail_dscrp_address_jibun" />
+
+                <TextView
+                    android:id="@+id/detail_dscrp_address_road"
+                    android:layout_width="@dimen/detail_dscrp_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="도로명"
+                    android:textColor="@color/colorTextPrimary"
+                    android:layout_marginTop="@dimen/default_side_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_txt_address_jibun" />
+
+                <TextView
+                    android:id="@+id/detail_txt_address_road"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    android:textColor="@color/black"
+                    android:text="asdadqw"
+                    app:layout_constraintBottom_toBottomOf="@+id/detail_dscrp_address_road"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/detail_dscrp_address_road"
+                    app:layout_constraintTop_toTopOf="@+id/detail_dscrp_address_road" />
+
+                <TextView
+                    android:id="@+id/detail_dscrp_user"
+                    android:layout_width="@dimen/detail_dscrp_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="주문자"
+                    android:textColor="@color/colorTextPrimary"
+                    android:layout_marginTop="@dimen/default_side_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_txt_address_road" />
+
+                <TextView
+                    android:id="@+id/detail_txt_user"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    android:textColor="@color/black"
+                    android:text="asdadqw"
+                    app:layout_constraintBottom_toBottomOf="@+id/detail_dscrp_user"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/detail_dscrp_user"
+                    app:layout_constraintTop_toTopOf="@+id/detail_dscrp_user" />
+
+            </android.support.constraint.ConstraintLayout>
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/detail_layout_bill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:paddingBottom="@dimen/detail_layout_padding"
+                android:background="@color/whiteBackground"
+                app:layout_constraintTop_toBottomOf="@id/detail_layout_order_info">
+                <TextView
+                    android:id="@+id/detail_dscrp_bill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dscrp_large_txt_size"
+                    android:textStyle="bold"
+                    android:text="주문서"
+                    android:paddingBottom="@dimen/detail_title_padding_bottom"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    />
+
+                <View
+                    android:id="@+id/detail_divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/grey"
+                    android:layout_margin="@dimen/default_margin"
+                    app:layout_constraintTop_toBottomOf="@id/detail_dscrp_bill" />
+
+                <TextView
+                    android:id="@+id/detail_dscrp_menu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginEnd="8dp"
+                    android:text="메뉴"
+                    android:textColor="@color/colorTextPrimary"
+                    app:layout_constraintEnd_toStartOf="@+id/detail_descrp_quantity"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_divider1" />
+
+                <TextView
+                    android:id="@+id/detail_dscrp_price"
+                    android:layout_width="@dimen/detail_dscrp_price_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    android:textAlignment="textEnd"
+                    android:text="금액"
+                    android:textColor="@color/colorTextPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_divider1" />
+
+                <TextView
+                    android:id="@+id/detail_descrp_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="수량"
+                    android:textColor="@color/colorTextPrimary"
+                    app:layout_constraintBottom_toBottomOf="@+id/detail_dscrp_price"
+                    app:layout_constraintEnd_toStartOf="@+id/detail_dscrp_price"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_divider1" />
+
+                <View
+                    android:id="@+id/detail_divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/grey"
+                    android:layout_margin="@dimen/default_margin"
+                    app:layout_constraintTop_toBottomOf="@id/detail_descrp_quantity" />
+
+
+                <LinearLayout
+                    android:id="@+id/detail_linear_layout_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_divider2">
+
+                    <include
+                        layout="@layout/template_bill_table" />
+                    <include
+                        layout="@layout/template_bill_table" />
+                    <include
+                        layout="@layout/template_bill_table" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/detail_divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/grey"
+                    android:layout_margin="@dimen/default_margin"
+                    app:layout_constraintTop_toBottomOf="@id/detail_linear_layout_order"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/defail_liner_layout_order_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/detail_divider3"
+                    >
+                    <include
+                        layout="@layout/template_bill_table" />
+                    <include
+                        layout="@layout/template_bill_table" />
+                </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/defail_liner_layout_order_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/detail_layout_bill"
+                >
+                <include
+                    layout="@layout/template_order_info_table"
+                    />
+                <include
+                    layout="@layout/template_order_info_table"
+                    />
+                <include
+                    layout="@layout/template_order_info_table"
+                    />
+            </LinearLayout>
+
         </android.support.constraint.ConstraintLayout>
-    </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
 </android.support.constraint.ConstraintLayout>
