@@ -22,6 +22,7 @@ import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.Retrofit.Response.ResponseKakao;
 import com.leaderpower.baechelin_owner_android.Retrofit.RetroCallBack;
 import com.leaderpower.baechelin_owner_android.Retrofit.RetroClient;
+import com.leaderpower.baechelin_owner_android.dialog.CheckOrderDialog;
 import com.leaderpower.baechelin_owner_android.model.Food;
 import com.leaderpower.baechelin_owner_android.model.Foods;
 import com.leaderpower.baechelin_owner_android.model.Order;
@@ -220,7 +221,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         void onOrderStatusClicked() {
             final Order order = orderList.get(getLayoutPosition());
             if (order.getMode() == 0){
-
+                CheckOrderDialog orderDialog = new CheckOrderDialog(mContext);
+                orderDialog.show();
             }
         }
 //
