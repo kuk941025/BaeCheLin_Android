@@ -12,7 +12,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         app:cardBackgroundColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,73 +24,23 @@
 
             <LinearLayout
                 android:id="@+id/template_order_button_layout"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/order_status"
                 android:gravity="center_vertical|center_horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 >
-                <Button
-                    android:id="@+id/template_order_confirm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/button_custom_height"
-                    android:textColor="#ffffff"
-                    android:layout_marginBottom="4dp"
-                    android:text="승락"
-                    android:background="@color/colorPrimary"
-                    />
-                <Button
-                    android:id="@+id/template_order_reject"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/button_custom_height"
-                    android:layout_marginTop="4dp"
-                    android:text="거절"
-                    android:background="@drawable/button_border"
-                    />
-            </LinearLayout>
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/template_order_selected_layout"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/template_order_button_layout"
-                app:layout_constraintTop_toTopOf="parent">
-
                 <TextView
-                    android:id="@+id/template_order_selected_dscrp"
+                    android:id="@+id/template_order_txt_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="배달예상 시간"
-                    android:textColor="#000000"
+                    android:text="접수"
                     android:textStyle="bold"
                     android:textSize="@dimen/dscrp_large_txt_size"
-                    app:layout_constraintVertical_bias=".2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <EditText
-                    android:id="@+id/template_order_selected_edit"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="#ffffff"
-                    android:hint="예상시간 (분)"
-                    android:padding="@dimen/edit_text_padding"
-                    android:textSize="@dimen/edit_text_size"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/template_order_selected_dscrp" />
-            </android.support.constraint.ConstraintLayout>
+                    />
+            </LinearLayout>
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/template_order_information_layout"
@@ -148,6 +97,7 @@
                     android:textSize="@dimen/dscrp_large_txt_size"
                     android:text="주문한 음식, 주문한 음식, 주문한 음식, 주문한 음식, 주문한 음식,"
                     android:maxLines="1"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/template_order_time" />
@@ -161,6 +111,7 @@
                     android:layout_marginEnd="8dp"
                     android:text="서울 용산시"
                     android:textSize="@dimen/dscrp_default_txt_size"
+                    android:textColor="@color/colorTextPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/template_order_food" />
@@ -172,6 +123,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginBottom="8dp"
                     android:text=""
+                    android:textColor="@color/colorTextPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
             </android.support.constraint.ConstraintLayout>

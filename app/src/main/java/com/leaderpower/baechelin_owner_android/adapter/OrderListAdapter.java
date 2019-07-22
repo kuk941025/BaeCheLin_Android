@@ -82,23 +82,23 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         SimpleDateFormat sdf;
         int status;
 
-        try{
+        try {
             status = Integer.parseInt(item.getStatus());
-        } catch (Exception e){
+        } catch (Exception e) {
             status = 0;
         }
 
 
-        if (status  < 2) {
+        if (status < 2) {
             sdf = new SimpleDateFormat("HH:mm");
-        }
-        else {
+        } else {
             sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ", Locale.KOREA);
         }
 
         orderViewHolder.txtAddress.setText(item.getAddress_road() + " " + item.getAddress_detail());
-        String food_ordered = ""; int idx = 0;
-        for (Food food : item.getFood()){
+        String food_ordered = "";
+        int idx = 0;
+        for (Food food : item.getFood()) {
             food_ordered += food.getName() + " (" + food.getCount() + "개)";
             if (idx < item.getFood().size() - 1) food_ordered += ", ";
             idx++;
@@ -108,81 +108,81 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         orderViewHolder.txtTime.setText(sdf.format(item.getCreated_at()));
 
 
-        //update ui based on order status
-        switch (status) {
-            case 0:
-                orderViewHolder.txtStatus.setBackgroundColor(Color.parseColor("#FF9800"));
-                orderViewHolder.txtStatus.setText("신규");
-                break;
-            case 1:
-                orderViewHolder.txtStatus.setBackgroundColor(Color.parseColor("#FF5722"));
-                orderViewHolder.txtStatus.setText("처리중");
-                break;
-            case 2:
-                orderViewHolder.txtStatus.setBackgroundColor(Color.parseColor("#4CAF50"));
-                orderViewHolder.txtStatus.setText("완료됨");
-                orderViewHolder.txtDeliveredAt.setText("완료된 시간: " + sdf.format(item.getDelivered_at()));
-                orderViewHolder.viewButton.setVisibility(View.GONE);
-                break;
-        }
-
-        if (item.getMode() == 0) {
-            orderViewHolder.viewInfo.setVisibility(View.VISIBLE);
-            orderViewHolder.viewSelected.setVisibility(View.GONE);
-            if (status == 0){
-                orderViewHolder.btnConfirm.setText("승락");
-                orderViewHolder.btnReject.setText("거절");
-                orderViewHolder.btnReject.setVisibility(View.VISIBLE);
-            }
-            else if (status == 1){
-                orderViewHolder.btnConfirm.setText("준비완료");
-                orderViewHolder.btnReject.setVisibility(View.GONE);
-            }
-            else {
-                orderViewHolder.btnConfirm.setVisibility(View.GONE);
-                orderViewHolder.btnReject.setVisibility(View.GONE);
-            }
-        } else {
-            //new order
-            orderViewHolder.viewInfo.setVisibility(View.GONE);
-            orderViewHolder.viewSelected.setVisibility(View.VISIBLE);
-            orderViewHolder.btnReject.setVisibility(View.VISIBLE);
-
-            if (status == 0) {
-                //accepted clicked
-                if (item.getMode() == 1) {
-                    orderViewHolder.btnConfirm.setText("배달시작");
-                    orderViewHolder.btnReject.setText("취소");
-
-                    orderViewHolder.editSelected.setHint("예상 시간(분)");
-                    orderViewHolder.editSelected.setInputType(InputType.TYPE_CLASS_NUMBER);
-                    orderViewHolder.txtSelectedDscrp.setText("배달예상 시간");
-                }
-                else if (item.getMode() == 2){
-                    //rejected clicked
-                    orderViewHolder.btnConfirm.setText("주문취소");
-                    orderViewHolder.btnReject.setText("취소");
-
-                    orderViewHolder.editSelected.setHint("고객에게 보내질 메세지를 입력해주세요.");
-                    orderViewHolder.editSelected.setInputType(InputType.TYPE_CLASS_TEXT);
-                    orderViewHolder.txtSelectedDscrp.setText("거절 사유");
-                }
-            } else {
-                //order in preparation
-                if (item.getMode() == 1) {
-                    //accepted clicked
-                    orderViewHolder.txtSelectedDscrp.setText("배달예상 시간: ");
-                    orderViewHolder.editSelected.setHint("예상 시간(분)");
-                    orderViewHolder.editSelected.setInputType(InputType.TYPE_CLASS_NUMBER);
-                } else {
-                    //rejected
-                    orderViewHolder.txtSelectedDscrp.setText("거절사유: ");
-                    orderViewHolder.editSelected.setHint("고객에게 전달될 메세지입니다.");
-                    orderViewHolder.editSelected.setInputType(InputType.TYPE_CLASS_TEXT);
-                }
-            }
-
-        }
+//        //update ui based on order status
+//        switch (status) {
+//            case 0:
+////                orderViewHolder.txtStatus.setBackgroundColor(Color.parseColor("#FF9800"));
+//                orderViewHolder.txtStatus.setText("요청");
+//                break;
+//            case 1:
+////                orderViewHolder.txtStatus.setBackgroundColor(Color.parseColor("#FF5722"));
+//                orderViewHolder.txtStatus.setText("처리중");
+//                break;
+//            case 2:
+////                orderViewHolder.txtStatus.setBackgroundColor(Color.parseColor("#4CAF50"));
+//                orderViewHolder.txtStatus.setText("완료");
+//                orderViewHolder.txtDeliveredAt.setText("완료된 시간: " + sdf.format(item.getDelivered_at()));
+//                orderViewHolder.viewButton.setVisibility(View.GONE);
+//                break;
+//        }
+//
+//        if (item.getMode() == 0) {
+//            orderViewHolder.viewInfo.setVisibility(View.VISIBLE);
+//            orderViewHolder.viewSelected.setVisibility(View.GONE);
+//            if (status == 0){
+//                orderViewHolder.btnConfirm.setText("승락");
+//                orderViewHolder.btnReject.setText("거절");
+//                orderViewHolder.btnReject.setVisibility(View.VISIBLE);
+//            }
+//            else if (status == 1){
+//                orderViewHolder.btnConfirm.setText("준비완료");
+//                orderViewHolder.btnReject.setVisibility(View.GONE);
+//            }
+//            else {
+//                orderViewHolder.btnConfirm.setVisibility(View.GONE);
+//                orderViewHolder.btnReject.setVisibility(View.GONE);
+//            }
+//        } else {
+//            //new order
+//            orderViewHolder.viewInfo.setVisibility(View.GONE);
+//            orderViewHolder.viewSelected.setVisibility(View.VISIBLE);
+//            orderViewHolder.btnReject.setVisibility(View.VISIBLE);
+//
+//            if (status == 0) {
+//                //accepted clicked
+//                if (item.getMode() == 1) {
+//                    orderViewHolder.btnConfirm.setText("배달시작");
+//                    orderViewHolder.btnReject.setText("취소");
+//
+//                    orderViewHolder.editSelected.setHint("예상 시간(분)");
+//                    orderViewHolder.editSelected.setInputType(InputType.TYPE_CLASS_NUMBER);
+//                    orderViewHolder.txtSelectedDscrp.setText("배달예상 시간");
+//                }
+//                else if (item.getMode() == 2){
+//                    //rejected clicked
+//                    orderViewHolder.btnConfirm.setText("주문취소");
+//                    orderViewHolder.btnReject.setText("취소");
+//
+//                    orderViewHolder.editSelected.setHint("고객에게 보내질 메세지를 입력해주세요.");
+//                    orderViewHolder.editSelected.setInputType(InputType.TYPE_CLASS_TEXT);
+//                    orderViewHolder.txtSelectedDscrp.setText("거절 사유");
+//                }
+//            } else {
+//                //order in preparation
+//                if (item.getMode() == 1) {
+//                    //accepted clicked
+//                    orderViewHolder.txtSelectedDscrp.setText("배달예상 시간: ");
+//                    orderViewHolder.editSelected.setHint("예상 시간(분)");
+//                    orderViewHolder.editSelected.setInputType(InputType.TYPE_CLASS_NUMBER);
+//                } else {
+//                    //rejected
+//                    orderViewHolder.txtSelectedDscrp.setText("거절사유: ");
+//                    orderViewHolder.editSelected.setHint("고객에게 전달될 메세지입니다.");
+//                    orderViewHolder.editSelected.setInputType(InputType.TYPE_CLASS_TEXT);
+//                }
+//            }
+//
+//        }
     }
 
     @Override
@@ -201,24 +201,16 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         TextView txtPrice;
         @BindView(R.id.template_order_food)
         TextView txtFood;
-        @BindView(R.id.template_order_confirm)
-        Button btnConfirm;
-        @BindView(R.id.template_order_reject)
-        Button btnReject;
         @BindView(R.id.template_order_information_layout)
         View viewInfo;
-        @BindView(R.id.template_order_selected_layout)
-        View viewSelected;
-        @BindView(R.id.template_order_selected_dscrp)
-        TextView txtSelectedDscrp;
-        @BindView(R.id.template_order_selected_edit)
-        EditText editSelected;
         @BindView(R.id.template_order_main_layout)
         View mainLayout;
         @BindView(R.id.template_order_delivered_at)
         TextView txtDeliveredAt;
         @BindView(R.id.template_order_button_layout)
         View viewButton;
+        @BindView(R.id.template_order_button_layout)
+        View btnOrderStatus;
 
         public orderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -226,121 +218,129 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             ButterKnife.bind(this, itemView);
         }
 
-        @OnClick(R.id.template_order_reject)
-        void onRejectClicked() {
-            Order order = orderList.get(getLayoutPosition());
-            if (order.getMode() == 0) {
-                //click rejected
-                order.setMode(2);
-            } else {
-                order.setMode(0);
-            }
-            notifyItemChanged(getLayoutPosition());
-        }
-
-        @OnClick(R.id.template_order_confirm)
-        void onConfirmClicked() {
+        @OnClick(R.id.template_order_button_layout)
+        void onOrderStatusClicked() {
             final Order order = orderList.get(getLayoutPosition());
-            final String strMessage = editSelected.getText().toString();
-            if (order.getMode() == 0) {
-                order.setMode(1);
-            } else {
-                if (strMessage.equals("")){
-                    Toast.makeText(mContext, "빈칸을 입력해주세요.", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    if (order.getMode() == 1){
-                        //user has clicked accepting order
-                        int status;
-                        try {
-                            status = Integer.parseInt(order.getStatus());
-                        } catch (Exception e){
-                            status = 0;
-                        }
-
-                        if (status == 0){
-                            //new order, let user know the owner has accepted the order
-//                            Toast.makeText(mContext, "주문승락", Toast.LENGTH_LONG).show();
-                            if (dbRef != null){
-                                Map<String, Object> updatedStatus = new HashMap<>();
-                                updatedStatus.put("status", 1);
-                                dbRef.document(order.getId()).update(updatedStatus)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                order.setStatus(Integer.toString(1));
-                                                sendAcceptedMessage(order, strMessage);
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(mContext, "주문이 정상적으로 처리되지 않았습니다. " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                            }
-                                        });
-
-
-                            }
-                            else {
-                                Toast.makeText(mContext, "알수없는 데이터베이스.", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                        else {
-                            //order in preparation, let user know the delivery has started
-//                            Toast.makeText(mContext, "배달시작", Toast.LENGTH_LONG).show();
-                            if (dbRef != null){
-                                Map<String, Object> updatedStatus = new HashMap<>();
-                                updatedStatus.put("status", 2);
-                                updatedStatus.put("delivered_at", new Date());
-                                dbRef.document(order.getId()).update(updatedStatus)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                order.setStatus(Integer.toString(2));
-                                                sendStartDelieveryMessage(order, strMessage);
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(mContext, "주문이 정상적으로 처리되지 않았습니다. " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                            }
-                                        });
-                            }
-                        }
-                    }
-                    else if (order.getMode() == 2){
-                        //user  has clicked rejecting order
-//                        Toast.makeText(mContext, "주문 거절", Toast.LENGTH_LONG).show();
-                        if (dbRef != null ){
-                            dbRef.document(order.getId()).delete()
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Toast.makeText(mContext, "주문 취소 완료", Toast.LENGTH_LONG).show();
-                                            sendRejectedMessage(order, strMessage);
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(mContext, "주문이 정상적으로 처리되지 않았습니다. " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                        }
-                                    });
-                        }
-                    }
-                    order.setMode(0);
-                    editSelected.setText("");
-
-                    InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
-                }
-
+            if (order.getMode() == 0){
+                
             }
-            notifyItemChanged(getLayoutPosition());
         }
+//
+//        @OnClick(R.id.template_order_reject)
+//        void onRejectClicked() {
+//            Order order = orderList.get(getLayoutPosition());
+//            if (order.getMode() == 0) {
+//                //click rejected
+//                order.setMode(2);
+//            } else {
+//                order.setMode(0);
+//            }
+//            notifyItemChanged(getLayoutPosition());
+//        }
 
-        private void sendStartDelieveryMessage(Order order, String strMessage){
+//        @OnClick(R.id.template_order_confirm)
+//        void onConfirmClicked() {
+//            final Order order = orderList.get(getLayoutPosition());
+//            final String strMessage = editSelected.getText().toString();
+//            if (order.getMode() == 0) {
+//                order.setMode(1);
+//            } else {
+//                if (strMessage.equals("")){
+//                    Toast.makeText(mContext, "빈칸을 입력해주세요.", Toast.LENGTH_LONG).show();
+//                }
+//                else{
+//                    if (order.getMode() == 1){
+//                        //user has clicked accepting order
+//                        int status;
+//                        try {
+//                            status = Integer.parseInt(order.getStatus());
+//                        } catch (Exception e){
+//                            status = 0;
+//                        }
+//
+//                        if (status == 0){
+//                            //new order, let user know the owner has accepted the order
+////                            Toast.makeText(mContext, "주문승락", Toast.LENGTH_LONG).show();
+//                            if (dbRef != null){
+//                                Map<String, Object> updatedStatus = new HashMap<>();
+//                                updatedStatus.put("status", 1);
+//                                dbRef.document(order.getId()).update(updatedStatus)
+//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                            @Override
+//                                            public void onSuccess(Void aVoid) {
+//                                                order.setStatus(Integer.toString(1));
+//                                                sendAcceptedMessage(order, strMessage);
+//                                            }
+//                                        })
+//                                        .addOnFailureListener(new OnFailureListener() {
+//                                            @Override
+//                                            public void onFailure(@NonNull Exception e) {
+//                                                Toast.makeText(mContext, "주문이 정상적으로 처리되지 않았습니다. " + e.getMessage(), Toast.LENGTH_LONG).show();
+//                                            }
+//                                        });
+//
+//
+//                            }
+//                            else {
+//                                Toast.makeText(mContext, "알수없는 데이터베이스.", Toast.LENGTH_LONG).show();
+//                            }
+//                        }
+//                        else {
+//                            //order in preparation, let user know the delivery has started
+////                            Toast.makeText(mContext, "배달시작", Toast.LENGTH_LONG).show();
+//                            if (dbRef != null){
+//                                Map<String, Object> updatedStatus = new HashMap<>();
+//                                updatedStatus.put("status", 2);
+//                                updatedStatus.put("delivered_at", new Date());
+//                                dbRef.document(order.getId()).update(updatedStatus)
+//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                            @Override
+//                                            public void onSuccess(Void aVoid) {
+//                                                order.setStatus(Integer.toString(2));
+//                                                sendStartDelieveryMessage(order, strMessage);
+//                                            }
+//                                        })
+//                                        .addOnFailureListener(new OnFailureListener() {
+//                                            @Override
+//                                            public void onFailure(@NonNull Exception e) {
+//                                                Toast.makeText(mContext, "주문이 정상적으로 처리되지 않았습니다. " + e.getMessage(), Toast.LENGTH_LONG).show();
+//                                            }
+//                                        });
+//                            }
+//                        }
+//                    }
+//                    else if (order.getMode() == 2){
+//                        //user  has clicked rejecting order
+////                        Toast.makeText(mContext, "주문 거절", Toast.LENGTH_LONG).show();
+//                        if (dbRef != null ){
+//                            dbRef.document(order.getId()).delete()
+//                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                        @Override
+//                                        public void onSuccess(Void aVoid) {
+//                                            Toast.makeText(mContext, "주문 취소 완료", Toast.LENGTH_LONG).show();
+//                                            sendRejectedMessage(order, strMessage);
+//                                        }
+//                                    })
+//                                    .addOnFailureListener(new OnFailureListener() {
+//                                        @Override
+//                                        public void onFailure(@NonNull Exception e) {
+//                                            Toast.makeText(mContext, "주문이 정상적으로 처리되지 않았습니다. " + e.getMessage(), Toast.LENGTH_LONG).show();
+//                                        }
+//                                    });
+//                        }
+//                    }
+//                    order.setMode(0);
+//                    editSelected.setText("");
+//
+//                    InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
+//                }
+//
+//            }
+//            notifyItemChanged(getLayoutPosition());
+//        }
+
+        private void sendStartDelieveryMessage(Order order, String strMessage) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
             String food_ordered;
 
@@ -357,7 +357,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
 
             sendMessage(parameters);
         }
-        private void sendRejectedMessage(Order order, String strMessage){
+
+        private void sendRejectedMessage(Order order, String strMessage) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 
             HashMap<String, Object> parameters = new HashMap<>();
@@ -373,7 +374,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
 
             sendMessage(parameters);
         }
-        private void sendAcceptedMessage(Order order, String strMessage){
+
+        private void sendAcceptedMessage(Order order, String strMessage) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 
             HashMap<String, Object> parameters = new HashMap<>();
@@ -391,7 +393,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             sendMessage(parameters);
         }
 
-        private void sendMessage(HashMap<String, Object> params){
+        private void sendMessage(HashMap<String, Object> params) {
             retroClient.postSendKakao(params, new RetroCallBack() {
                 @Override
                 public void onError(Throwable t) {
