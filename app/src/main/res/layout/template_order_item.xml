@@ -118,6 +118,16 @@
                     app:layout_constraintTop_toBottomOf="@+id/template_order_food" />
 
                 <TextView
+                    android:id="@+id/template_order_txt_payment_method"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:textColor="@color/colorTextPrimary"
+                    android:text="결제완료 12,000원"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/template_order_address" />
+
+                <TextView
                     android:id="@+id/template_order_delivered_at"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
