@@ -8,6 +8,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
+        android:id="@+id/template_order"
         android:layout_height="@dimen/order_card_height"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"

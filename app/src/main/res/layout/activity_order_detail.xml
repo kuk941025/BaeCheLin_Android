@@ -318,6 +318,12 @@
                 <include
                     layout="@layout/template_order_info_table"
                     />
+                <include
+                    layout="@layout/template_order_info_table"
+                    />
+                <include
+                    layout="@layout/template_order_info_table"
+                    />
             </LinearLayout>
 
         </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.leaderpower.baechelin_owner_android.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.Retrofit.Response.ResponseKakao;
 import com.leaderpower.baechelin_owner_android.Retrofit.RetroCallBack;
 import com.leaderpower.baechelin_owner_android.Retrofit.RetroClient;
+import com.leaderpower.baechelin_owner_android.activity.OrderDetail;
 import com.leaderpower.baechelin_owner_android.dialog.CheckOrderDialog;
 import com.leaderpower.baechelin_owner_android.model.Food;
 import com.leaderpower.baechelin_owner_android.model.Foods;
@@ -224,6 +226,12 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                 CheckOrderDialog orderDialog = new CheckOrderDialog(mContext);
                 orderDialog.show();
             }
+        }
+
+        @OnClick(R.id.template_order)
+        void onOrderClicked() {
+            Intent intent = new Intent(mContext, OrderDetail.class);
+            mContext.startActivity(intent);
         }
 //
 //        @OnClick(R.id.template_order_reject)
