@@ -1,6 +1,8 @@
 package com.leaderpower.baechelin_owner_android.Retrofit;
 
 import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.leaderpower.baechelin_owner_android.Retrofit.Response.ResponseKakao;
 
@@ -58,7 +60,7 @@ public class RetroClient {
 
             @Override
             public void onFailure(Call<ResponseKakao> call, Throwable t) {
-
+                Log.d("ORANGE MSG", "FAILED");
             }
         });
     }

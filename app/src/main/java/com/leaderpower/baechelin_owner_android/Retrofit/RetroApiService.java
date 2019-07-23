@@ -11,7 +11,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface RetroApiService {
-    String KAKAO_BASE_URL = "http://www.apiorange.com/api/";
+    String KAKAO_BASE_URL = "https://www.apiorange.com/api/";
 
     @Headers("Authorization: tUsWZZ+I983DVr5AZnuezWsQjz1iIR3e+KoJfPLSs7o=")
     @FormUrlEncoded

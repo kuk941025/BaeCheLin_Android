@@ -8,13 +8,22 @@ public class Order {
     private String address_detail, address_jibun, address_road, coupon_type, request, status, user_phone, id, delivered_at;
     private Date created_at;
     private int coupon_amount, payment_method, point_amount, total_price, mode, delivery_time;
+    private boolean timer_on;
 
     private ArrayList<Food> food;
 
     public Order() {
         mode = 0;
+        timer_on = false;
     }
 
+    public boolean isTimer_on() {
+        return timer_on;
+    }
+
+    public void setTimer_on(boolean timer_on) {
+        this.timer_on = timer_on;
+    }
 
     public int getDelivery_time() {
         return delivery_time;
