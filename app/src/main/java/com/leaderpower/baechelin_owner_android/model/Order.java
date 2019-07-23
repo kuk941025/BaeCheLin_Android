@@ -30,7 +30,7 @@ public class Order implements Serializable {
         String ordered = "";
         Food first_food = food.get(0);
         if (food.size() == 1) ordered = first_food.getName() + " " + first_food.getCount() + "개";
-        else ordered = first_food.getName() + " 외" + (food.size() - 1) + "개";
+        else ordered = first_food.getName() + " 외 " + (food.size() - 1) + "개";
 
         this.food_ordered = ordered;
     }

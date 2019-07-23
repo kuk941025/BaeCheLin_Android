@@ -35,8 +35,10 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+
             Map<String, String> data = remoteMessage.getData();
-            String shop_name = data.get("shop_name");
+            String total_price = data.get("total_price");
+            String ordered = data.get("ordereD");
 
             String channelId = "channel";
             String channelName = "Channel Name";
@@ -70,7 +72,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                     , PendingIntent.FLAG_UPDATE_CURRENT);
 
             builder.setContentTitle("새로운 주문") // required
-                    .setContentText(shop_name + "에 새로운 주문이 들어왔습니다.")  // required
+                    .setContentText("신규 주문이 들어왔습니다.")  // required
                     .setDefaults(android.app.Notification.DEFAULT_ALL) // 알림, 사운드 진동 설정
                     .setAutoCancel(true) // 알림 터치시 반응 후 삭제
                     .setSound(RingtoneManager

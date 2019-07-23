@@ -8,7 +8,7 @@
     >
 
     <ImageView
-        android:id="@+id/dialog_accept_received_title"
+        android:id="@+id/dialog_order_received_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="X"
@@ -57,7 +57,7 @@
         />
 
     <Button
-        android:id="@+id/dialog_order_received_show"
+        android:id="@+id/dialog_order_received_btn_show"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_dialog_btn_status_0"

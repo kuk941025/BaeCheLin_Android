@@ -108,9 +108,14 @@ public class OrderCompleteFragment extends Fragment {
                         case ADDED:
                             Order order = dc.getDocument().toObject(Order.class);
                             order.setId(dc.getDocument().getId());
-                            order.setFoodOrdered();
-                            orderList.add(order);
-                            orderAdapter.notifyItemInserted(orderList.size());
+
+                            //filter orders that are not complted
+                            if (order.getStatus().equals("2" )){
+                                order.setFoodOrdered();
+                                orderList.add(order);
+                                orderAdapter.notifyItemInserted(orderList.size());
+                            }
+
 
                             break;
 

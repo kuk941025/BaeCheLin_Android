@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -222,8 +223,6 @@ public class OrderDetail extends AppCompatActivity implements RejectOrderDialogL
 
     @OnClick(R.id.detail_btn_cancel_order)
     void onOrderCancel() {
-        View viewInflated = LayoutInflater.from(this).inflate(R.layout.dialog_reject_order, null, false);
-
         RejectOrderDialog rejectOrderDialog = new RejectOrderDialog(this, this);
         rejectOrderDialog.show();
 
@@ -264,7 +263,6 @@ public class OrderDetail extends AppCompatActivity implements RejectOrderDialogL
                  .addOnSuccessListener(new OnSuccessListener<Void>() {
                      @Override
                      public void onSuccess(Void aVoid) {
-
                      }
                  })
                  .addOnFailureListener(new OnFailureListener() {
@@ -280,7 +278,19 @@ public class OrderDetail extends AppCompatActivity implements RejectOrderDialogL
     @Override
     public void onRejectClicked(String reason) {
         sendRejectedMessage(reason);
-        this.finish();
+        orderRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(OrderDetail.this, "주문이 취소되었습니다.", Toast.LENGTH_LONG).show();
+                OrderDetail.this.finish();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(OrderDetail.this, "예상치 못한 오류가 발생했습니다. " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
     private void sendRejectedMessage(String strMessage) {
@@ -305,7 +315,8 @@ public class OrderDetail extends AppCompatActivity implements RejectOrderDialogL
 
             @Override
             public void onSuccess(int code, Object receivedData) {
-                Toast.makeText(OrderDetail.this, "고객님에게 카카오 알림 메세지를 발송했습니다.", Toast.LENGTH_LONG).show();
+                Log.d("ORDER_DETAIL", "카카오 발송선공");
+//                Toast.makeText(OrderDetail.this, "고객님에게 카카오 알림 메세지를 발송했습니다.", Toast.LENGTH_LONG).show();
             }
 
             @Override
