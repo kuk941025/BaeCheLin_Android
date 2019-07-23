@@ -211,19 +211,20 @@ public class OrderDetail extends AppCompatActivity implements RejectOrderDialogL
 
     @Override
     public void onRejectClicked(String reason) {
-
+        sendRejectedMessage(reason);
+        this.finish(); 
     }
 
     private void sendRejectedMessage(String strMessage) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREA);
 
         HashMap<String, Object> params = new HashMap<>();
-        params.put("temp_number", "7858");
+        params.put("tmp_number", "7858");
         params.put("kakao_sender", KAKAO_SENDER);
         params.put("kakao_name", "고객");
         params.put("kakao_phone", order.getUser_phone());
         params.put("kakao_add1", "[" + strMessage + "]");
-        params.put("kakao_add2", sdf.format(order.getCoupon_amount()));
+        params.put("kakao_add2", sdf.format(order.getCreated_at()));
         params.put("kakao_add3", owner.getShop_name());
         params.put("kakao_add4", order.getFood_ordered());
         params.put("kakao_add5", order.getAddress_road() + " " + order.getAddress_detail());
