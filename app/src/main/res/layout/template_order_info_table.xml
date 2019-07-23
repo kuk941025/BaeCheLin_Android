@@ -9,13 +9,14 @@
 
     <TextView
         android:id="@+id/template_order_table_header"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
         android:layout_marginTop="@dimen/default_side_margin"
         android:layout_marginBottom="@dimen/default_side_margin"
-        android:text="업소명"
+        android:text="item1"
         android:textColor="@color/colorTextPrimary"
+        app:layout_constraintEnd_toStartOf="@id/template_order_table_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,7 +27,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginEnd="8dp"
         android:textColor="@color/colorTextPrimary"
-        android:text="배민식당방이점(23459("
+        android:text="item2"
         app:layout_constraintBottom_toBottomOf="@+id/template_order_table_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/template_order_table_header"

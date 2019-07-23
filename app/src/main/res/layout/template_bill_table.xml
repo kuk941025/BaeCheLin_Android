@@ -12,7 +12,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="@dimen/default_margin"
         android:layout_marginEnd="8dp"
-        android:text="단호박치즈피자"
+        android:text="item1"
         android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/template_txt_bill_table_quantity"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/default_margin"
         android:layout_marginTop="@dimen/default_margin"
-        android:text="28,500"
+        android:text="item2"
         android:textAlignment="textEnd"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,11 +32,12 @@
 
     <TextView
         android:id="@+id/template_txt_bill_table_quantity"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/detail_dscrp_quantity_width"
+        android:textAlignment="center"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/default_margin"
         android:layout_marginTop="@dimen/default_margin"
-        android:text="1"
+        android:text="item3"
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/template_txt_bill_table_price" />

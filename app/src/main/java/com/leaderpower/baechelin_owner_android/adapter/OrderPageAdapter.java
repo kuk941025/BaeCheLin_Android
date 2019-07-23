@@ -40,6 +40,7 @@ public class OrderPageAdapter extends FragmentPagerAdapter {
 
         Bundle completeBundle = new Bundle();
         completeBundle.putString("oid", owner.getOid());
+        completeBundle.putSerializable("owner", owner);
         OrderCompleteFragment completeFragment = new OrderCompleteFragment();
         completeFragment.setArguments(completeBundle);
 

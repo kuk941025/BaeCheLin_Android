@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Order implements Serializable {
-    private String address_detail, address_jibun, address_road, coupon_type, request, status, user_phone, id, delivered_at, food_ordered;
+    private String address_detail, address_jibun, address_road, coupon_type, request, status, user_phone, id, delivered_at, food_ordered, user_name;
     private Date created_at;
     private int coupon_amount, payment_method, point_amount, total_price, mode, delivery_time;
     private boolean timer_on;
@@ -37,6 +37,14 @@ public class Order implements Serializable {
 
     public String getFood_ordered() {
         return food_ordered;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
     public int getDelivery_time() {

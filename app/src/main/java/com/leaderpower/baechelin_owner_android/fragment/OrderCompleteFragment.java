@@ -36,6 +36,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.adapter.OrderListAdapter;
 import com.leaderpower.baechelin_owner_android.model.Order;
+import com.leaderpower.baechelin_owner_android.model.OwnerItem;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -75,6 +76,7 @@ public class OrderCompleteFragment extends Fragment {
     private EditText selectedEdit = null;
     private final String strDateFormat = "MM/dd/yy";
     private String oid;
+    private OwnerItem owner;
 
     public OrderCompleteFragment() {
         // Required empty public constructor
@@ -158,6 +160,7 @@ public class OrderCompleteFragment extends Fragment {
 
             //receive oid
             oid = getArguments().getString("oid");
+            owner = (OwnerItem) getArguments().getSerializable("owner");
             initRecycleView();
 
 
@@ -268,7 +271,7 @@ public class OrderCompleteFragment extends Fragment {
     private void initRecycleView() {
         orderList = new ArrayList<>();
 
-        orderAdapter = new OrderListAdapter(orderList, getActivity());
+        orderAdapter = new OrderListAdapter(orderList, getActivity(), owner);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(orderAdapter);

@@ -1,6 +1,8 @@
 package com.leaderpower.baechelin_owner_android.model;
 
-public class Food {
+import java.io.Serializable;
+
+public class Food implements Serializable {
     private String count, extra_options, name, price;
 
     public String getCount() {

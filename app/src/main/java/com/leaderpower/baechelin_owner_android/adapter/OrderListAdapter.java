@@ -58,9 +58,10 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
     private final String colorSecondary = "#F44336";
     private final String colorTextPrimary = "#747988";
 
-    public OrderListAdapter(ArrayList<Order> orderList, Context context) {
+    public OrderListAdapter(ArrayList<Order> orderList, Context context, OwnerItem owner) {
         this.orderList = orderList;
         this.mContext = context;
+        this.owner = owner;
         dbRef = null;
 
         retroClient = RetroClient.getInstance(context).createBaseApi();
@@ -114,7 +115,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         }
         else {
             orderViewHolder.txtPaymentMethod.setTextColor(Color.parseColor(colorTextPrimary));
-            txtPaymentMethod = "결제완료";
+            txtPaymentMethod = "앱에서 미리 결제";
         }
         txtPaymentMethod += " " + df.format(item.getTotal_price()) + "원";
         orderViewHolder.txtPaymentMethod.setText(txtPaymentMethod);
@@ -251,12 +252,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         void onOrderClicked() {
             final Order order = orderList.get(getLayoutPosition());
             Intent intent = new Intent(mContext, OrderDetail.class);
+            intent.putExtra("order", order);
+            intent.putExtra("owner", owner);
             mContext.startActivity(intent);
-            if (order.getMode() == 0) {
-
-            } else if (order.getMode() == 1) {
-
-            }
         }
 
 //        public void setTimer(int remaining_time) {

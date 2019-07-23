@@ -55,13 +55,15 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detail_top_layout">
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@color/grey"
+            android:paddingBottom="@dimen/default_side_margin"
             app:layout_constraintTop_toBottomOf="@+id/detail_btn_confirm">
 
             <android.support.constraint.ConstraintLayout
@@ -255,10 +257,11 @@
 
                 <TextView
                     android:id="@+id/detail_descrp_quantity"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/detail_dscrp_quantity_width"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginTop="8dp"
+                    android:textAlignment="center"
                     android:text="수량"
                     android:textColor="@color/colorTextPrimary"
                     app:layout_constraintBottom_toBottomOf="@+id/detail_dscrp_price"
@@ -281,12 +284,6 @@
                     android:orientation="vertical"
                     app:layout_constraintTop_toBottomOf="@+id/detail_divider2">
 
-                    <include
-                        layout="@layout/template_bill_table" />
-                    <include
-                        layout="@layout/template_bill_table" />
-                    <include
-                        layout="@layout/template_bill_table" />
                 </LinearLayout>
 
                 <View
@@ -299,21 +296,23 @@
                     />
 
                 <LinearLayout
-                    android:id="@+id/defail_liner_layout_order_result"
+                    android:id="@+id/detail_liner_layout_order_result"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     app:layout_constraintTop_toBottomOf="@id/detail_divider3"
                     >
                     <include
+                        android:id="@+id/detail_layout_menu_total"
                         layout="@layout/template_bill_table" />
                     <include
+                        android:id="@+id/detail_layout_total_price"
                         layout="@layout/template_bill_table" />
                 </LinearLayout>
             </android.support.constraint.ConstraintLayout>
 
             <LinearLayout
-                android:id="@+id/defail_liner_layout_order_table"
+                android:id="@+id/detail_liner_layout_order_table"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
@@ -321,22 +320,46 @@
                 app:layout_constraintTop_toBottomOf="@id/detail_layout_bill"
                 >
                 <include
+                    android:id="@+id/detail_order_info_store_name"
                     layout="@layout/template_order_info_table"
                     />
                 <include
+                    android:id="@+id/detail_order_info_order_id"
                     layout="@layout/template_order_info_table"
                     />
                 <include
+                    android:id="@+id/detail_order_info_order_time"
                     layout="@layout/template_order_info_table"
                     />
                 <include
-                    layout="@layout/template_order_info_table"
-                    />
-                <include
+                    android:id="@+id/detail_order_info_payment"
                     layout="@layout/template_order_info_table"
                     />
             </LinearLayout>
+            <Button
+                android:id="@+id/detail_btn_cancel_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/detail_liner_layout_order_table"
+                android:background="@drawable/rectangle_grey_border"
+                android:layout_margin="@dimen/default_margin"
+                android:text="주문 취소하기"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:elevation="0dp"
+                />
 
+            <TextView
+                android:id="@+id/detail_dscrp_cancel_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:text="- 주문 취소 시, 이미 접수 완료 된 주문이 취소되며 고객님께 즉시 알림이 발송됩니다."
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="@dimen/dscrp_default_txt_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_btn_cancel_order" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
