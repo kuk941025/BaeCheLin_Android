@@ -129,7 +129,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         switch (status) {
             case 0:
                 orderViewHolder.statusLayout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.order_status_0));
-                orderViewHolder.txtStatus.setText("요청");
+                orderViewHolder.txtStatus.setText("접수");
                 break;
 
             case 1:
@@ -224,7 +224,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         @Override
         public void onConfirmClicked(final int delivery_time) {
             final Order order = orderList.get(getLayoutPosition());
-
             order.setDelivery_time(delivery_time);
 
             //set order time and mode;

@@ -1,10 +1,10 @@
 package com.leaderpower.baechelin_owner_android.activity;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -25,6 +25,7 @@ import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.Retrofit.RetroCallBack;
 import com.leaderpower.baechelin_owner_android.Retrofit.RetroClient;
 import com.leaderpower.baechelin_owner_android.dialog.CheckOrderDialog;
+import com.leaderpower.baechelin_owner_android.dialog.CheckOrderDialogListener;
 import com.leaderpower.baechelin_owner_android.dialog.RejectOrderDialog;
 import com.leaderpower.baechelin_owner_android.dialog.RejectOrderDialogListener;
 import com.leaderpower.baechelin_owner_android.model.Food;
@@ -41,7 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OrderDetail extends AppCompatActivity implements RejectOrderDialogListener {
+public class OrderDetail extends AppCompatActivity implements RejectOrderDialogListener, CheckOrderDialogListener {
     @BindView(R.id.detail_layout_request)
     View requestLayout;
     @BindView(R.id.detail_txt_request)
@@ -98,37 +99,14 @@ public class OrderDetail extends AppCompatActivity implements RejectOrderDialogL
 
         retroClient = RetroClient.getInstance(this).createBaseApi();
 
-//        orderRef = db.collection("owner").document(owner.getOid()).collection("order").document(order.getId());
+        db = FirebaseFirestore.getInstance();
+         orderRef = db.collection("owner").document(owner.getOid()).collection("order").document(order.getId());
     }
 
+
     private void initView() {
-        final String colorSecondary = "#F44336";
-        final String colorAccent = "#1a7cff";
-        final String colorTextPrimary = "#747988";
 
-        //set status bar
-        if (order.getStatus().equals("2")) {
-            txtCreatedAt.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREA).format(order.getCreated_at()));
-            btnAction.setText("완료");
-            btnAction.setBackground(ContextCompat.getDrawable(this, R.drawable.shape_dialog_btn_status_2));
-            btnAction.setTextColor(Color.parseColor(colorAccent));
-            txtOrderStatus.setText("결제완료");
-        } else {
-            if (order.getStatus().equals("1")) {
-                btnAction.setBackground(ContextCompat.getDrawable(this, R.drawable.shape_dialog_btn_status_1));
-                btnAction.setTextColor(Color.parseColor("#FFFFFF"));
-            } else if (order.getStatus().equals("0")) {
-                btnAction.setBackground(ContextCompat.getDrawable(this, R.drawable.shape_dialog_btn_status_0));
-                btnAction.setTextColor(Color.parseColor("#FFFFFF"));
-            }
-
-            if (order.getPayment_method() == 2) txtOrderStatus.setText("결제완료 - 앱에서 미리결제");
-            else {
-                txtOrderStatus.setText("현장결제 " + (order.getPayment_method() == 0 ? "(카드)" : "(현금)"));
-            }
-            txtCreatedAt.setText(new SimpleDateFormat("HH:mm", Locale.KOREA).format(order.getCreated_at()));
-        }
-
+        setStatusBar();
 
         DecimalFormat df = new DecimalFormat("#,###");
         if (order.getRequest() == "") requestLayout.setVisibility(View.GONE);
@@ -177,6 +155,71 @@ public class OrderDetail extends AppCompatActivity implements RejectOrderDialogL
         ((TextView) viewOrder.findViewById(R.id.template_order_table_content)).setText(item2);
     }
 
+    private void setStatusBar(){
+        final String colorAccent = "#1a7cff";
+
+        //set status bar
+        if (order.getStatus().equals("2")) {
+            txtCreatedAt.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREA).format(order.getCreated_at()));
+            btnAction.setText("완료");
+            btnAction.setBackground(ContextCompat.getDrawable(this, R.drawable.shape_dialog_btn_status_2));
+            btnAction.setTextColor(Color.parseColor(colorAccent));
+            txtOrderStatus.setText("결제완료");
+        } else {
+            if (order.getStatus().equals("1")) {
+                        btnAction.setBackground(ContextCompat.getDrawable(this, R.drawable.shape_dialog_btn_status_1));
+                btnAction.setTextColor(Color.parseColor("#FFFFFF"));
+                btnAction.setText("준비중");
+            } else if (order.getStatus().equals("0")) {
+                btnAction.setBackground(ContextCompat.getDrawable(this, R.drawable.shape_dialog_btn_status_0));
+                btnAction.setTextColor(Color.parseColor("#FFFFFF"));
+                btnAction.setText("접수");
+            }
+
+            if (order.getPayment_method() == 2) txtOrderStatus.setText("결제완료 - 앱에서 미리결제");
+            else {
+                txtOrderStatus.setText("현장결제 " + (order.getPayment_method() == 0 ? "(카드)" : "(현금)"));
+            }
+            txtCreatedAt.setText(new SimpleDateFormat("HH:mm", Locale.KOREA).format(order.getCreated_at()));
+        }
+    }
+
+    @OnClick(R.id.detail_btn_action)
+    void onActionClicked(){
+        if (order.getStatus().equals("0")){
+            CheckOrderDialog checkDialog = new CheckOrderDialog(this, this);
+            checkDialog.show();
+        }
+        else if (order.getStatus().equals("1")){
+            android.app.AlertDialog.Builder builder = new AlertDialog.Builder(OrderDetail.this, R.style.AlertDialogTheme);
+            builder.setTitle("준비 완료").setMessage("배달을 시작하시겠습니까?")
+                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Map<String, Object> updatedStatus = new HashMap<>();
+                            updatedStatus.put("status", "2");
+                            orderRef.update(updatedStatus)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            order.setStatus("2");
+                                            setStatusBar();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(OrderDetail.this, "오류 발생. 정상적을 처리되지 않았습니다.", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                        }
+                    })
+                    .setNegativeButton("취소", null);
+
+            builder.show();
+        }
+    }
+
     @OnClick(R.id.detail_btn_cancel_order)
     void onOrderCancel() {
         View viewInflated = LayoutInflater.from(this).inflate(R.layout.dialog_reject_order, null, false);
@@ -210,9 +253,34 @@ public class OrderDetail extends AppCompatActivity implements RejectOrderDialogL
     }
 
     @Override
+    public void onConfirmClicked(int delivery_time) {
+         order.setDelivery_time(delivery_time);
+         order.setStatus("1");
+        setStatusBar();
+
+         HashMap<String, Object> params = new HashMap<>();
+         params.put("status", "1");
+         orderRef.update(params)
+                 .addOnSuccessListener(new OnSuccessListener<Void>() {
+                     @Override
+                     public void onSuccess(Void aVoid) {
+                         
+                     }
+                 })
+                 .addOnFailureListener(new OnFailureListener() {
+                     @Override
+                     public void onFailure(@NonNull Exception e) {
+                         Toast.makeText(OrderDetail.this, "예상치 못한 오류가 발생했습니다. 오류: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                     }
+                 });
+
+
+    }
+
+    @Override
     public void onRejectClicked(String reason) {
         sendRejectedMessage(reason);
-        this.finish(); 
+        this.finish();
     }
 
     private void sendRejectedMessage(String strMessage) {
