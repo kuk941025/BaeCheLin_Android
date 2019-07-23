@@ -12,6 +12,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import com.google.firebase.messaging.RemoteMessage;
 import com.leaderpower.baechelin_owner_android.R;
+import com.leaderpower.baechelin_owner_android.activity.FCMActivity;
 import com.leaderpower.baechelin_owner_android.activity.LoginActivity;
 import com.leaderpower.baechelin_owner_android.activity.MainActivity;
 import com.leaderpower.baechelin_owner_android.activity.SettingActivity;
@@ -87,7 +88,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 //            testBuilder.setTitle("hey").setMessage("messagE").sho
 
 
-            Intent intent = new Intent(this, OrderReceivedDialog.class);
+            Intent intent = new Intent(this, FCMActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
 

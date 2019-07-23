@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/App.Theme.BaeCheLinTheme">
-        <activity android:name=".activity.OrderDetail"></activity>
+        <activity android:name=".activity.FCMActivity" android:theme="@style/Theme.Transparent"/>
+        <activity android:name=".activity.OrderDetail" />
         <activity android:name=".activity.OrderActivity" />
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".TestMainActivity" />
@@ -25,7 +26,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".dialog.OrderReceivedDialog"  android:theme="@style/Theme.Transparent"/>
+
+
         <service android:name=".fcm.FirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
