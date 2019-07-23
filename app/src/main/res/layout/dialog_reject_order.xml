@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/dialog_width"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/default_side_margin"
+    android:background="@color/whiteBackground">
+
+    <ImageView
+        android:id="@+id/dialog_reject_order_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:textColor="@color/black"
+        android:background="@drawable/ic_close_black_24dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dialog_reject_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="취소 사유를 입력해주세요."
+        android:textColor="@color/black"
+        android:textSize="@dimen/dscrp_default_txt_size"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/dialog_title_margin_top"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/dialog_reject_edit_reason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_side_margin"
+        android:hint="거절 사유를 입력해주세요."
+        android:textSize="@dimen/default_side_margin"
+        android:maxLines="1"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_reject_title"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <Button
+        android:id="@+id/dialog_reject_confirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/shape_dialog_btn_status_0"
+        android:text="확인"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/dialog_reject_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_reject_edit_reason" />
+
+    <Button
+        android:id="@+id/dialog_reject_cancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="8dp"
+        android:text="취소"
+        android:textStyle="bold"
+        android:background="@drawable/shape_dialog_btn_status_1"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_reject_confirm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_reject_edit_reason" />
+</android.support.constraint.ConstraintLayout>

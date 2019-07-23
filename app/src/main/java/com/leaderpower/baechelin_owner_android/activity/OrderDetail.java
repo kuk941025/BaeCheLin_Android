@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -23,6 +24,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.Retrofit.RetroCallBack;
 import com.leaderpower.baechelin_owner_android.Retrofit.RetroClient;
+import com.leaderpower.baechelin_owner_android.dialog.CheckOrderDialog;
+import com.leaderpower.baechelin_owner_android.dialog.RejectOrderDialog;
+import com.leaderpower.baechelin_owner_android.dialog.RejectOrderDialogListener;
 import com.leaderpower.baechelin_owner_android.model.Food;
 import com.leaderpower.baechelin_owner_android.model.Order;
 import com.leaderpower.baechelin_owner_android.model.OwnerItem;
@@ -37,7 +41,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OrderDetail extends AppCompatActivity {
+public class OrderDetail extends AppCompatActivity implements RejectOrderDialogListener {
     @BindView(R.id.detail_layout_request)
     View requestLayout;
     @BindView(R.id.detail_txt_request)
@@ -175,37 +179,39 @@ public class OrderDetail extends AppCompatActivity {
 
     @OnClick(R.id.detail_btn_cancel_order)
     void onOrderCancel() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
-        final EditText editInput = new EditText(this);
-        editInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        View viewInflated = LayoutInflater.from(this).inflate(R.layout.dialog_reject_order, null, false);
 
-        builder.setView(editInput);
+        RejectOrderDialog rejectOrderDialog = new RejectOrderDialog(this, this);
+        rejectOrderDialog.show();
 
-        builder.setTitle("주문 취소").setMessage("선택하신 주문을 삭제하시겠습니까?")
-                .setPositiveButton("삭제", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String strMessage = editInput.getText().toString();
-                        Toast.makeText(OrderDetail.this, strMessage, Toast.LENGTH_SHORT).show();
-//                        orderRef.delete()
-//                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                    @Override
-//                                    public void onSuccess(Void aVoid) {
-//
-//                                        Toast.makeText(OrderDetail.this, "주문이 취소되었습니다.", Toast.LENGTH_LONG).show();
-//                                    }
-//                                })
-//                                .addOnFailureListener(new OnFailureListener() {
-//                                    @Override
-//                                    public void onFailure(@NonNull Exception e) {
-//                                        Toast.makeText(OrderDetail.this, "오류가 발생했습니다: " + e.getMessage(), Toast.LENGTH_LONG).show();
-//                                    }
-//                                });
-                    }
-                })
-                .setNegativeButton("취소", null);
+//        builder.setTitle("주문 취소").setMessage("선택하신 주문을 삭제하시겠습니까?")
+//                .setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        Toast.makeText(OrderDetail.this, strMessage, Toast.LENGTH_SHORT).show();
+////                        orderRef.delete()
+////                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+////                                    @Override
+////                                    public void onSuccess(Void aVoid) {
+////
+////                                        Toast.makeText(OrderDetail.this, "주문이 취소되었습니다.", Toast.LENGTH_LONG).show();
+////                                    }
+////                                })
+////                                .addOnFailureListener(new OnFailureListener() {
+////                                    @Override
+////                                    public void onFailure(@NonNull Exception e) {
+////                                        Toast.makeText(OrderDetail.this, "오류가 발생했습니다: " + e.getMessage(), Toast.LENGTH_LONG).show();
+////                                    }
+////                                });
+//                    }
+//                })
+//                .setNegativeButton("취소", null);
 
-        builder.show();
+    }
+
+    @Override
+    public void onRejectClicked(String reason) {
+
     }
 
     private void sendRejectedMessage(String strMessage) {
@@ -225,7 +231,7 @@ public class OrderDetail extends AppCompatActivity {
         retroClient.postSendKakao(params, new RetroCallBack() {
             @Override
             public void onError(Throwable t) {
-                Toast.makeText(OrderDetail.this, "카카오 알림 메세지 알수없는 오류: " + t.getMessage(), Toast.LENGTH_LONG).setDuration();
+                Toast.makeText(OrderDetail.this, "카카오 알림 메세지 알수없는 오류: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
 
             @Override
