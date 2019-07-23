@@ -10,9 +10,7 @@
         android:layout_width="match_parent"
         android:id="@+id/template_order"
         android:layout_height="@dimen/order_card_height"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         app:cardBackgroundColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,28 +64,19 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/template_order_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorTextPrimary"
-                    android:text="처리중"
-                    android:layout_marginStart="8dp"
-                    android:padding="3dp"
-                    android:textColor="#ffffff"
-                    app:layout_constraintBottom_toBottomOf="@+id/template_order_time"
-                    app:layout_constraintStart_toEndOf="@+id/template_order_time"
-                    app:layout_constraintTop_toTopOf="@+id/template_order_time" />
+                <!--<TextView-->
+                    <!--android:id="@+id/template_order_status"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="@color/colorTextPrimary"-->
+                    <!--android:text="처리중"-->
+                    <!--android:layout_marginStart="8dp"-->
+                    <!--android:padding="3dp"-->
+                    <!--android:textColor="#ffffff"-->
+                    <!--app:layout_constraintBottom_toBottomOf="@+id/template_order_time"-->
+                    <!--app:layout_constraintStart_toEndOf="@+id/template_order_time"-->
+                    <!--app:layout_constraintTop_toTopOf="@+id/template_order_time" />-->
 
-                <TextView
-                    android:id="@+id/template_order_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="17,000 원"
-                    app:layout_constraintBottom_toBottomOf="@+id/template_order_status"
-                    app:layout_constraintStart_toEndOf="@+id/template_order_status"
-                    app:layout_constraintTop_toTopOf="@+id/template_order_status" />
 
                 <TextView
                     android:id="@+id/template_order_food"

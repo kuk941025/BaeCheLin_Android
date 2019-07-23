@@ -1,10 +1,11 @@
 package com.leaderpower.baechelin_owner_android.model;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Order {
+public class Order implements Serializable {
     private String address_detail, address_jibun, address_road, coupon_type, request, status, user_phone, id, delivered_at, food_ordered;
     private Date created_at;
     private int coupon_amount, payment_method, point_amount, total_price, mode, delivery_time;

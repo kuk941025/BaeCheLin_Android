@@ -122,7 +122,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
 
         orderViewHolder.txtAddress.setText(item.getAddress_road() + " " + item.getAddress_detail());
         orderViewHolder.txtFood.setText(item.getFood_ordered());
-        orderViewHolder.txtPrice.setText(df.format(item.getTotal_price()) + "원");
         orderViewHolder.txtTime.setText(sdf.format(item.getCreated_at()));
 
 
@@ -158,8 +157,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         TextView txtTime;
         @BindView(R.id.template_order_txt_status)
         TextView txtStatus;
-        @BindView(R.id.template_order_price)
-        TextView txtPrice;
         @BindView(R.id.template_order_food)
         TextView txtFood;
         @BindView(R.id.template_order_information_layout)
