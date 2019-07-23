@@ -2,25 +2,22 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_owner"
-    android:layout_margin="10dp"
     android:clickable="true"
-    android:background="@color/colorPrimary"
-    app:cardBackgroundColor="@color/colorPrimary"
+    app:cardBackgroundColor="@color/defaultBackground"
     android:layout_width="match_parent" android:layout_height="@dimen/cardview_height">
     <android.support.constraint.ConstraintLayout
         android:id="@+id/card_owner_layout_complete"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/padding"
+        android:layout_marginTop="@dimen/default_margin"
+        android:padding="@dimen/default_margin"
+        android:background="@color/colorPrimary"
         >
 
         <ImageView
             android:id="@+id/card_owner_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,8 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="업체 이름"
-            android:textSize="@dimen/cardview_title_txt_size"
-            android:fontFamily="@font/bold"
+            android:textSize="@dimen/dscrp_large_txt_size"
             android:layout_marginStart="@dimen/padding"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/card_owner_image"
@@ -43,7 +39,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/padding"
             android:text="업체 주소"
-            android:fontFamily="@font/regular"
             app:layout_constraintStart_toEndOf="@+id/card_owner_image"
             app:layout_constraintTop_toBottomOf="@+id/card_owner_title" />
 

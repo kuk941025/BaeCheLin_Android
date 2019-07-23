@@ -38,7 +38,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
             Map<String, String> data = remoteMessage.getData();
             String total_price = data.get("total_price");
-            String ordered = data.get("ordereD");
+            String ordered = data.get("ordered");
 
             String channelId = "channel";
             String channelName = "Channel Name";
@@ -91,7 +91,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
             Intent intent = new Intent(this, FCMActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("total_price", total_price);
+            intent.putExtra("ordered", ordered);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 
         }

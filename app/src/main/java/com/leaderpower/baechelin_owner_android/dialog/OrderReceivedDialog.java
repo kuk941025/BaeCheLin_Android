@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.leaderpower.baechelin_owner_android.R;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class OrderReceivedDialog extends Dialog {
@@ -23,10 +24,13 @@ public class OrderReceivedDialog extends Dialog {
     @BindView(R.id.dialog_order_received_price)
     TextView txtPrice;
 
+    private String strFood, strPrice;
     OrderReceivedDialogListener mListener;
     public OrderReceivedDialog(Context context, OrderReceivedDialogListener listener, String strFood, String strPrice) {
         super(context);
         this.mListener = listener;
+        this.strFood = strFood;
+        this.strPrice = strPrice;
     }
 
 
@@ -35,10 +39,14 @@ public class OrderReceivedDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_order_received);
 
+        ButterKnife.bind(this);
+        txtFood.setText(strFood);
+        txtPrice.setText(strPrice);
     }
 
     @OnClick(R.id.dialog_order_received_btn_show)
     void onShowOrderClicked(){
+        this.dismiss();
         mListener.onCheckOrderClicked();
     }
 

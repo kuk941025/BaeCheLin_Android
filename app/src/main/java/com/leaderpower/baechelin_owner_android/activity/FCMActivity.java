@@ -14,7 +14,10 @@ public class FCMActivity extends AppCompatActivity implements OrderReceivedDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        OrderReceivedDialog receivedDialog = new OrderReceivedDialog(this, this, "test", "1000");
+        String total_price = getIntent().getStringExtra("total_price");
+        String ordered = getIntent().getStringExtra("ordered");
+
+        OrderReceivedDialog receivedDialog = new OrderReceivedDialog(this, this, ordered, total_price);
         receivedDialog.show();
 
     }
@@ -22,6 +25,7 @@ public class FCMActivity extends AppCompatActivity implements OrderReceivedDialo
     @Override
     public void onCheckOrderClicked() {
         Intent intent = new Intent(FCMActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         this.finish();
     }
