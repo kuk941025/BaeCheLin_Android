@@ -134,7 +134,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
 
             case 1:
                 orderViewHolder.statusLayout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.order_status_1));
-                orderViewHolder.txtStatus.setText("준비중");
+                orderViewHolder.txtStatus.setText("배달");
                 break;
 
             case 2:

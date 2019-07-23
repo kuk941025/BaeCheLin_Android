@@ -40,7 +40,7 @@
             app:layout_constraintTop_toTopOf="@+id/detail_txt_time" />
 
         <Button
-            android:id="@+id/detail_btn_confirm"
+            android:id="@+id/detail_btn_action"
             android:layout_width="80dp"
             android:layout_height="35dp"
             android:text="접수"
@@ -64,7 +64,7 @@
             android:layout_marginTop="8dp"
             android:background="@color/grey"
             android:paddingBottom="@dimen/default_side_margin"
-            app:layout_constraintTop_toBottomOf="@+id/detail_btn_confirm">
+            app:layout_constraintTop_toBottomOf="@+id/detail_btn_action">
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/detail_layout_request"
