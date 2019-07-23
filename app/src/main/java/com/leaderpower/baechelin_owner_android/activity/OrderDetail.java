@@ -264,7 +264,7 @@ public class OrderDetail extends AppCompatActivity implements RejectOrderDialogL
                  .addOnSuccessListener(new OnSuccessListener<Void>() {
                      @Override
                      public void onSuccess(Void aVoid) {
-                         
+
                      }
                  })
                  .addOnFailureListener(new OnFailureListener() {

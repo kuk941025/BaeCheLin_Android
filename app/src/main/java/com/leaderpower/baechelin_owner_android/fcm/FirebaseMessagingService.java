@@ -1,5 +1,6 @@
 package com.leaderpower.baechelin_owner_android.fcm;
 
+import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,6 +14,9 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.leaderpower.baechelin_owner_android.R;
 import com.leaderpower.baechelin_owner_android.activity.LoginActivity;
 import com.leaderpower.baechelin_owner_android.activity.MainActivity;
+import com.leaderpower.baechelin_owner_android.activity.SettingActivity;
+import com.leaderpower.baechelin_owner_android.dialog.OrderReceivedDialog;
+import com.leaderpower.baechelin_owner_android.dialog.RejectOrderDialog;
 
 import java.util.Map;
 
@@ -77,6 +81,15 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                     .setContentIntent(pendingIntent);
 
             notifManager.notify((int) System.currentTimeMillis(), builder.build());
+
+
+//            AlertDialog.Builder testBuilder = new AlertDialog.Builder(this);
+//            testBuilder.setTitle("hey").setMessage("messagE").sho
+
+
+            Intent intent = new Intent(this, OrderReceivedDialog.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
 
         }
 

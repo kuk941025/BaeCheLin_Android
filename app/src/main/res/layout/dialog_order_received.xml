@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dialog_width"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/whiteBackground"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/default_side_margin"
+    >
+
+    <ImageView
+        android:id="@+id/dialog_accept_received_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:textColor="@color/black"
+        android:background="@drawable/ic_close_black_24dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dialog_order_received_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="신규주문이 도착했습니다."
+        android:textColor="@color/black"
+        android:textSize="@dimen/dscrp_default_txt_size"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/dialog_title_margin_top"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/dialog_order_received_food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_side_margin"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="주문내역"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_order_received_title" />
+
+    <TextView
+        android:id="@+id/dialog_order_received_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="price"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/dialog_order_received_food"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <Button
+        android:id="@+id/dialog_order_received_show"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_dialog_btn_status_0"
+        android:layout_marginStart="@dimen/default_side_margin"
+        android:layout_marginEnd="@dimen/default_side_margin"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/whiteBackground"
+        android:textSize="@dimen/btn_text_size"
+        android:text="주문확인"
+        app:layout_constraintTop_toBottomOf="@id/dialog_order_received_price"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+</android.support.constraint.ConstraintLayout>
