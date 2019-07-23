@@ -99,6 +99,7 @@ public class OrderInProgressFragment extends Fragment {
                         case ADDED:
                             Order order = dc.getDocument().toObject(Order.class);
                             order.setId(dc.getDocument().getId());
+                            order.setFoodOrdered();
                             orderList.add(order);
                             orderAdapter.notifyItemInserted(orderList.size());
 
@@ -120,6 +121,7 @@ public class OrderInProgressFragment extends Fragment {
                                 if (item.getId().equals(id)) {
                                     Order modifiedOrder = dc.getDocument().toObject(Order.class);
                                     modifiedOrder.setId(dc.getDocument().getId());
+                                    modifiedOrder.setFoodOrdered();
                                     orderList.set(position, modifiedOrder);
                                     orderAdapter.notifyItemChanged(position);
                                     break;

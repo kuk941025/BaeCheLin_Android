@@ -106,14 +106,14 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         }
 
         orderViewHolder.txtAddress.setText(item.getAddress_road() + " " + item.getAddress_detail());
-        String food_ordered = "";
-        int idx = 0;
-        for (Food food : item.getFood()) {
-            food_ordered += food.getName() + " (" + food.getCount() + "개)";
-            if (idx < item.getFood().size() - 1) food_ordered += ", ";
-            idx++;
-        }
-        orderViewHolder.txtFood.setText(food_ordered);
+//        String food_ordered = "";
+//        int idx = 0;
+//        for (Food food : item.getFood()) {
+//            food_ordered += food.getName() + " (" + food.getCount() + "개)";
+//            if (idx < item.getFood().size() - 1) food_ordered += ", ";
+//            idx++;
+//        }
+        orderViewHolder.txtFood.setText(item.getFood_ordered());
         orderViewHolder.txtPrice.setText(df.format(item.getTotal_price()) + "원");
         orderViewHolder.txtTime.setText(sdf.format(item.getCreated_at()));
 
@@ -274,21 +274,15 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-
+                                                Toast.makeText(mContext, "오류 발생. 정상적을 처리되지 않았습니다.", Toast.LENGTH_LONG).show();
                                             }
                                         });
                             }
                         })
-                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        });
+                        .setNegativeButton("취소", null);
 
                 builder.show();
-            }
-            else {
+            } else {
                 Toast.makeText(mContext, "완료된 주문입니다.", Toast.LENGTH_LONG).show();
             }
         }
@@ -307,10 +301,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-
                             sendAcceptedMessage(order, Integer.toString(delivery_time));
-                            notifyItemChanged(getLayoutPosition());
-
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -510,11 +501,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         parameters.put("tmp_number", "7853");
         parameters.put("kakao_sender", KAKAO_SENDER);
         parameters.put("kakao_name", "고객");
-        parameters.put("kakao_phone", "01024421848");
+        parameters.put("kakao_phone", order.getUser_phone());
         parameters.put("kakao_add1", strMessage + "분");
         parameters.put("kakao_add2", sdf.format(order.getCreated_at()));
         parameters.put("kakao_add3", owner.getShop_name());
-            parameters.put("kakao_add4", "Asd");
+        parameters.put("kakao_add4", order.getFood_ordered());
         parameters.put("kakao_add5", order.getAddress_road() + " " + order.getAddress_detail());
         parameters.put("kakao_080", "N");
 

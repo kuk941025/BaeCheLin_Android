@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Order {
-    private String address_detail, address_jibun, address_road, coupon_type, request, status, user_phone, id, delivered_at;
+    private String address_detail, address_jibun, address_road, coupon_type, request, status, user_phone, id, delivered_at, food_ordered;
     private Date created_at;
     private int coupon_amount, payment_method, point_amount, total_price, mode, delivery_time;
     private boolean timer_on;
@@ -23,6 +23,19 @@ public class Order {
 
     public void setTimer_on(boolean timer_on) {
         this.timer_on = timer_on;
+    }
+
+    public void setFoodOrdered() {
+        String ordered = "";
+        Food first_food = food.get(0);
+        if (food.size() == 1) ordered = first_food.getName() + " " + first_food.getCount() + "개";
+        else ordered = first_food.getName() + " 외" + (food.size() - 1) + "개";
+
+        this.food_ordered = ordered;
+    }
+
+    public String getFood_ordered() {
+        return food_ordered;
     }
 
     public int getDelivery_time() {
@@ -97,7 +110,7 @@ public class Order {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
         try {
             this.created_at = sdf.parse(created_at);
-        } catch (Exception e){
+        } catch (Exception e) {
             this.created_at = new Date();
         }
 

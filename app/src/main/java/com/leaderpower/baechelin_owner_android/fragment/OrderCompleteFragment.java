@@ -106,7 +106,7 @@ public class OrderCompleteFragment extends Fragment {
                         case ADDED:
                             Order order = dc.getDocument().toObject(Order.class);
                             order.setId(dc.getDocument().getId());
-                            order.setId(dc.getDocument().getId());
+                            order.setFoodOrdered();
                             orderList.add(order);
                             orderAdapter.notifyItemInserted(orderList.size());
 
@@ -130,6 +130,7 @@ public class OrderCompleteFragment extends Fragment {
                                 if (item.getId().equals(id)){
                                     Order modifedOrder = dc.getDocument().toObject(Order.class);
                                     modifedOrder.setId(dc.getDocument().getId());
+                                    modifedOrder.setFoodOrdered();
                                     orderList.set(pos, modifedOrder);
                                     orderAdapter.notifyItemChanged(pos);
                                     break;
