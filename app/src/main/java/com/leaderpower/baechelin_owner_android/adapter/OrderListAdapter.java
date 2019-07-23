@@ -55,7 +55,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
     private OwnerItem owner;
     private final String KAKAO_SENDER = "01024421848";
     private final String colorAccent = "#1a7cff";
-    private final String colorWhite = "#ffffff";
+    private final String colorSecondary = "#F44336";
+    private final String colorTextPrimary = "#747988";
 
     public OrderListAdapter(ArrayList<Order> orderList, Context context) {
         this.orderList = orderList;
@@ -105,17 +106,25 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ", Locale.KOREA);
         }
 
+        String txtPaymentMethod;
+        if (item.getPayment_method() <= 1){
+            //후불
+            orderViewHolder.txtPaymentMethod.setTextColor(Color.parseColor(colorSecondary));
+            txtPaymentMethod = item.getPayment_method() == 0 ? "현장결제(카드)" : "현장결제(현금)";
+        }
+        else {
+            orderViewHolder.txtPaymentMethod.setTextColor(Color.parseColor(colorTextPrimary));
+            txtPaymentMethod = "결제완료";
+        }
+        txtPaymentMethod += " " + df.format(item.getTotal_price()) + "원";
+        orderViewHolder.txtPaymentMethod.setText(txtPaymentMethod);
+
+
         orderViewHolder.txtAddress.setText(item.getAddress_road() + " " + item.getAddress_detail());
-//        String food_ordered = "";
-//        int idx = 0;
-//        for (Food food : item.getFood()) {
-//            food_ordered += food.getName() + " (" + food.getCount() + "개)";
-//            if (idx < item.getFood().size() - 1) food_ordered += ", ";
-//            idx++;
-//        }
         orderViewHolder.txtFood.setText(item.getFood_ordered());
         orderViewHolder.txtPrice.setText(df.format(item.getTotal_price()) + "원");
         orderViewHolder.txtTime.setText(sdf.format(item.getCreated_at()));
+
 
         switch (status) {
             case 0:
@@ -134,81 +143,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
                 orderViewHolder.txtStatus.setTextColor(Color.parseColor(colorAccent));
                 break;
         }
-//        //update ui based on order status
-//        switch (status) {
-//            case 0:
-////                orderViewHolder.txtStatus.setBackgroundColor(Color.parseColor("#FF9800"));
-//                orderViewHolder.txtStatus.setText("요청");
-//                break;
-//            case 1:
-////                orderViewHolder.txtStatus.setBackgroundColor(Color.parseColor("#FF5722"));
-//                orderViewHolder.txtStatus.setText("처리중");
-//                break;
-//            case 2:
-////                orderViewHolder.txtStatus.setBackgroundColor(Color.parseColor("#4CAF50"));
-//                orderViewHolder.txtStatus.setText("완료");
-//                orderViewHolder.txtDeliveredAt.setText("완료된 시간: " + sdf.format(item.getDelivered_at()));
-//                orderViewHolder.viewButton.setVisibility(View.GONE);
-//                break;
-//        }
-//
-//        if (item.getMode() == 0) {
-//            orderViewHolder.viewInfo.setVisibility(View.VISIBLE);
-//            orderViewHolder.viewSelected.setVisibility(View.GONE);
-//            if (status == 0){
-//                orderViewHolder.btnConfirm.setText("승락");
-//                orderViewHolder.btnReject.setText("거절");
-//                orderViewHolder.btnReject.setVisibility(View.VISIBLE);
-//            }
-//            else if (status == 1){
-//                orderViewHolder.btnConfirm.setText("준비완료");
-//                orderViewHolder.btnReject.setVisibility(View.GONE);
-//            }
-//            else {
-//                orderViewHolder.btnConfirm.setVisibility(View.GONE);
-//                orderViewHolder.btnReject.setVisibility(View.GONE);
-//            }
-//        } else {
-//            //new order
-//            orderViewHolder.viewInfo.setVisibility(View.GONE);
-//            orderViewHolder.viewSelected.setVisibility(View.VISIBLE);
-//            orderViewHolder.btnReject.setVisibility(View.VISIBLE);
-//
-//            if (status == 0) {
-//                //accepted clicked
-//                if (item.getMode() == 1) {
-//                    orderViewHolder.btnConfirm.setText("배달시작");
-//                    orderViewHolder.btnReject.setText("취소");
-//
-//                    orderViewHolder.editSelected.setHint("예상 시간(분)");
-//                    orderViewHolder.editSelected.setInputType(InputType.TYPE_CLASS_NUMBER);
-//                    orderViewHolder.txtSelectedDscrp.setText("배달예상 시간");
-//                }
-//                else if (item.getMode() == 2){
-//                    //rejected clicked
-//                    orderViewHolder.btnConfirm.setText("주문취소");
-//                    orderViewHolder.btnReject.setText("취소");
-//
-//                    orderViewHolder.editSelected.setHint("고객에게 보내질 메세지를 입력해주세요.");
-//                    orderViewHolder.editSelected.setInputType(InputType.TYPE_CLASS_TEXT);
-//                    orderViewHolder.txtSelectedDscrp.setText("거절 사유");
-//                }
-//            } else {
-//                //order in preparation
-//                if (item.getMode() == 1) {
-//                    //accepted clicked
-//                    orderViewHolder.txtSelectedDscrp.setText("배달예상 시간: ");
-//                    orderViewHolder.editSelected.setHint("예상 시간(분)");
-//                    orderViewHolder.editSelected.setInputType(InputType.TYPE_CLASS_NUMBER);
-//                } else {
-//                    //rejected
-//                    orderViewHolder.txtSelectedDscrp.setText("거절사유: ");
-//                    orderViewHolder.editSelected.setHint("고객에게 전달될 메세지입니다.");
-//                    orderViewHolder.editSelected.setInputType(InputType.TYPE_CLASS_TEXT);
-//                }
-//            }
-//
-//        }
+
     }
 
     @Override
@@ -235,8 +170,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         TextView txtDeliveredAt;
         @BindView(R.id.template_order_button_layout)
         View statusLayout;
+        @BindView(R.id.template_order_txt_payment_method)
+        TextView txtPaymentMethod;
 
-        CountDownTimer timer;
 
         public orderViewHolder(@NonNull View itemView) {
             super(itemView);
