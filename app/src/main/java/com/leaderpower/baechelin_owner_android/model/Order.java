@@ -7,7 +7,7 @@ import java.util.Date;
 public class Order {
     private String address_detail, address_jibun, address_road, coupon_type, request, status, user_phone, id, delivered_at;
     private Date created_at;
-    private int coupon_amount, payment_method, point_amount, total_price, mode;
+    private int coupon_amount, payment_method, point_amount, total_price, mode, delivery_time;
 
     private ArrayList<Food> food;
 
@@ -15,6 +15,14 @@ public class Order {
         mode = 0;
     }
 
+
+    public int getDelivery_time() {
+        return delivery_time;
+    }
+
+    public void setDelivery_time(int delivery_time) {
+        this.delivery_time = delivery_time;
+    }
 
     public String getDelivered_at() {
         return delivered_at;

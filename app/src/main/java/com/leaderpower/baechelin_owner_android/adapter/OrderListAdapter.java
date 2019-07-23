@@ -3,7 +3,9 @@ package com.leaderpower.baechelin_owner_android.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
@@ -25,6 +27,7 @@ import com.leaderpower.baechelin_owner_android.Retrofit.RetroCallBack;
 import com.leaderpower.baechelin_owner_android.Retrofit.RetroClient;
 import com.leaderpower.baechelin_owner_android.activity.OrderDetail;
 import com.leaderpower.baechelin_owner_android.dialog.CheckOrderDialog;
+import com.leaderpower.baechelin_owner_android.dialog.CheckOrderDialogListener;
 import com.leaderpower.baechelin_owner_android.model.Food;
 import com.leaderpower.baechelin_owner_android.model.Foods;
 import com.leaderpower.baechelin_owner_android.model.Order;
@@ -49,6 +52,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
     private RetroClient retroClient;
     private OwnerItem owner;
     private final String KAKAO_SENDER = "01024421848";
+    private final String colorAccent = "#1a7cff";
+    private final String colorWhite = "#ffffff";
 
     public OrderListAdapter(ArrayList<Order> orderList, Context context) {
         this.orderList = orderList;
@@ -110,7 +115,22 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         orderViewHolder.txtPrice.setText(df.format(item.getTotal_price()) + "원");
         orderViewHolder.txtTime.setText(sdf.format(item.getCreated_at()));
 
+        switch (status) {
+            case 0:
+                orderViewHolder.statusLayout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.order_status_0));
+                orderViewHolder.txtStatus.setText("요청");
+                break;
 
+            case 1:
+                orderViewHolder.statusLayout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.order_status_1));
+                break;
+
+            case 2:
+                orderViewHolder.statusLayout.setBackground(ContextCompat.getDrawable(mContext, R.drawable.order_status_2));
+                orderViewHolder.txtStatus.setText("완료");
+                orderViewHolder.txtStatus.setTextColor(Color.parseColor(colorAccent));
+                break;
+        }
 //        //update ui based on order status
 //        switch (status) {
 //            case 0:
@@ -193,12 +213,12 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         return orderList.size();
     }
 
-    class orderViewHolder extends RecyclerView.ViewHolder {
+    class orderViewHolder extends RecyclerView.ViewHolder implements CheckOrderDialogListener {
         @BindView(R.id.template_order_address)
         TextView txtAddress;
         @BindView(R.id.template_order_time)
         TextView txtTime;
-        @BindView(R.id.template_order_status)
+        @BindView(R.id.template_order_txt_status)
         TextView txtStatus;
         @BindView(R.id.template_order_price)
         TextView txtPrice;
@@ -211,7 +231,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         @BindView(R.id.template_order_delivered_at)
         TextView txtDeliveredAt;
         @BindView(R.id.template_order_button_layout)
-        View viewButton;
+        View statusLayout;
+
+        CountDownTimer timer;
 
         public orderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -222,10 +244,43 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
         @OnClick(R.id.template_order_button_layout)
         void onOrderStatusClicked() {
             final Order order = orderList.get(getLayoutPosition());
-            if (order.getMode() == 0){
-                CheckOrderDialog orderDialog = new CheckOrderDialog(mContext);
+            if (order.getMode() == 0) {
+                CheckOrderDialog orderDialog = new CheckOrderDialog(mContext, this);
                 orderDialog.show();
             }
+        }
+
+        @Override
+        public void onConfirmClicked(final int delivery_time) {
+            final Order order = orderList.get(getLayoutPosition());
+
+            order.setDelivery_time(delivery_time);
+
+            //set order time and mode;
+
+            Map<String, Object> updatedStatus = new HashMap<>();
+            updatedStatus.put("status", "1");
+            dbRef.document(order.getId()).update(updatedStatus)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            order.setStatus("1");
+                            order.setMode(1);
+                            setTimer(delivery_time);
+
+                            sendAcceptedMessage(order, Integer.toString(delivery_time));
+                            notifyItemChanged(getLayoutPosition());
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(mContext, "오류 발생. 정상적으로 처리되지 않았습니다.", Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+
         }
 
         @OnClick(R.id.template_order)
@@ -233,7 +288,26 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.orde
             Intent intent = new Intent(mContext, OrderDetail.class);
             mContext.startActivity(intent);
         }
-//
+
+        public void setTimer(int remaining_time) {
+            timer = new CountDownTimer(remaining_time * 60 * 1000, 1000 * 60) {
+                @Override
+                public void onTick(long l) {
+                    Order order = orderList.get(getLayoutPosition());
+
+                    txtStatus.setText(order.getDelivery_time() - 1 + "분");
+                    order.setDelivery_time(order.getDelivery_time() - 1);
+                }
+
+                @Override
+                public void onFinish() {
+                    orderList.get(getLayoutPosition()).setDelivery_time(0);
+                    txtStatus.setText("0분");
+                }
+            };
+
+            timer.start();
+        }
 //        @OnClick(R.id.template_order_reject)
 //        void onRejectClicked() {
 //            Order order = orderList.get(getLayoutPosition());

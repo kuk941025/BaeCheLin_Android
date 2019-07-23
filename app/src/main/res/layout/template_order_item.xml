@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/default_margin"
-                android:background="@drawable/order_status"
+                android:background="@drawable/order_status_0"
                 android:gravity="center_vertical|center_horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +38,7 @@
                     android:id="@+id/template_order_txt_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="접수"
+                    android:text=""
                     android:textStyle="bold"
                     android:textSize="@dimen/dscrp_large_txt_size"
                     />
