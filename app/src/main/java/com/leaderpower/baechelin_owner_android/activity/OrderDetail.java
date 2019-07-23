@@ -7,9 +7,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,13 +21,17 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.leaderpower.baechelin_owner_android.R;
+import com.leaderpower.baechelin_owner_android.Retrofit.RetroCallBack;
+import com.leaderpower.baechelin_owner_android.Retrofit.RetroClient;
 import com.leaderpower.baechelin_owner_android.model.Food;
 import com.leaderpower.baechelin_owner_android.model.Order;
 import com.leaderpower.baechelin_owner_android.model.OwnerItem;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,6 +77,8 @@ public class OrderDetail extends AppCompatActivity {
     private Order order;
     private FirebaseFirestore db;
     private DocumentReference orderRef;
+    private RetroClient retroClient;
+    private final String KAKAO_SENDER = "01024421848";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +91,8 @@ public class OrderDetail extends AppCompatActivity {
         order = (Order) getIntent().getSerializableExtra("order");
 
         initView();
+
+        retroClient = RetroClient.getInstance(this).createBaseApi();
 
 //        orderRef = db.collection("owner").document(owner.getOid()).collection("order").document(order.getId());
     }
@@ -102,14 +112,13 @@ public class OrderDetail extends AppCompatActivity {
         } else {
             if (order.getStatus().equals("1")) {
                 btnAction.setBackground(ContextCompat.getDrawable(this, R.drawable.shape_dialog_btn_status_1));
-                btnAction.setTextColor(Color.parseColor("#FFF"));
-            }
-            else if (order.getStatus().equals("0") ){
+                btnAction.setTextColor(Color.parseColor("#FFFFFF"));
+            } else if (order.getStatus().equals("0")) {
                 btnAction.setBackground(ContextCompat.getDrawable(this, R.drawable.shape_dialog_btn_status_0));
-                btnAction.setTextColor(Color.parseColor("#FFF"));
+                btnAction.setTextColor(Color.parseColor("#FFFFFF"));
             }
 
-            if (order.getPayment_method() == 2) txtOrderStatus.setText("결제완료 - 앱에서 미리결제" );
+            if (order.getPayment_method() == 2) txtOrderStatus.setText("결제완료 - 앱에서 미리결제");
             else {
                 txtOrderStatus.setText("현장결제 " + (order.getPayment_method() == 0 ? "(카드)" : "(현금)"));
             }
@@ -167,25 +176,67 @@ public class OrderDetail extends AppCompatActivity {
     @OnClick(R.id.detail_btn_cancel_order)
     void onOrderCancel() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
+        final EditText editInput = new EditText(this);
+        editInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+        builder.setView(editInput);
+
         builder.setTitle("주문 취소").setMessage("선택하신 주문을 삭제하시겠습니까?")
                 .setPositiveButton("삭제", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        orderRef.delete()
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(OrderDetail.this, "주문이 취소되었습니다.", Toast.LENGTH_LONG).show();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(OrderDetail.this, "오류가 발생했습니다: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                    }
-                                });
+                        String strMessage = editInput.getText().toString();
+                        Toast.makeText(OrderDetail.this, strMessage, Toast.LENGTH_SHORT).show();
+//                        orderRef.delete()
+//                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                    @Override
+//                                    public void onSuccess(Void aVoid) {
+//
+//                                        Toast.makeText(OrderDetail.this, "주문이 취소되었습니다.", Toast.LENGTH_LONG).show();
+//                                    }
+//                                })
+//                                .addOnFailureListener(new OnFailureListener() {
+//                                    @Override
+//                                    public void onFailure(@NonNull Exception e) {
+//                                        Toast.makeText(OrderDetail.this, "오류가 발생했습니다: " + e.getMessage(), Toast.LENGTH_LONG).show();
+//                                    }
+//                                });
                     }
                 })
                 .setNegativeButton("취소", null);
+
+        builder.show();
+    }
+
+    private void sendRejectedMessage(String strMessage) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREA);
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("temp_number", "7858");
+        params.put("kakao_sender", KAKAO_SENDER);
+        params.put("kakao_name", "고객");
+        params.put("kakao_phone", order.getUser_phone());
+        params.put("kakao_add1", "[" + strMessage + "]");
+        params.put("kakao_add2", sdf.format(order.getCoupon_amount()));
+        params.put("kakao_add3", owner.getShop_name());
+        params.put("kakao_add4", order.getFood_ordered());
+        params.put("kakao_add5", order.getAddress_road() + " " + order.getAddress_detail());
+
+        retroClient.postSendKakao(params, new RetroCallBack() {
+            @Override
+            public void onError(Throwable t) {
+                Toast.makeText(OrderDetail.this, "카카오 알림 메세지 알수없는 오류: " + t.getMessage(), Toast.LENGTH_LONG).setDuration();
+            }
+
+            @Override
+            public void onSuccess(int code, Object receivedData) {
+                Toast.makeText(OrderDetail.this, "고객님에게 카카오 알림 메세지를 발송했습니다.", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(int code) {
+                Toast.makeText(OrderDetail.this, "카카오 알림 발송실패. 오류코드: " + code, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
