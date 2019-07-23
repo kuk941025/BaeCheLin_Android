@@ -93,19 +93,19 @@ public class OrderDetail extends AppCompatActivity {
         final String colorTextPrimary = "#747988";
 
         //set status bar
-        if (order.getStatus() == "2") {
-            txtCreatedAt.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA).format(order.getCreated_at()));
+        if (order.getStatus().equals("2")) {
+            txtCreatedAt.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREA).format(order.getCreated_at()));
             btnAction.setText("완료");
-            btnAction.setBackground(ContextCompat.getDrawable(this, R.drawable.order_status_2));
+            btnAction.setBackground(ContextCompat.getDrawable(this, R.drawable.shape_dialog_btn_status_2));
             btnAction.setTextColor(Color.parseColor(colorAccent));
             txtOrderStatus.setText("결제완료");
         } else {
-            if (order.getStatus() == "1") {
-                btnAction.setBackground(ContextCompat.getDrawable(this, R.drawable.order_status_1));
+            if (order.getStatus().equals("1")) {
+                btnAction.setBackground(ContextCompat.getDrawable(this, R.drawable.shape_dialog_btn_status_1));
                 btnAction.setTextColor(Color.parseColor("#FFF"));
             }
-            else if (order.getStatus() == "0"){
-                btnAction.setBackground(ContextCompat.getDrawable(this, R.drawable.order_status_0));
+            else if (order.getStatus().equals("0") ){
+                btnAction.setBackground(ContextCompat.getDrawable(this, R.drawable.shape_dialog_btn_status_0));
                 btnAction.setTextColor(Color.parseColor("#FFF"));
             }
 
@@ -139,7 +139,7 @@ public class OrderDetail extends AppCompatActivity {
         }
 
         //set bill result table
-        setBillTableItem(viewMenuTotal, "메뉴합계", "2", Integer.toString(food_price));
+        setBillTableItem(viewMenuTotal, "메뉴합계", Integer.toString(order.getFood().size()), Integer.toString(food_price));
         setBillTableItem(viewPriceTotal, "총 결제금액", "", df.format(order.getTotal_price()));
 
 
